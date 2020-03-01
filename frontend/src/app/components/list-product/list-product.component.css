@@ -6,9 +6,12 @@
     
     background-size: cover;
   }
-  .list-product {
+  #list-product {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    width: 80%;
   }
   .mt-card-title {
     font-size: 13px;
@@ -17,8 +20,29 @@
     overflow-x: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    color: rgba(15, 3, 3, 0.897)
   }
-
+  .mt-card-image{
+    max-width: 200px;
+    max-height: 200px;
+    margin: 0 auto;
+  }
+  .mt-card-sub{
+    color: #000;
+  }
   a { 
     text-decoration: none;
+   
+  }
+  #main {
+    width:75%;
+    margin: 0 auto;
+    display: flex;
+  }
+  #main-left{
+    border: 3px solid #ccc;
+    width: 15%;
+  }
+  .example-card:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
