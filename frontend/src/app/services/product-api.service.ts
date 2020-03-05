@@ -26,4 +26,42 @@ export class ProductsApiService {
           catchError(ProductsApiService._handleError)
         )
       }
+
+      deleteProduct(id):Observable<any>{
+        var params = {id: id};
+        return this.http.post<any>('api/delete_product', params)
+        .pipe(
+          catchError(ProductsApiService._handleError)
+        );
+      }
+
+      addProduct(id, name, price, category, description, imageURL):Observable<any>{
+        var params = {
+          id: id,
+          name: name,
+          price: price,
+          category: category,
+          description: description,
+          imageURL: imageURL
+        };
+        return this.http.post<any>('api/add_product', params)
+        .pipe(
+          catchError(ProductsApiService._handleError)
+        );
+      }
+
+      updateProduct(id, name, price, category, description, imageURL):Observable<any>{
+        var params = {
+          id: id,
+          name: name,
+          price: price,
+          category: category,
+          description: description,
+          imageURL: imageURL
+        };
+        return this.http.post<any>('api/update_product', params)
+        .pipe(
+          catchError(ProductsApiService._handleError)
+        );
+      }
     }
