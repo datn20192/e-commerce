@@ -44,3 +44,6 @@ def get_product_byID(id):
             'imageURL': extracted['imageURL'],
                 }
     return json_util.dumps(processed, ensure_ascii=False).encode('utf-8')
+
+@app.route('/api/add_product', methods=['POST'])
+def add_product():

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 /* Impotr AngularFire Modules */
 import { AngularFireModule } from 'angularfire2';
@@ -53,6 +54,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     BrowserAnimationsModule,
     MatCardModule,
     HttpClientModule,
+    FormsModule
   ],
   providers: [AuthService,ProductsApiService,],
   bootstrap: [AppComponent]

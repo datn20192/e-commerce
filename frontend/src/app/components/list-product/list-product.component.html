@@ -1,6 +1,11 @@
 <div id="main">
-  <div id="main-left">
-    123
+  <div id="main-left">   
+    <div class="card-header"><strong>Thêm sản phẩm</strong></div>    
+      <ul class="list-group">
+        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Điện thoại thông minh<span class="badge badge-primary badge-pill">14</span></li>
+        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Máy tính bảng<span class="badge badge-primary badge-pill">2</span></li>
+        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Laptop<span class="badge badge-primary badge-pill">1</span></li>
+      </ul>    
   </div>
   <div id="list-product">
     <mat-card class="example-card" *ngFor="let product of productsList">
@@ -8,14 +13,73 @@
         <img mat-card-image class="mt-card-image" src="{{product.imageURL}}" alt="Photo of a Shiba Inu">
         <mat-card-header>
           <mat-card-title class="mt-card-title">{{product.name}}</mat-card-title>
-          <mat-card-subtitle class="mt-card-sub">{{product.price}} đ</mat-card-subtitle>
+          <mat-card-subtitle class="mt-card-sub">{{product.price}}</mat-card-subtitle>
         </mat-card-header>
       </a>
       <mat-card-actions>
-        <button mat-button>Sua</button>
-        <button mat-button>Xoa</button>
+        <button class="btn btn-sm btn-danger" (click)='update(product.product_id)'> Sửa</button>
+        <button class="btn btn-sm btn-warning" (click)='delete(product.product_id)'> Xóa</button>
       </mat-card-actions>
 
     </mat-card>
-  </div>
+  </div>   
+  <div id="main-right" class="card">
+    <div class="card-header"><strong>Thêm sản phẩm</strong></div>
+    <div class="card-body">
+      <form class="container" >
+        <div class="form-group row">
+          <label class="col-3 col-form-label">Mã</label>
+          <div class="col-md-9">
+            <input class="form-control" name="product_id" placeholder="Nhập mã sản phẩm..." type="text" [(ngModel)]="product.product_id" [disabled]="type == 'Edit'">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Tên</label>
+          <div class="col-md-9">
+            <input class="form-control" name="name" placeholder="Nhập tên sản phẩm.." [(ngModel)]="product.name">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="select1">Loại</label>
+          <div class="col-md-9">
+            <select class="form-control" id="select1" name="category" [(ngModel)]="product.category">
+              <option value="">Chọn</option>
+              <option value="smart phone">Điện thoại thông minh</option>
+              <option value="laptop">Laptop</option>
+              <option value="tablet">Máy tính bảng</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Giá</label>
+          <div class="col-md-9">
+            <input class="form-control" name="price" placeholder="Nhập giá sản phẩm.." [(ngModel)]="product.price">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">SL</label>
+          <div class="col-md-9">
+            <input class="form-control" name="quantity" placeholder="Nhập số lượng" [(ngModel)]="product.quantity">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label">Ảnh</label>
+          <div class="col-md-9">
+            <input class="form-control" name="imageURL" placeholder="Chèn đường dẫn.." [(ngModel)]="product.imageURL">
+          </div>
+        </div>
+        <div class="form-group row">
+          <label class="col-md-3 col-form-label" for="textarea-input">Mô tả</label>
+          <div class="col-md-9">
+            <textarea class="form-control" id="textarea-input" name="description" rows="9" placeholder="Nội dung.." [(ngModel)]="product.description"></textarea>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-sm btn-info" (click)='load()'> Làm mới </button>
+      <button class="btn btn-sm btn-primary" (click)='create()'> Thêm </button>
+      <button class="btn btn-sm btn-success" (click)='submit()'> Xác nhận</button>      
+    </div>
+  </div>       
 </div>
