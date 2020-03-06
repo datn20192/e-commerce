@@ -16,20 +16,28 @@ mongo = PyMongo(app)
 @app.route('/products', methods = ['GET'])
 
 def get_all_products():
-    processed = []
-    extracted = list(mongo.db.product.find({}))
-    for product in extracted:
-        processed.append({
-            'product_id': product['product_id'],
-            'name': product['name'],
-            'price': product['price'],
-            'quantity': product['quantity'],
-            'description': product['description'],
-            'category': product['category'],
-            'imageURL': product['imageURL'],
-            
-        })
-    output = json_util.dumps(processed, ensure_ascii=False).encode('utf-8') 
+    try:
+        response = Response()
+        processed = []
+        extracted = list(mongo.db.product.find({}))
+        for product in extracted:
+            processed.append({
+                'product_id': product['product_id'],
+                'name': product['name'],
+                'price': product['price'],
+                'quantity': product['quantity'],
+                'description': product['description'],
+                'category': product['category'],
+                'imageURL': product['imageURL'],
+                
+            })    
+        response.create(Response.SUCCESS)
+        response.data = processed        
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+    except:
+        response.create(Response.ERROR)
+        response.data = "Datebase connection is false."
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
 
     return output
 
@@ -49,11 +57,48 @@ def get_product_byID(id):
 
 @app.route('/api/add_product', methods=['POST'])
 def add_product():
-    response = Response()
-    params = json.loads(request.data)
-    mongo.db.product.insert(params)
-    response.create(Response.ERROR)
-    response.data = 'Product was created.'
-    print(response)
-    return json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8')
+    try:
+        response = Response()
+        params = json.loads(request.data)
+        mongo.db.product.insert(params)
+        response.create(Response.SUCCESS)
+        response.data = 'Product was created.'       
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+    except:
+        response.create(Response.ERROR)
+        response.data = "Datebase connection is false."
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
 
+    return output
+
+@app.route('/api/update_product', methods=['POST'])
+def update_product():
+    try:
+        response = Response()
+        params = json.loads(request.data)
+        mongo.db.product.update({'product_id': params['product_id']}, {'$set': params})
+        response.create(Response.SUCCESS)
+        response.data = 'Product was updated.'
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+    except:
+        response.create(Response.ERROR)
+        response.data = 'Datebase connection is false.'
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+
+    return output
+
+@app.route('/api/delete_product', methods=['POST'])
+def delete_product():
+    try:
+        response = Response()
+        params = json.loads(request.data)
+        mongo.db.product.remove({'product_id': params['product_id']})
+        response.create(Response.SUCCESS)
+        response.data = 'Product was deleted.'
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+    except:
+        response.create(Response.ERROR)
+        response.data = 'Datebase connection is false.'
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+
+    return output
