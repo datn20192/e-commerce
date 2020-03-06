@@ -3,6 +3,7 @@ export class Product {
         public product_id: string,
         public name: string,
         public price: string,
+        public quantity: string,
         public category: string,
         public description: string,
         public imageURL: string

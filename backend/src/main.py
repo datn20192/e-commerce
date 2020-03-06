@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request
 from flask_pymongo import PyMongo
+import json
 from bson import json_util
 from flask_cors import CORS
+from .config import Response
 
 app = Flask(__name__)
 
@@ -47,3 +49,11 @@ def get_product_byID(id):
 
 @app.route('/api/add_product', methods=['POST'])
 def add_product():
+    response = Response()
+    params = json.loads(request.data)
+    mongo.db.product.insert(params)
+    response.create(Response.ERROR)
+    response.data = 'Product was created.'
+    print(response)
+    return json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8')
+
