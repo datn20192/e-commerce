@@ -13,7 +13,7 @@ export class ProductsApiService {
       }
     
       // GET list of public, future events
-      getProducts(): Observable<Product[]> {
+      getProducts(): Observable<any> {
         return this.http.get<Product[]>(`${API_URL}/products`)
         .pipe(
             catchError(ProductsApiService._handleError)
@@ -28,7 +28,7 @@ export class ProductsApiService {
       }
 
       deleteProduct(id):Observable<any>{
-        var params = {id: id};
+        var params = {product_id: id};
         return this.http.post<any>(`${API_URL}/api/delete_product`, params)
         .pipe(
           catchError(ProductsApiService._handleError)
@@ -51,18 +51,20 @@ export class ProductsApiService {
         );
       }
 
-      updateProduct(id, name, price, category, description, imageURL):Observable<any>{
+      updateProduct(id, name, price, quantity, category, description, imageURL):Observable<any>{
         var params = {
           product_id: id,
           name: name,
           price: price,
+          quantity: quantity,
           category: category,
           description: description,
           imageURL: imageURL
         };
-        return this.http.post<any>('api/update_product', params)
+        return this.http.post<any>(`${API_URL}/api/update_product`, params)
         .pipe(
           catchError(ProductsApiService._handleError)
         );
       }
+
     }

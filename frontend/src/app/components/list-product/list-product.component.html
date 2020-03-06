@@ -2,9 +2,9 @@
   <div id="main-left">   
     <div class="card-header"><strong>DS sản phẩm</strong></div>    
       <ul class="list-group">
-        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Điện thoại thông minh<span class="badge badge-primary badge-pill">14</span></li>
-        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Máy tính bảng<span class="badge badge-primary badge-pill">2</span></li>
-        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Laptop<span class="badge badge-primary badge-pill">1</span></li>
+        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Điện thoại thông minh<span class="badge badge-primary badge-pill">{{count['smartphone']}}</span></li>
+        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Máy tính bảng<span class="badge badge-primary badge-pill">{{count['tablet']}}</span></li>
+        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Laptop<span class="badge badge-primary badge-pill">{{count['laptop']}}</span></li>
       </ul>    
   </div>
   <div id="list-product">
@@ -17,8 +17,8 @@
         </mat-card-header>
       </a>
       <mat-card-actions>
-        <button class="btn btn-sm btn-danger" (click)='update(product.product_id)'> Sửa</button>
-        <button class="btn btn-sm btn-warning" (click)='delete(product.product_id)'> Xóa</button>
+        <button class="btn btn-sm btn-warning" (click)='update(product.product_id)'> Sửa</button>
+        <button class="btn btn-sm btn-danger" (click)='delete(product.product_id)'> Xóa</button>
       </mat-card-actions>
 
     </mat-card>
@@ -47,7 +47,7 @@
           <div class="col-md-9">
             <select class="form-control" id="select1" name="category" [(ngModel)]="product.category">
               <option value="">Chọn</option>
-              <option value="smart phone">Điện thoại thông minh</option>
+              <option value="smartphone">Điện thoại thông minh</option>
               <option value="laptop">Laptop</option>
               <option value="tablet">Máy tính bảng</option>
             </select>
