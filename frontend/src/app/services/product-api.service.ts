@@ -29,22 +29,23 @@ export class ProductsApiService {
 
       deleteProduct(id):Observable<any>{
         var params = {id: id};
-        return this.http.post<any>('api/delete_product', params)
+        return this.http.post<any>(`${API_URL}/api/delete_product`, params)
         .pipe(
           catchError(ProductsApiService._handleError)
         );
       }
 
-      addProduct(id, name, price, category, description, imageURL):Observable<any>{
+      addProduct(id, name, price, quantity, category, description, imageURL):Observable<any>{
         var params = {
-          id: id,
+          product_id: id,
           name: name,
           price: price,
+          quantity: quantity,
           category: category,
           description: description,
           imageURL: imageURL
         };
-        return this.http.post<any>('api/add_product', params)
+        return this.http.post<any>(`${API_URL}/api/add_product`, params)
         .pipe(
           catchError(ProductsApiService._handleError)
         );
@@ -52,7 +53,7 @@ export class ProductsApiService {
 
       updateProduct(id, name, price, category, description, imageURL):Observable<any>{
         var params = {
-          id: id,
+          product_id: id,
           name: name,
           price: price,
           category: category,
