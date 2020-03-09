@@ -41,27 +41,31 @@ export class ListProductComponent implements OnInit {
   productCategory = new productCategory("","",""); 
 
   load() {
+    this.show_old = false;         // Show the old category form
+    this.show_new = false;         // Show the new category form
     // Get product list
     this.productsListSubs = this.productsApi.getProducts().subscribe(res => {
       let result = JSON.parse(JSON.stringify(res));
       this.productsList = result.data;
       this.product = new Product("", "", "", "", "", "", "");        
-      console.log(this.productsListSubs);     
-    },
-      console.error
-    );
+      console.log(this.productsListSubs); 
 
-    // Get product category list
-    this.productCategoryListSubs = this.productCategoryApi.getProductCategories().subscribe(res =>{
-      let result = JSON.parse(JSON.stringify(res));
-      this.productCategoryList = result.data;
-      this.productCategory = new productCategory("","","");      
-      this.productCategoryList.forEach(element => {        
-        element.quantity = this.productsList.filter(item => item.category = element.category_id).length;
-      });
+
+      // Get product category list
+     this.productCategoryListSubs = this.productCategoryApi.getProductCategories().subscribe(res =>{
+        let result = JSON.parse(res);
+        this.productCategoryList = result.data;      
+        this.productCategory = new productCategory("","","");          
+        this.productCategoryList.forEach(element => {                  
+          element.quantity = this.productsList.filter(item => item.category == element.category_id).length;          
+        });
+      },
+        console.error
+      );
+
     },
       console.error
-    );
+    );    
   }
 
   unload() {  
@@ -71,6 +75,7 @@ export class ListProductComponent implements OnInit {
         console.error
       );
     });
+    console.log('unload');
     this.productsListSubs.unsubscribe();
     this.productCategoryListSubs.unsubscribe();
   }
@@ -135,6 +140,7 @@ export class ListProductComponent implements OnInit {
 
   update(id) {
     this.type = 'Edit';
+    this.show_old = true;
     var productEdit = this.productsList.filter(item => item.product_id == id)[0];
     this.product.product_id = productEdit.product_id;
     this.product.name = productEdit.name;
@@ -150,7 +156,9 @@ export class ListProductComponent implements OnInit {
       var result = JSON.parse(res);
       alert(result.data);
       this.load();
-    });
+    },
+      console.error
+    );
   }
 
 }
