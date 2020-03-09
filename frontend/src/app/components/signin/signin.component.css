@@ -1,0 +1,79 @@
+.hint-text {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+.social-btn .btn, .social-btn .btn:hover {
+	color: #fff;
+	margin: 0;
+	padding: 0 !important;
+	font-size: 13px;
+	border: none;
+	transition: all 0.4s;
+	text-align: center;
+	line-height: 34px;
+	width: 47%;
+	text-decoration: none;
+}
+.social-btn .btn-primary {
+    background: #507cc0;
+}
+
+.social-btn .btn-primary:hover {
+    background: #4676bd;
+}
+
+ .social-btn .btn-info {
+    background: #64ccf1;
+}
+
+ .social-btn .btn-info:hover {
+    background: #4ec7ef;
+}
+
+ .social-btn .btn i {
+    margin-right: 5px;
+    font-size: 16px;
+    position: relative;
+    top: 2px;
+}
+.form-footer {
+    text-align: center;
+    padding-top: 10px;
+    font-size: 13px;
+}
+.form-footer a:hover {
+    text-decoration: underline;
+}
+.or-seperator {
+    margin-top: 32px;
+    text-align: center;
+    border-top: 1px solid #e0e0e0;
+}
+
+.or-seperator b {
+    color: #666;
+    padding: 0 8px;
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+    text-align: center;
+    line-height: 26px;
+    background: #fff;
+    display: inline-block;
+    border: 1px solid #e0e0e0;
+    border-radius: 50%;
+    position: relative;
+    top: -15px;
+    z-index: 1;
+}
+.form-control {
+    box-shadow: none;
+    font-weight: normal;
+    font-size: 13px;
+}
+
+.form-control:focus {
+    border-color: #33cabb;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}

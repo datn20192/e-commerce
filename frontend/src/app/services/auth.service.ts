@@ -14,6 +14,7 @@ export class AuthService {
   // userData: Observable<firebase.User>;
   userData: any; // save logged in user data
   defaultURL = '/assets/img/image.png';
+  isAdmin: boolean;
   
 
   constructor(
@@ -26,6 +27,12 @@ export class AuthService {
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
           JSON.parse(localStorage.getItem('user'));
+          this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {
+            if (res.length) {
+              this.isAdmin = true;
+            }
+            else this.isAdmin = false;
+          })
         } else {
           localStorage.setItem('user', '');
           // JSON.parse(localStorage.getItem('user'));
@@ -35,18 +42,10 @@ export class AuthService {
 
   /* Sign up*/
   signUp(email: string, password: string) {
-    /* this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password).then(
-      resolve => {
-        console.log('Successfully signed up!', resolve);
-      }).catch(
-        error => {
-          console.error('Something is wrong', error);
-        }
-      ); */
       return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
         /* Call the SendVerificaitonMail() function when new user sign up and returns promise */
-        //  this.SendVerificationMail();
+        this.SendVerificationMail();
         this.SetUserData(result.user);
       }).catch((error) => {
         window.alert(error.message);
@@ -111,7 +110,7 @@ export class AuthService {
     return this.angularFireAuth.auth.signInWithPopup(provider)
     .then((result) => {
        this.ngZone.run(() => {
-          this.router.navigate(['image', 'list']);
+          //this.router.navigate(['image', 'list']);
         });
        this.SetUserData(result.user);
     }).catch((error) => {
@@ -139,6 +138,7 @@ export class AuthService {
   // Sign out
   signOut() {
     return this.angularFireAuth.auth.signOut().then(() => {
+      this.isAdmin = false;
       this.userData = null;
       localStorage.removeItem('user');
       // this.router.navigate(['sign-in']);
