@@ -45,13 +45,13 @@
         <div class="form-group row">
           <label class="col-md-3 col-form-label">Loại</label>
           <div class="col-md-9 col-form-label">
-            <div class="form-check form-check-inline mr-1">
-              <input class="form-check-input" id="inline-radio1" type="radio" value="oldCategory" (change)="show_old=!show_old;show_new=false" name="categoryChecking">
-              <label class="form-check-label" for="inline-radio1">Cũ</label>
+            <div class="form-check form-check-inline mr-1 left-sel">
+              <input class="form-check-input" id="inline-radio1" type="radio" value="oldCategory" (change)="show_old=!show_old;show_new=false" name="categoryChecking" [disabled]="type == 'Edit'">
+              <label class="form-check-label" for="inline-radio1">Có sẵn</label>
             </div>
-            <div class="form-check form-check-inline mr-1">
-              <input class="form-check-input" id="inline-radio2" type="radio" value="newCategory" (change)="show_new=!show_new;show_old=false" name="categoryChecking">
-              <label class="form-check-label" for="inline-radio2">Mới</label>
+            <div class="form-check form-check-inline mr-1 right-sel">
+              <input class="form-check-input" id="inline-radio2" type="radio" value="newCategory" (change)="show_new=!show_new;show_old=false" name="categoryChecking" [disabled]="type == 'Edit'">
+              <label class="form-check-label" for="inline-radio2">Thêm mới</label>
             </div>            
           </div>
         </div>       
@@ -59,11 +59,9 @@
         <div class="form-group row" *ngIf="show_old">   
           <label class="col-md-3 col-form-label"></label>          
           <div class="col-md-9">
-            <select class="form-control" id="select1" name="category" [(ngModel)]="product.category">
+            <select class="form-control" id="select1" name="category" [(ngModel)]="product.category" [disabled]="type == 'Edit'">
               <option value="">Chọn</option>
-              <option value="smartphone">Điện thoại thông minh</option>
-              <option value="laptop">Laptop</option>
-              <option value="tablet">Máy tính bảng</option>
+              <option *ngFor="let productCategory of productCategoryList" value="{{productCategory.category_id}}">{{productCategory.name}}</option>              
             </select>
           </div>
         </div>

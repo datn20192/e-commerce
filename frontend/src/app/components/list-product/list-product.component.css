@@ -65,3 +65,11 @@ a {
   margin-left: 10px;
   margin-right: 10px;
 }
+
+.left-sel{
+  padding-right: 7%;
+}
+
+.right-sel{
+  padding-left: 6%;
+}
