@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProductsApiService } from '../../services/product-api.service';
 import { Product } from '../../models/product.model';
+import { productCategoryServiceAPI } from '../../services/productCategory-api.service';
+import { productCategory } from '../../models/productCategory.model';
 
 @Component({
   selector: 'app-list-product',
@@ -10,7 +12,10 @@ import { Product } from '../../models/product.model';
 })
 export class ListProductComponent implements OnInit {
 
-  constructor(private productsApi: ProductsApiService) { }
+  constructor(
+    private productsApi: ProductsApiService, 
+    private productCategoryApi: productCategoryServiceAPI
+    ) { }
 
   ngOnInit() {
     this.load();
@@ -20,42 +25,80 @@ export class ListProductComponent implements OnInit {
   }
 
   productsListSubs: Subscription;
-  categoryList = [];
+  productCategoryListSubs: Subscription;
+  
+  // Product  
   productsList: Product[];
   product = new Product("", "", "", "", "", "", "");
   type = '';
 
-  // to count the quantity by product type 
-  count = {
-    'smartphone': 0,
-    'laptop': 0,
-    'tablet': 0
-  }; 
+  // Product category
+  show_old = false;         // Show the old category form
+  show_new = false;         // Show the new category form
+  productCategoryList = [];  
+  productCategory = new productCategory("","",""); 
 
   load() {
+    // Get product list
     this.productsListSubs = this.productsApi.getProducts().subscribe(res => {
-      var result = JSON.parse(res)
+      let result = JSON.parse(res);
       this.productsList = result.data;
-      this.product = new Product("", "", "", "", "", "", "");
-
-      // count the quantity by product type
-      this.count = {
-        'smartphone': this.productsList.filter(item => item.category == 'smartphone').length, 
-        'laptop': this.productsList.filter(item => item.category == 'laptop').length,
-        'tablet': this.productsList.filter(item => item.category == 'table').length
-      }
+      this.product = new Product("", "", "", "", "", "", "");        
       console.log(this.productsListSubs);     
+    },
+      console.error
+    );
+
+    // Get product category list
+    this.productCategoryListSubs = this.productCategoryApi.getProductCategories().subscribe(res =>{
+      let result = JSON.parse(res);
+      this.productCategoryList = result.data;
+      this.productCategory = new productCategory("","","");      
+      this.productCategoryList.forEach(element => {        
+        element.quantity = this.productsList.filter(item => item.category = element.category_id).length;
+      });
     },
       console.error
     );
   }
 
-  unload() {
+  unload() {  
+    // Update the quantity of every category to database
+    this.productCategoryList.forEach(element => {
+      this.productCategoryListSubs = this.productCategoryApi.updateProductCategory(element.product_id, element.name, element.quantity).subscribe(res =>{ },
+        console.error
+      );
+    });
     this.productsListSubs.unsubscribe();
+    this.productCategoryListSubs.unsubscribe();
   }
 
   submit() {
     if (this.type == 'Add') {
+      // Add new product category  
+      if(this.show_new){
+        this.productCategoryListSubs = this.productCategoryApi.addProductCategory(this.productCategory.category_id, this.productCategory.name,"1").subscribe(res => {
+          let result = JSON.parse(res);
+          if(result.CODE==500){
+            alert(result.data);
+            this.load();
+          }else{
+            this.product.category = this.productCategory.category_id;
+          }
+        });
+      }
+      // Update the quantity of old product category
+      else if(this.show_old){
+        let categoryEdit = this.productCategoryList.filter(item => item.category_id=this.product.category)[0];
+        categoryEdit.quantity = (parseInt(categoryEdit.quantity)+1).toString();
+        this.productCategoryListSubs = this.productCategoryApi.updateProductCategory(this.product.category, categoryEdit.name, categoryEdit.quantity).subscribe(res => {
+          let result = JSON.parse(res);
+          if(result.CODE==500){
+            alert(result.data);
+            this.load();
+          }
+        });
+      }
       this.productsListSubs = this.productsApi.addProduct(this.product.product_id, this.product.name, this.product.price, this.product.quantity, this.product.category, this.product.description, this.product.imageURL).subscribe(res => {
         var result = JSON.parse(res);
         alert(result.data);
