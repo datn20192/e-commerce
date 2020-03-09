@@ -15,13 +15,13 @@
         </mat-card-header>
       </a>
       <mat-card-actions>
-        <button class="btn btn-sm btn-warning" (click)='update(product.product_id)'> Sửa</button>
-        <button class="btn btn-sm btn-danger" (click)='delete(product.product_id)'> Xóa</button>
+        <button class="btn btn-sm btn-warning" (click)='update(product.product_id)' *ngIf="auth.isAdmin"> Sửa</button>
+        <button class="btn btn-sm btn-danger" (click)='delete(product.product_id)' *ngIf="auth.isAdmin"> Xóa</button>
       </mat-card-actions>
 
     </mat-card>
   </div>   
-  <div id="main-right" class="card">
+  <div id="main-right" class="card" *ngIf="auth.isAdmin">
     <div class="card-header">
       <button class="btn btn-sm btn-primary" (click)='create()'> Thêm sản phẩm</button>
       <button class="btn btn-sm btn-info" (click)='load()'> Làm mới</button>      
