@@ -50,8 +50,6 @@ export class productCategoryServiceAPI {
         .pipe(
             catchError(productCategoryServiceAPI._handleError)
         );
-    }
-
-    
+    }   
     
 }
