@@ -21,11 +21,11 @@ def get_all_products(mongo):
             })    
         response.create(Response.SUCCESS)
         response.data = processed        
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = (json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
     except:
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = (json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
 
     return output
 
