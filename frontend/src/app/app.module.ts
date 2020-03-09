@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 /* Impotr AngularFire Modules */
 import { AngularFireModule } from 'angularfire2';
@@ -25,8 +26,12 @@ import { AuthService } from './services/auth.service';
 import {MatMenuModule} from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
+
+// Service
 import {ProductsApiService} from './services/product-api.service';
-import {HttpClientModule} from '@angular/common/http';
+import { productCategoryServiceAPI } from './services/productCategory-api.service';
+
+// Component
 import { ListProductComponent } from './components/list-product/list-product.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
@@ -56,7 +61,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     HttpClientModule,
     FormsModule
   ],
-  providers: [AuthService,ProductsApiService,],
+  providers: [AuthService,ProductsApiService,productCategoryServiceAPI],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

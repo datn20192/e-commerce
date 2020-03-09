@@ -1,10 +1,8 @@
 <div id="main">
   <div id="main-left">   
     <div class="card-header"><strong>DS sản phẩm</strong></div>    
-      <ul class="list-group">
-        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Điện thoại thông minh<span class="badge badge-primary badge-pill">{{count['smartphone']}}</span></li>
-        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Máy tính bảng<span class="badge badge-primary badge-pill">{{count['tablet']}}</span></li>
-        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">Laptop<span class="badge badge-primary badge-pill">{{count['laptop']}}</span></li>
+      <ul class="list-group" *ngFor="let productCategory of productCategoryList">
+        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">{{productCategory.name}}<span class="badge badge-primary badge-pill">{{productCategory.quantity}}</span></li>        
       </ul>    
   </div>
   <div id="list-product">
@@ -42,8 +40,24 @@
             <input class="form-control" name="name" placeholder="Nhập tên sản phẩm.." [(ngModel)]="product.name">
           </div>
         </div>
+
+        <!-- Checking category form -->
         <div class="form-group row">
-          <label class="col-md-3 col-form-label" for="select1">Loại</label>
+          <label class="col-md-3 col-form-label">Loại</label>
+          <div class="col-md-9 col-form-label">
+            <div class="form-check form-check-inline mr-1">
+              <input class="form-check-input" id="inline-radio1" type="radio" value="oldCategory" (change)="show_old=!show_old;show_new=false" name="categoryChecking">
+              <label class="form-check-label" for="inline-radio1">Cũ</label>
+            </div>
+            <div class="form-check form-check-inline mr-1">
+              <input class="form-check-input" id="inline-radio2" type="radio" value="newCategory" (change)="show_new=!show_new;show_old=false" name="categoryChecking">
+              <label class="form-check-label" for="inline-radio2">Mới</label>
+            </div>            
+          </div>
+        </div>       
+        <!-- Old category form -->
+        <div class="form-group row" *ngIf="show_old">   
+          <label class="col-md-3 col-form-label"></label>          
           <div class="col-md-9">
             <select class="form-control" id="select1" name="category" [(ngModel)]="product.category">
               <option value="">Chọn</option>
@@ -53,6 +67,15 @@
             </select>
           </div>
         </div>
+        <!-- New category form -->
+        <div class="form-group row" *ngIf="show_new">   
+          <label class="col-md-3 col-form-label"></label>          
+          <div class="col-md-9">
+            <input class="form-control" name="category_id" placeholder="Nhập mã loại mới.." [(ngModel)]="productCategory.category_id">
+            <input class="form-control" name="category" placeholder="Nhập tên loại mới.." [(ngModel)]="productCategory.name"> 
+          </div>
+        </div>    
+
         <div class="form-group row">
           <label class="col-md-3 col-form-label">Giá</label>
           <div class="col-md-9">

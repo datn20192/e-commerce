@@ -14,7 +14,7 @@ export class ProductsApiService {
     
       // GET list of public, future events
       getProducts(): Observable<any> {
-        return this.http.get<Product[]>(`${API_URL}/products`)
+        return this.http.get<Product[]>(`${API_URL}/api/products`)
         .pipe(
             catchError(ProductsApiService._handleError)
         );
