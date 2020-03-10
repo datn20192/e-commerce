@@ -59,7 +59,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     BrowserAnimationsModule,
     MatCardModule,
     HttpClientModule,
-    FormsModule
+    FormsModule  
   ],
   providers: [AuthService,ProductsApiService,productCategoryServiceAPI],
   bootstrap: [AppComponent]

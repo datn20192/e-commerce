@@ -59,8 +59,8 @@ a {
 }
 #main-right{
   border: 3px solid #ccc;    
-  width: 22%;
-  margin-left: 11px;
+  width: 30%;
+  margin-left: 0px;
 }
 .btn{
   margin-left: 10px;
@@ -73,6 +73,7 @@ a {
 
 .right-sel{
   padding-left: 6%;
+}
 
 .form-control{
   font-size: 13px;

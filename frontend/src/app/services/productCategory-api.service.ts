@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs/';
 import {catchError} from 'rxjs/operators';
 import { API_URL} from '../../environments/environment';
-import { productCategory } from '../models/productCategory.model';
+import { ProductCategory } from '../models/productCategory.model';
 
 @Injectable()
 export class productCategoryServiceAPI {
@@ -14,7 +14,7 @@ export class productCategoryServiceAPI {
 
     // GET list of productCategory, future events
     getProductCategories(): Observable<any> {
-        return this.http.get<productCategory[]>(`${API_URL}/api/productCategoris`)
+        return this.http.get<ProductCategory[]>(`${API_URL}/api/productCategoris`)
         .pipe(
             catchError(productCategoryServiceAPI._handleError)
         );
