@@ -2,31 +2,33 @@
     <nav class="navbar navbar-expand-lg navbar-light" id="myHeader">
         <div class="navbar-header">
             <a class="navbar-brand" routerLink="/">
-                <b>E-COMMERCE</b>
+                <b>LOGO</b>
             </a>
         </div>
 
-        <div class="input-group search-box">
-            <input type="text" class="form-control" placeholder=" Tim theo tên sản phẩm ...">
-            <button class="input-group-text fa fa-search"></button>
-
+        <div class="search-box">
+            <input type="text" class="search-txt" name="" placeholder=" Tim theo tên sản phẩm ...">
+            <a class="search-btn"><i class="fa fa-search"></i></a>
         </div>
 
         <!-- Collection of nav links, forms, and other content for toggling -->
         <div id="navbarCollapse" class="collapse navbar-collapse justify-content-start">
 <!--Before loggin-->
             <ul class="nav navbar-nav navbar-right ml-auto" *ngIf="!(auth.userData) && !(auth.isLoggedIn)">
-
                 <li class="nav-item">
-                    <button type="button" class="btn btn-light get-started-btn mt-1 mb-1">
-                        <i class="fa fa-shopping-cart"></i>
+                    <a routerLink="/" class="nav-link dropdown-toggle get-started-btn mt-1 mb-1" style="color: #F6F0ED;">
+                        Đơn hàng
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a routerLink="/" class="nav-link dropdown-toggle get-started-btn mt-1 mb-1" style="color: #F6F0ED;">
                         Giỏ hàng
                         <span class="badge badge-warning">0</span>
-                    </button>
+                    </a>
                 </li>
                 <li class="nav-item">
                     <a data-toggle="dropdown" class="nav-link dropdown-toggle get-started-btn mt-1 mb-1" href="#"
-                        style="color: white;">Đăng
+                        style="color: #F6F0ED;">Đăng
                         nhập</a>
                     <ul class="dropdown-menu form-wrapper">
                         <li>
@@ -48,34 +50,39 @@
 <!--After loggin-->
             <ul class="nav navbar-nav navbar-right ml-auto" *ngIf="(auth.userData) && (auth.isLoggedIn)">
                 <li class="nav-item" *ngIf="!auth.isAdmin">
-                    <button type="button" class="btn btn-light get-started-btn mt-1 mb-1">
-                        <i class="fa fa-shopping-cart"></i>
+                    <a routerLink="/" class="nav-link dropdown-toggle get-started-btn mt-1 mb-1">
+                        Đơn hàng
+                    </a>
+                </li>
+                <li class="nav-item" *ngIf="!auth.isAdmin">
+                    <a routerLink="/" class="nav-link dropdown-toggle get-started-btn mt-1 mb-1" 
+                    style="color: #F6F0ED;">
                         Giỏ hàng
                         <span class="badge badge-warning">0</span>
-                    </button>
+                    </a>
                 </li>                
                 <li class="nav-item" *ngIf="auth.isAdmin">
                     <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle get-started-btn mt-1 mb-1"
-                        style="color: white;">Thống kê
+                        style="color: #F6F0ED;">Thống kê
                     </a>                    
                 </li>
                 <li class="nav-item" *ngIf="auth.isAdmin">
                     <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle get-started-btn mt-1 mb-1"
-                        style="color: white;">DS khách hàng
+                        style="color: #F6F0ED;">DS khách hàng
                     </a>                    
                 </li>                
-                <li class="nav-item dropdown">
+                <li class="nav-item-info dropdown">
                     <a data-toggle="dropdown" class="nav-link dropdown-toggle" aria-haspopup="true"
                         aria-expanded="false" href="#">
                         <img src="{{ !auth.userData.photoURL ? auth.defaultURL : auth.userData.photoURL }}" width="40"
-                            height="40" style="border: 3px solid white" class="rounded-circle">
+                            height="40" class="rounded-circle">
                         <b
-                            style="color: white;">{{auth.userData.displayName === null ? auth.userData.email.split('@')[0] : auth.userData.displayName }}</b></a>
+                            style="color: #F6F0ED;">{{auth.userData.displayName === null ? auth.userData.email.split('@')[0] : auth.userData.displayName }}</b></a>
                     <ul class="dropdown-menu">
                         <li><a routerLink="/dashboard" class="dropdown-item"><i class="fa fa-camera-retro"
                                     aria-hidden="true"></i> Something</a></li>
                         <li><button (click)="auth.signOut()" class="dropdown-item btn btn-important"><i
-                                    class="fa fa-lock" aria-hidden="true"></i> Logout</button></li>
+                                    class="fa fa-lock" aria-hidden="true"></i> Đăng xuất</button></li>
                     </ul>
                 </li>
             </ul>
