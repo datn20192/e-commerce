@@ -4,6 +4,7 @@ import { ProductsApiService } from '../../services/product-api.service';
 import { Product } from '../../models/product.model';
 import { productCategoryServiceAPI } from '../../services/productCategory-api.service';
 import { productCategory } from '../../models/productCategory.model';
+import { AuthService} from '../../services/auth.service'
 
 @Component({
   selector: 'app-list-product',
@@ -14,7 +15,8 @@ export class ListProductComponent implements OnInit {
 
   constructor(
     private productsApi: ProductsApiService, 
-    private productCategoryApi: productCategoryServiceAPI
+    private productCategoryApi: productCategoryServiceAPI,
+    private auth: AuthService
     ) { }
 
   ngOnInit() {
@@ -43,13 +45,14 @@ export class ListProductComponent implements OnInit {
     this.show_new = false;         // Show the new category form
     // Get product list
     this.productsListSubs = this.productsApi.getProducts().subscribe(res => {
-      let result = JSON.parse(res);
+      let result = JSON.parse(JSON.stringify(res));
       this.productsList = result.data;
       this.product = new Product("", "", "", "", "", "", "");        
       console.log(this.productsListSubs); 
 
+
       // Get product category list
-      this.productCategoryListSubs = this.productCategoryApi.getProductCategories().subscribe(res =>{
+     this.productCategoryListSubs = this.productCategoryApi.getProductCategories().subscribe(res =>{
         let result = JSON.parse(res);
         this.productCategoryList = result.data;      
         this.productCategory = new productCategory("","","");          
@@ -59,6 +62,7 @@ export class ListProductComponent implements OnInit {
       },
         console.error
       );
+
     },
       console.error
     );    
