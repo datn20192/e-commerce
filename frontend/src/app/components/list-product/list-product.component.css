@@ -18,7 +18,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   /* margin: 0 auto; */
-  width: 70%;
+  width: 750px;
   padding-left: 0px;
   margin-left: 11px;
 }
@@ -44,14 +44,13 @@ a {
  
 }
 #main {
-  font-size: 13px;
-  width:98%;
+  width:100%;
   margin: 0 auto;
   display: flex;
 }
 #main-left{
   border: 3px solid #ccc;
-  width: 18%;
+  width: 200px;
   margin-left: 11px;
 }
 .example-card:hover{
@@ -59,7 +58,7 @@ a {
 }
 #main-right{
   border: 3px solid #ccc;    
-  width: 22%;
+  width: 345px;
   margin-left: 11px;
 }
 .btn{
@@ -73,7 +72,4 @@ a {
 
 .right-sel{
   padding-left: 6%;
-
-.form-control{
-  font-size: 13px;
 }
