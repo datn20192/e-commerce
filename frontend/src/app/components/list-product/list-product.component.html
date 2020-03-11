@@ -17,9 +17,9 @@
           <mat-card-subtitle class="mt-card-sub">{{product.price}}</mat-card-subtitle>
         </mat-card-header>
       </a>
-      <mat-card-actions>
-        <button class="btn btn-sm btn-warning" (click)='update(product.product_id)' *ngIf="auth.isAdmin"> Sửa</button>
-        <button class="btn btn-sm btn-danger" (click)='delete(product.product_id)' *ngIf="auth.isAdmin"> Xóa</button>
+      <mat-card-actions *ngIf="auth.isAdmin">
+        <button class="btn btn-sm btn-warning" (click)='update(product.product_id)'> Sửa</button>
+        <button class="btn btn-sm btn-danger" (click)='delete(product.product_id)'> Xóa</button>
       </mat-card-actions>
 
     </mat-card>

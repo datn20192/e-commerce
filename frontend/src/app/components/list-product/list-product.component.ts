@@ -4,8 +4,7 @@ import { ProductsApiService } from '../../services/product-api.service';
 import { Product } from '../../models/product.model';
 import { productCategoryServiceAPI } from '../../services/productCategory-api.service';
 import { ProductCategory } from '../../models/productCategory.model';
-import { AuthService} from '../../services/auth.service'
-import { NgForm } from '@angular/forms';
+import { AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-list-product',
@@ -99,7 +98,7 @@ export class ListProductComponent implements OnInit {
       }
       // Update the quantity of old product category
       else if(this.show_old){
-        let categoryEdit = this.productCategoryList.filter(item => item.category_id=this.product.category)[0];
+        let categoryEdit = this.productCategoryList.filter(item => item.category_id==this.product.category)[0]; 
         categoryEdit.quantity = (parseInt(categoryEdit.quantity)+1).toString();
         this.productCategoryListSubs = this.productCategoryApi.updateProductCategory(this.product.category, categoryEdit.name, categoryEdit.quantity).subscribe(res => {
           let result = JSON.parse(res);

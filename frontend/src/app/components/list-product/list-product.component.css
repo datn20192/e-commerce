@@ -1,27 +1,26 @@
-.ul_menu ul li{  
+.ul_menu ul li{
   border-bottom: 1px solid #c6d0da;
   text-align: left;
-  font-size: 18px;  
+  font-size: 18px;
 }
 
 .example-card {
-  max-width: 250px;
+  max-width: 32.62%;
   max-height: 320px;
   margin-right: 5px;
   margin-top: 5px;
 }
 
 .example-header-image {
-  
   background-size: cover;
 }
 #list-product {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 68%;
-  padding-left: 0px;
+  width: 57%;
   margin-left: 11px;
+  margin-right: 11px;
 }
 .mt-card-title {
   font-size: 13px;
@@ -40,9 +39,9 @@
 .mt-card-sub{
   color: #000;
 }
-a { 
+a {
   text-decoration: none;
- 
+
 }
 #main {
   font-size: 13px;
@@ -59,9 +58,9 @@ a {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #main-right{
-  border: 3px solid #ccc;    
-  width: 30%;
-  margin-left: 0px;
+  border: 3px solid #ccc;
+  width: 27%;
+  margin-right: 11px;  
 }
 .btn{
   margin-left: 10px;
@@ -75,6 +74,8 @@ a {
 .right-sel{
   padding-left: 6%;
 }
+
 .form-control{
   font-size: 13px;
 }
+
