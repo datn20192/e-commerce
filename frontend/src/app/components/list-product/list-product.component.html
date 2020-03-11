@@ -1,43 +1,48 @@
 <div id="main">
   <div id="main-left">   
-    <div class="card-header"><strong>DS sản phẩm</strong></div>    
+    <div class="card-header"><strong>DANH SÁCH SẢN PHẨM</strong></div>    
       <ul class="list-group" *ngFor="let productCategory of productCategoryList">
-        <li class="list-group-item d-flex list-group-item-action justify-content-between align-items-center">{{productCategory.name}}<span class="badge badge-primary badge-pill">{{productCategory.quantity}}</span></li>        
+        <button class="list-group-item d-flex list-group-item-action justify-content-between align-items-center" (click)='filterProductByCategory(productCategory.category_id)'>
+          {{productCategory.name}}
+          <span class="badge badge-primary badge-pill" *ngIf="auth.isAdmin">{{productCategory.quantity}}</span>
+        </button>        
       </ul>    
   </div>
   <div id="list-product">
-    <mat-card class="example-card" *ngFor="let product of productsList">
+    <mat-card class="example-card" *ngFor="let product of filteredProductList">
       <a routerLink="{{product.product_id}}" title="{{product.name}}">
-        <img mat-card-image class="mt-card-image" src="{{product.imageURL}}" alt="Photo of a Shiba Inu">
+        <img mat-card-image class="mt-card-image" src="{{product.imageURL}}" alt="Photo of {{product.name}}">
         <mat-card-header>
           <mat-card-title class="mt-card-title">{{product.name}}</mat-card-title>
           <mat-card-subtitle class="mt-card-sub">{{product.price}}</mat-card-subtitle>
         </mat-card-header>
       </a>
-      <mat-card-actions>
+      <mat-card-actions *ngIf="auth.isAdmin">
         <button class="btn btn-sm btn-warning" (click)='update(product.product_id)'> Sửa</button>
         <button class="btn btn-sm btn-danger" (click)='delete(product.product_id)'> Xóa</button>
       </mat-card-actions>
 
     </mat-card>
   </div>   
-  <div id="main-right" class="card">
+  <div id="main-right" class="card" *ngIf="auth.isAdmin">
     <div class="card-header">
       <button class="btn btn-sm btn-primary" (click)='create()'> Thêm sản phẩm</button>
       <button class="btn btn-sm btn-info" (click)='load()'> Làm mới</button>      
     </div>
     <div class="card-body">
-      <form class="container" >
+      <form class="container" #productForm="ngForm" (ngSubmit)="submit()">
         <div class="form-group row">
           <label class="col-3 col-form-label">Mã</label>
           <div class="col-md-9">
-            <input class="form-control" name="product_id" placeholder="Nhập mã sản phẩm..." type="text" [(ngModel)]="product.product_id" [disabled]="type == 'Edit'">
+            <input required class="form-control" name="product_id" placeholder="Nhập mã sản phẩm..." type="text" 
+                [(ngModel)]="product.product_id" [disabled]="type == 'Edit'"
+            >
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-3 col-form-label">Tên</label>
           <div class="col-md-9">
-            <input class="form-control" name="name" placeholder="Nhập tên sản phẩm.." [(ngModel)]="product.name">
+            <input required class="form-control" name="name" placeholder="Nhập tên sản phẩm.." [(ngModel)]="product.name">
           </div>
         </div>
 
@@ -46,11 +51,16 @@
           <label class="col-md-3 col-form-label">Loại</label>
           <div class="col-md-9 col-form-label">
             <div class="form-check form-check-inline mr-1 left-sel">
-              <input class="form-check-input" id="inline-radio1" type="radio" value="oldCategory" (change)="show_old=!show_old;show_new=false" name="categoryChecking" [disabled]="type == 'Edit'">
+              <input class="form-check-input" id="inline-radio1" type="radio" value="oldCategory" 
+                  (change)="show_old=!show_old;show_new=false" name="categoryChecking" [disabled]="type == 'Edit'" 
+                  checked="checked"
+              >
               <label class="form-check-label" for="inline-radio1">Có sẵn</label>
             </div>
             <div class="form-check form-check-inline mr-1 right-sel">
-              <input class="form-check-input" id="inline-radio2" type="radio" value="newCategory" (change)="show_new=!show_new;show_old=false" name="categoryChecking" [disabled]="type == 'Edit'">
+              <input class="form-check-input" id="inline-radio2" type="radio" value="newCategory" 
+                  (change)="show_new=!show_new;show_old=false" name="categoryChecking" [disabled]="type == 'Edit'"
+              >
               <label class="form-check-label" for="inline-radio2">Thêm mới</label>
             </div>            
           </div>
@@ -69,39 +79,39 @@
         <div class="form-group row" *ngIf="show_new">   
           <label class="col-md-3 col-form-label"></label>          
           <div class="col-md-9">
-            <input class="form-control" name="category_id" placeholder="Nhập mã loại mới.." [(ngModel)]="productCategory.category_id">
-            <input class="form-control" name="category" placeholder="Nhập tên loại mới.." [(ngModel)]="productCategory.name"> 
+            <input required class="form-control" name="category_id" placeholder="Nhập mã loại mới.." [(ngModel)]="productCategory.category_id">
+            <input required class="form-control" name="category" placeholder="Nhập tên loại mới.." [(ngModel)]="productCategory.name"> 
           </div>
         </div>    
 
         <div class="form-group row">
           <label class="col-md-3 col-form-label">Giá</label>
           <div class="col-md-9">
-            <input class="form-control" name="price" placeholder="Nhập giá sản phẩm.." [(ngModel)]="product.price">
+            <input required class="form-control" name="price" placeholder="Nhập giá sản phẩm.." [(ngModel)]="product.price">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-3 col-form-label">SL</label>
           <div class="col-md-9">
-            <input class="form-control" name="quantity" placeholder="Nhập số lượng" [(ngModel)]="product.quantity">
+            <input required class="form-control" name="quantity" placeholder="Nhập số lượng" [(ngModel)]="product.quantity">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-3 col-form-label">Ảnh</label>
           <div class="col-md-9">
-            <input class="form-control" name="imageURL" placeholder="Chèn đường dẫn.." [(ngModel)]="product.imageURL">
+            <input required class="form-control" name="imageURL" placeholder="Chèn đường dẫn.." [(ngModel)]="product.imageURL">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-md-3 col-form-label" for="textarea-input">Mô tả</label>
           <div class="col-md-9">
-            <textarea class="form-control" id="textarea-input" name="description" rows="9" placeholder="Nội dung.." [(ngModel)]="product.description"></textarea>
+            <textarea required class="form-control" id="textarea-input" name="description" rows="9" placeholder="Nội dung.." [(ngModel)]="product.description"></textarea>
           </div>
         </div>
+        <div class="card-footer">      
+          <button class="btn btn-sm btn-success" [disabled]="!productForm.valid"> Xác nhận</button>      
+        </div>
       </form>
-    </div>
-    <div class="card-footer">      
-      <button class="btn btn-sm btn-success" (click)='submit()'> Xác nhận</button>      
-    </div>
+    </div>    
   </div>       
 </div>

@@ -3,8 +3,8 @@ import { Subscription } from 'rxjs';
 import { ProductsApiService } from '../../services/product-api.service';
 import { Product } from '../../models/product.model';
 import { productCategoryServiceAPI } from '../../services/productCategory-api.service';
-import { productCategory } from '../../models/productCategory.model';
-import { AuthService} from '../../services/auth.service'
+import { ProductCategory } from '../../models/productCategory.model';
+import { AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-list-product',
@@ -32,30 +32,32 @@ export class ListProductComponent implements OnInit {
   // Product  
   productsList: Product[];
   product = new Product("", "", "", "", "", "", "");
-  type = '';
+  type = '';  
+  filteredProductList = [];     // save the filtered product
 
   // Product category
-  show_old = false;         // Show the old category form
+  show_old = true;         // Show the old category form
   show_new = false;         // Show the new category form
-  productCategoryList = [];  
-  productCategory = new productCategory("","",""); 
+  productCategoryList= [];  
+  productCategory = new ProductCategory("","",""); 
 
   load() {
-    this.show_old = false;         // Show the old category form
+    this.show_old = true;         // Show the old category form
     this.show_new = false;         // Show the new category form
     // Get product list
     this.productsListSubs = this.productsApi.getProducts().subscribe(res => {
-      let result = JSON.parse(JSON.stringify(res));
-      this.productsList = result.data;
-      this.product = new Product("", "", "", "", "", "", "");        
+      let result = JSON.parse(res);
+      this.productsList = result.data;     
+      this.filteredProductList  = this.productsList;
+      this.product = new Product("", "", "", "", "", "", "");          
       console.log(this.productsListSubs); 
 
-
       // Get product category list
-     this.productCategoryListSubs = this.productCategoryApi.getProductCategories().subscribe(res =>{
+      this.productCategoryListSubs = this.productCategoryApi.getProductCategories().subscribe(res =>{
         let result = JSON.parse(res);
         this.productCategoryList = result.data;      
-        this.productCategory = new productCategory("","","");          
+        this.productCategory = new ProductCategory("","","");       
+        console.log(this.productsList);   
         this.productCategoryList.forEach(element => {                  
           element.quantity = this.productsList.filter(item => item.category == element.category_id).length;          
         });
@@ -80,7 +82,7 @@ export class ListProductComponent implements OnInit {
     this.productCategoryListSubs.unsubscribe();
   }
 
-  submit() {
+  submit() {    
     if (this.type == 'Add') {
       // Add new product category  
       if(this.show_new){
@@ -96,7 +98,7 @@ export class ListProductComponent implements OnInit {
       }
       // Update the quantity of old product category
       else if(this.show_old){
-        let categoryEdit = this.productCategoryList.filter(item => item.category_id=this.product.category)[0];
+        let categoryEdit = this.productCategoryList.filter(item => item.category_id==this.product.category)[0]; 
         categoryEdit.quantity = (parseInt(categoryEdit.quantity)+1).toString();
         this.productCategoryListSubs = this.productCategoryApi.updateProductCategory(this.product.category, categoryEdit.name, categoryEdit.quantity).subscribe(res => {
           let result = JSON.parse(res);
@@ -114,7 +116,7 @@ export class ListProductComponent implements OnInit {
         console.error
       );
     }
-    else {
+    else {      
       this.productsListSubs = this.productsApi.updateProduct(this.product.product_id, this.product.name, this.product.price, this.product.quantity, this.product.category, this.product.description, this.product.imageURL).subscribe(res => {
         var result = JSON.parse(res);
         alert(result.data);
@@ -141,7 +143,7 @@ export class ListProductComponent implements OnInit {
   update(id) {
     this.type = 'Edit';
     this.show_old = true;
-    var productEdit = this.productsList.filter(item => item.product_id == id)[0];
+    var productEdit = this.filteredProductList.filter(item => item.product_id == id)[0];
     this.product.product_id = productEdit.product_id;
     this.product.name = productEdit.name;
     this.product.price = productEdit.price;
@@ -159,6 +161,11 @@ export class ListProductComponent implements OnInit {
     },
       console.error
     );
+  }
+
+  // Filter product list by category
+  filterProductByCategory(id){         
+    this.filteredProductList = this.productsList.filter(item => item.category==id);    
   }
 
 }
