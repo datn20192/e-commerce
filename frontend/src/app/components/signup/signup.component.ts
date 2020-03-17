@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { CustomValidatorsPassword } from 'src/app/validators/custom-validators-password';
@@ -37,6 +37,8 @@ export class SignupComponent implements OnInit {
 
   constructor(private auth: AuthService) { }
 
+  @Output() onClose = new EventEmitter();
+
   ngOnInit() {
   }
 
@@ -68,6 +70,11 @@ export class SignupComponent implements OnInit {
       }
 
     }
+  }
+
+  // close Modal
+  closeModal(){
+    this.onClose.emit(null);
   }
 
 }

@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { AuthService } from 'src/app/services/auth.service';
+// import { EventEmitter } from 'protractor';
 
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
   styleUrls: ['./signin.component.css']
 })
+
 export class SigninComponent implements OnInit {
 
   formSignin = new FormGroup({
@@ -15,6 +17,8 @@ export class SigninComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.pattern(/['0-9a-zA-Z']{6,}/)])
   });
   constructor(private authentification: AuthService) { }
+
+  @Output() onClose = new EventEmitter();
 
   ngOnInit() {
   }
@@ -29,6 +33,10 @@ export class SigninComponent implements OnInit {
     } else {
       console.error("Invalid")
     }
+  }
+
+  closeModal(){
+    this.onClose.emit(null);
   }
 
 }

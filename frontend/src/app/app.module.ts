@@ -27,6 +27,30 @@ import {MatMenuModule} from '@angular/material/menu';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 
+// Coreui template
+import {
+  AppAsideModule,
+  AppBreadcrumbModule,
+  AppHeaderModule,
+  AppFooterModule,
+  AppSidebarModule,
+} from '@coreui/angular';
+
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
+const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
+  suppressScrollX: true
+};
+
+// Import 3rd party components
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { ChartsModule } from 'ng2-charts';
+
+// bootstrap
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 // Service
 import {ProductsApiService} from './services/product-api.service';
 import { productCategoryServiceAPI } from './services/productCategory-api.service';
@@ -43,8 +67,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     SignupComponent,
     ListProductComponent,
     NotFoundComponent,
-    ProductDetailComponent,
-
+    ProductDetailComponent    
   ],
   imports: [
     BrowserModule,
@@ -59,7 +82,17 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     BrowserAnimationsModule,
     MatCardModule,
     HttpClientModule,
-    FormsModule  
+    FormsModule,
+    AppAsideModule,
+    AppBreadcrumbModule.forRoot(),
+    AppHeaderModule,
+    AppFooterModule,  
+    AppSidebarModule, 
+    BsDropdownModule.forRoot(),
+    TabsModule.forRoot(),
+    ChartsModule,
+    PerfectScrollbarModule,
+    ModalModule.forRoot()        
   ],
   providers: [AuthService,ProductsApiService,productCategoryServiceAPI],
   bootstrap: [AppComponent]
