@@ -1,0 +1,33 @@
+<ng-container>
+  <div class="row">
+    <div class="col-md-12">
+      <h2>{{title}}</h2>
+      <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="0">
+        <!-- Carousel indicators -->      
+        <!-- <ol class="carousel-indicators">
+          <li data-target="#myCarousel" data-slide-to="i" [ngClass]="(i==0)?'active':''" 
+              *ngFor="let quadrupleProduct of quadrupleProductList; let i=index">
+          </li>          
+        </ol>    -->
+        <!-- Wrapper for carousel items -->
+        <div class="carousel-inner">
+          <div class="item carousel-item" [ngClass]="(i==0)?'active':''" 
+              *ngFor="let quadrupleProduct of quadrupleProductList;  let i = index">
+              <div class="row">
+                <div class="col-sm-3" *ngFor="let product of quadrupleProduct">
+                  <app-card-product [product]="product"></app-card-product>
+                </div>
+              </div>
+          </div>
+          <!-- Carousel controls -->
+          <a class="carousel-control left carousel-control-prev" href="#myCarousel" data-slide="prev">
+            <i class="fa fa-angle-left"></i>
+          </a>
+          <a class="carousel-control right carousel-control-next" href="#myCarousel" data-slide="next">
+            <i class="fa fa-angle-right"></i>
+          </a>
+        </div>
+      </div>      
+    </div>
+  </div>
+</ng-container>  

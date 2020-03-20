@@ -22,10 +22,6 @@ import { SignupComponent } from './components/signup/signup.component';
 
 /* Auth service */
 import { AuthService } from './services/auth.service';
-//Material
-import {MatMenuModule} from '@angular/material/menu';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatCardModule } from '@angular/material/card';
 
 // Coreui template
 import {
@@ -56,18 +52,19 @@ import {ProductsApiService} from './services/product-api.service';
 import { productCategoryServiceAPI } from './services/productCategory-api.service';
 
 // Component
-import { ListProductComponent } from './components/list-product/list-product.component';
+import { DefaultLayoutComponent } from './components/default-layout/default-layout.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     //HeaderComponent,
+    DefaultLayoutComponent,    
     SigninComponent,
-    SignupComponent,
-    ListProductComponent,
+    SignupComponent,    
     NotFoundComponent,
-    ProductDetailComponent    
+    ProductDetailComponent,          
   ],
   imports: [
     BrowserModule,
@@ -77,10 +74,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    AngularFirestoreModule,
-    MatMenuModule,
-    BrowserAnimationsModule,
-    MatCardModule,
+    AngularFirestoreModule,    
     HttpClientModule,
     FormsModule,
     AppAsideModule,
@@ -94,7 +88,10 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     PerfectScrollbarModule,
     ModalModule.forRoot()        
   ],
-  providers: [AuthService,ProductsApiService,productCategoryServiceAPI],
+  providers: [
+    AuthService,ProductsApiService,productCategoryServiceAPI,
+    
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
