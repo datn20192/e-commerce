@@ -1,24 +1,21 @@
-
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Router, NavigationEnd } from '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'E-Commerce';
-
-
-  constructor(private auth: AuthService){}
+  title = 'E-Commerce';  
+  constructor(private router: Router) { }
 
   ngOnInit() {
-
-  }
-  signOut() {
-    this.auth.signOut();
-  }
-  ngOnDestroy() {
-  
+    this.router.events.subscribe((evt) => {
+      if (!(evt instanceof NavigationEnd)) {
+        return;
+      }
+      window.scrollTo(0, 0);
+    });
   }
 }

@@ -1,0 +1,8 @@
+<ng-container>
+    <ul class="list-group" *ngFor="let productCategory of productCategorisList">
+        <a  (click)='filterProductByCategory(productCategory.category_id)'>
+          {{productCategory.name}}
+          <span class="badge badge-primary badge-pill">{{productCategory.quantity}}</span>
+        </a>        
+    </ul>
+</ng-container>

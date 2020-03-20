@@ -8,71 +8,21 @@
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="icon" type="image/x-icon" href="favicon.ico">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">	
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 	<!-- CoreUI CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/browse/@coreui/coreui@2.1.16/dist/css/coreui.min.css">
-	<style>
-	body {
-			font-family: 'Varela Round', sans-serif;
-			font-size: 16px;
-			background: #D5E2ED;
-		}
-
-		@media (min-width: 1200px) {
-			.form-inline .input-group {
-				width: 300px;
-				margin-left: 30px;
-			}
-		}
-
-		@media (max-width: 768px) {
-			.navbar .dropdown-menu .form-wrapper {
-				width: 100%;
-				padding: 10px 15px;
-				background: transparent;
-				border: none;
-			}
-			.search-box{
-				width: 300px;
-			}
-			.navbar .form-inline {
-				display: block;
-			}
-
-			.navbar .input-group {
-				width: 100%;
-			}
-
-			.navbar .nav .btn-primary,
-			.navbar .nav .btn-primary:active {
-				display: block;
-			}
-		}
-	</style>
+	<link rel="stylesheet" href="https://unpkg.com/browse/@coreui/coreui@2.1.16/dist/css/coreui.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+	
 </head>
 
 <body>
+	<!-- <div style="height: 30px; background-color: #0f43bd; position: sticky; top:0; text-align: center;">
+		<h4 style="color: #ffffff; ">Hỗ trợ khách hàng: 0987654321</h4>
+	</div> -->
 	<app-root></app-root>
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
-	<script src="https://unpkg.com/browse/@coreui/coreui@2.1.16/dist/js/coreui.min.js"></script>	
-	<script type="text/javascript">
-		// Prevent dropdown menu from closing when click inside the form
-		$(document).on("click", ".navbar-right .dropdown-menu", function (e) {
-			e.stopPropagation();
-		});
-	</script>
-
 </body>
 
 </html>

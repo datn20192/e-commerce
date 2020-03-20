@@ -1,0 +1,28 @@
+/* Header */
+.app-header{
+    width: 100%;    
+}
+.search-container{
+    width: 40%;
+}
+.fa-search{   
+    margin-right: 5px;
+}
+.form-control{
+    border-radius: 0px;
+    width: 300px;
+}
+.nav-item{
+    margin-left: 10px;    
+}
+.modal-title{    
+    color: red;
+}
+.main{
+    background-color: white;
+}
+
+/* Sidebar */
+.sidebar{
+    background-color: rgb(198, 198, 240);
+}
