@@ -25,10 +25,7 @@ export class ListProductComponent {
     this.productsListSubs.unsubscribe(); 
   }
 
-  productsListSubs: Subscription;   
-
-  // product list
-  public _list: Product[] = [];  
+  productsListSubs: Subscription;    
 
   // Product    
   productsList: Product[];  

@@ -10,9 +10,12 @@ def get_all_categoris(mongo):
         extracted = list(mongo.db.productCategory.find({}))
         for category in extracted:
             processed.append({
-                'category_id': category['category_id'],
+                'id': category['id'],
                 'name': category['name'],    
-                'quantity': category['quantity']            
+                'quantity': category['quantity'],
+                'url': category['url'],
+                'icon': category['icon'],
+                'children': category['children']          
             })    
         response.create(Response.SUCCESS)
         response.data = processed             
@@ -43,7 +46,7 @@ def update_category(mongo):
     try:
         response = Response()
         params = json.loads(request.data)
-        mongo.db.productCategory.update({'category_id': params['category_id']}, {'$set': params})
+        mongo.db.productCategory.update({'id': params['id']}, {'$set': params})
         response.create(Response.SUCCESS)
         response.data = 'category was updated.'
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
@@ -58,7 +61,7 @@ def delete_category(mongo):
     try:
         response = Response()
         params = json.loads(request.data)
-        mongo.db.productCategory.remove({'category_id': params['category_id']})
+        mongo.db.productCategory.remove({'id': params['id']})
         response.create(Response.SUCCESS)
         response.data = 'category was deleted.'
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))

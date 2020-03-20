@@ -1,7 +1,12 @@
 export class ProductCategory{
     constructor(
-        public category_id: string,
+        public id: string,
         public name: string,
-        public quantity: string
+        public quantity: string,
+        public url: string,
+        public icon: string,
+        public children: {
+            
+        }
     ){}
 }

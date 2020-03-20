@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {NotFoundComponent } from './components/not-found/not-found.component';
-import { DefaultLayoutComponent } from './components/default-layout/default-layout.component';
-import { HomeProductComponent } from './components/products/home-product/home-product.component';
+import { DefaultLayoutComponent } from './views/default-layout/default-layout.component';
+import { HomeProductComponent } from './views/home-product/home-product.component';
 import { ProductDetailComponent} from "./components/product-detail/product-detail.component";
 import { SigninComponent } from './components/signin/signin.component';
 // : if request.auth != null
@@ -16,12 +16,12 @@ const routes: Routes = [
     path: '',
     component: DefaultLayoutComponent,
     data: {
-      title: 'Home'
+      title: 'Trang chủ'
     },
     children: [
       {
-        path: 'san-pham-moi',
-        loadChildren: () => import('./components/products/home-product/home-product.module').then(m => m.HomeProductModule)
+        path: 'san-pham-moi',        
+        loadChildren: () => import('./views/home-product/home-product.module').then(m => m.HomeProductModule)
       }
     ]
   },  

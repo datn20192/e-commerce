@@ -6,8 +6,8 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 import { HomeProductComponent } from './home-product.component';
-import { ListProductComponent } from '../list-product/list-product.component';
-import { CardProductComponent } from '../card-product/card-product.component';
+import { ListProductComponent } from '../../components/products/list-product/list-product.component';
+import { CardProductComponent } from '../../components/products/card-product/card-product.component';
 import { HomeProductRoutingModule } from './home-product-routing.module';
 
 @NgModule({

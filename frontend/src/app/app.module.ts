@@ -52,9 +52,10 @@ import {ProductsApiService} from './services/product-api.service';
 import { productCategoryServiceAPI } from './services/productCategory-api.service';
 
 // Component
-import { DefaultLayoutComponent } from './components/default-layout/default-layout.component';
+import { DefaultLayoutComponent } from './views/default-layout/default-layout.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { SidebarDComponent } from './components/sidebar-d/sidebar-d.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     SigninComponent,
     SignupComponent,    
     NotFoundComponent,
-    ProductDetailComponent,          
+    ProductDetailComponent,
+    SidebarDComponent,          
   ],
   imports: [
     BrowserModule,

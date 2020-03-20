@@ -36,7 +36,7 @@ def delete_product():
 #--------------- product category API ----------------------#
 @app.route('/api/productCategoris', methods = ['GET'])
 def productCategoris():
-    return productCategory_api.get_all_categoris(mongo)
+    return productCategory_api.get_all_categoris(mongo)    
 
 @app.route('/api/add_productCategory', methods=['POST'])
 def add_productCategory():

@@ -88,13 +88,8 @@
   </ul>     
 </app-header>
 <div class="app-body">
-  <app-sidebar #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
-    <ul class="list-group" *ngFor="let productCategory of productCategoryList">
-      <button class="list-group-item d-flex list-group-item-action justify-content-between align-items-center" (click)='filterProductByCategory(productCategory.category_id)'>
-        {{productCategory.name}}
-        <span class="badge badge-primary badge-pill" *ngIf="auth.isAdmin">{{productCategory.quantity}}</span>
-      </button>        
-    </ul>
+  <app-sidebar class="sidebar" #appSidebar [fixed]="true" [display]="'lg'" [minimized]="sidebarMinimized" (minimizedChange)="toggleMinimize($event)">
+    <app-sidebar-d></app-sidebar-d>
   </app-sidebar>
   <!-- Main content -->
   <main class="main">
