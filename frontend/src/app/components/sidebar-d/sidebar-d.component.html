@@ -1,8 +1,14 @@
 <ng-container>
-    <ul class="list-group" *ngFor="let productCategory of productCategorisList">
-        <a  (click)='filterProductByCategory(productCategory.category_id)'>
-          {{productCategory.name}}
-          <span class="badge badge-primary badge-pill">{{productCategory.quantity}}</span>
-        </a>        
+    <ul class="list-group">
+      <!-- Separator with title -->
+      <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+        <small>MAIN MENU</small>
+      </li>
+      <!-- End Separator -->
+      <!-- Menu -->
+      <a href="#" class="font-weight-light list-group-item list-group-item-action flex-column align-items-start">
+        <span class="fa {{icon}} fa-fw fa-lg mr-1"></span> 
+        <span class="menu-collapsed">Dashboard</span>        
+      </a>      
     </ul>
 </ng-container>

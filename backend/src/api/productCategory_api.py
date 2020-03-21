@@ -11,11 +11,11 @@ def get_all_categoris(mongo):
         for category in extracted:
             processed.append({
                 'id': category['id'],
+                'group': category['group'],
                 'name': category['name'],    
                 'quantity': category['quantity'],
                 'url': category['url'],
-                'icon': category['icon'],
-                'children': category['children']          
+                'icon': category['icon']                         
             })    
         response.create(Response.SUCCESS)
         response.data = processed             
