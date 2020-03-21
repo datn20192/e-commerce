@@ -10,12 +10,9 @@ def get_all_categoris(mongo):
         extracted = list(mongo.db.productCategory.find({}))
         for category in extracted:
             processed.append({
-                'id': category['id'],
-                'group': category['group'],
-                'name': category['name'],    
-                'quantity': category['quantity'],
-                'url': category['url'],
-                'icon': category['icon']                         
+                'groupId': category['groupId'],                
+                'name': category['name'],
+                'children': category['children']                                      
             })    
         response.create(Response.SUCCESS)
         response.data = processed             
