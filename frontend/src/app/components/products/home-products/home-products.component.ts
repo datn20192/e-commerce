@@ -1,23 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-home-product',
-  templateUrl: './home-product.component.html',
-  styleUrls: ['./home-product.component.css']
+  selector: 'app-home-products',
+  templateUrl: './home-products.component.html',
+  styleUrls: ['./home-products.component.css']
 })
-export class HomeProductComponent implements OnInit {
+export class HomeProductsComponent implements OnInit {
 
-  constructor(
-    
-    ) { }
+  constructor() { }
 
   ngOnInit() {
     this.load();
   }
-  ngOnDestroy() {
 
-  }  
-  
   // Product  
   listTitle: String;
   listContent: String;   
@@ -29,6 +24,6 @@ export class HomeProductComponent implements OnInit {
 
     // Get product list
     
-  }  
+  }
 
 }

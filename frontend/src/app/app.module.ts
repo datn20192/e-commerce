@@ -47,26 +47,38 @@ import { ChartsModule } from 'ng2-charts';
 // bootstrap
 import { ModalModule } from 'ngx-bootstrap/modal';
 
+// Import containers
+import { DefaultLayoutComponent } from './containers';
+
+const APP_CONTAINERS = [
+  DefaultLayoutComponent
+];
+
 // Service
 import {ProductsApiService} from './services/product-api.service';
 import { productCategoryServiceAPI } from './services/productCategory-api.service';
 
 // Component
-import { DefaultLayoutComponent } from './views/default-layout/default-layout.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { SidebarDComponent } from './components/sidebar-d/sidebar-d.component';
+import { ListProductComponent } from './components/products/common/list-product/list-product.component';
+import { CardProductComponent } from './components/products/common/card-product/card-product.component';
+import { HomeProductsComponent } from './components/products/home-products/home-products.component';
+import { GroupProductsComponent } from './components/products/group-products/group-products.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    //HeaderComponent,
-    DefaultLayoutComponent,    
+    AppComponent,    
+    ...APP_CONTAINERS,    
     SigninComponent,
     SignupComponent,    
     NotFoundComponent,
     ProductDetailComponent,
-    SidebarDComponent,          
+    SidebarDComponent,
+    ListProductComponent,
+    CardProductComponent,    
+    HomeProductsComponent, GroupProductsComponent                 
   ],
   imports: [
     BrowserModule,

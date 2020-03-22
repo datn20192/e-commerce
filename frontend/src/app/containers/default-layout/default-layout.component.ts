@@ -1,31 +1,30 @@
 import { Component, TemplateRef } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { navItems } from '../../_nav';
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-Ecommerce',
   templateUrl: './default-layout.component.html',
   styleUrls: ['./default-layout.component.css']
 })
-export class DefaultLayoutComponent {
-  modalRef: BsModalRef;
-  public navItems = navItems;
+export class DefaultLayoutComponent {  
+
+  modalRef: BsModalRef;  
 
   constructor(
     private auth: AuthService,
     private modalService: BsModalService
     ){}
 
-  ngOnInit() {
-
+  ngOnInit() {    
+    
   }
   
   ngOnDestroy() {
   
   }
-
-  signOut() {
+ 
+  signOut() {    
     this.auth.signOut();
   }
 
@@ -40,4 +39,5 @@ export class DefaultLayoutComponent {
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);    
   }
+
 }

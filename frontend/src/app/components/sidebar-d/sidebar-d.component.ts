@@ -25,25 +25,18 @@ export class SidebarDComponent implements OnInit {
   productCategoriesListSubs: Subscription;
 
   // product categories list
-  productCategorisList: ProductCategory[];
-  // product categories list is grouped by 'category group'
-  cateListByGroup = [];
+  productCategoriesList: ProductCategory[];  
 
   icon = "fa-mobile";
 
   load(){
     this.productCategoriesListSubs = this.productCategoryApi.getProductCategories().subscribe(res => {
       let result = JSON.parse(res);
-      this.productCategorisList = result.data;
-
-      console.log(this.productCategorisList);
+      this.productCategoriesList = result.data;      
+      console.log(this.productCategoriesList[0].children);
     },
       console.error,      
     );
-  }
-
-  groupCategoryList(productCategoryList){
-    
   }
 
 }

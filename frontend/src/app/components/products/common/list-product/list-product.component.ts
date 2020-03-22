@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Product } from '../../../models/product.model';
-import { ProductsApiService } from '../../../services/product-api.service';
+import { Product } from '../../../../models/product.model';
+import { ProductsApiService } from '../../../../services/product-api.service';
 
 @Component({
   selector: 'app-list-product',

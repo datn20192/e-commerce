@@ -1,5 +1,33 @@
-<div class="">
-    <div *ngIf="productsListDetail">
-        {{productsListDetail.name}}
+<ng-container>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="product-images">
+                <div class="product-main-img">
+                    <img src="https://salt.tikicdn.com/cache/280x280/ts/product/d8/13/59/fbb34c6566380e77146f54c100413670.jpg" alt="">
+                </div>
+                
+                <div class="product-gallery">
+                    <img src="https://salt.tikicdn.com/cache/75x75/ts/product/d8/13/59/fbb34c6566380e77146f54c100413670.jpg" alt="">
+                    <img src="https://salt.tikicdn.com/cache/75x75/ts/product/be/dc/16/2f5cd90d1a8c6efbdcb82398380ce444.jpg" alt="">
+                    <img src="https://salt.tikicdn.com/cache/75x75/ts/product/4c/fa/8c/c901f816e71151499f4ea3ecdb88f813.jpg" alt="">
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-sm-6">
+            <div class="product-inner">
+                <h2 class="product-name">Sony Smart TV - 2015</h2>
+                <div class="product-inner-price">
+                    <ins>$700.00</ins> <del>$100.00</del>
+                </div>    
+                
+                <form action="" class="cart">
+                    <div class="quantity">
+                        <input type="number" size="4" class="input-text qty text" title="Qty" value="1" name="quantity" min="1" step="1">
+                    </div>
+                    <button class="add_to_cart_button" type="submit">Add to cart</button>
+                </form>
+            </div>
+        </div>
     </div>
-</div>
+</ng-container>

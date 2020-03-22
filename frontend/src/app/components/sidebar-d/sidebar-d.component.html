@@ -1,14 +1,18 @@
 <ng-container>
-    <ul class="list-group">
+    <ul class="list-group" *ngFor="let categoryGroup of productCategoriesList">
       <!-- Separator with title -->
       <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
-        <small>MAIN MENU</small>
+        <small>{{categoryGroup.name}}</small>
       </li>
       <!-- End Separator -->
       <!-- Menu -->
-      <a href="#" class="font-weight-light list-group-item list-group-item-action flex-column align-items-start">
-        <span class="fa {{icon}} fa-fw fa-lg mr-1"></span> 
-        <span class="menu-collapsed">Dashboard</span>        
+      <a routerLink="{{categoryProduct.url}}" 
+        routerLinkActive="active-link"
+        class="font-weight-light list-group-item list-group-item-action flex-column align-items-start"
+        *ngFor="let categoryProduct of categoryGroup.children"
+      >
+        <span class="fa {{categoryProduct.icon}} fa-fw fa-lg mr-1"></span> 
+        <span class="menu-collapsed">{{categoryProduct.name}}</span>        
       </a>      
     </ul>
 </ng-container>
