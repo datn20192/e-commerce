@@ -10,14 +10,18 @@ def get_all_products(mongo):
         extracted = list(mongo.db.product.find({}))
         for product in extracted:
             processed.append({
-                'product_id': product['product_id'],
-                'name': product['name'],
-                'price': product['price'],
-                'quantity': product['quantity'],
-                'description': product['description'],
+                'id': product['_id'],
+                'groupID': product['groupID'],
+                'groupName': product['groupName'],
                 'category': product['category'],
-                'imageURL': product['imageURL'],
-                
+                'name': product['name'],
+                'link': product['link'],
+                'brand': product['brand'],                
+                'imageURL': product['imageURL'],    
+                'price': product['price'],            
+                'description': product['description'],                          
+                'quantity': product['quantity'],
+                'star': product['star']
             })    
         response.create(Response.SUCCESS)
         response.data = processed        
@@ -30,15 +34,20 @@ def get_all_products(mongo):
     return output
 
 def get_product_byID(mongo, id):
-    extracted= mongo.db.product.find_one_or_404({'product_id': id})
+    extracted= mongo.db.product.find_one_or_404({'_id': id})
     processed = {
-            'product_id': extracted['product_id'],
-            'name': extracted['name'],
-            'price': extracted['price'],
-            'quantity': extracted['quantity'],
-            'description': extracted['description'],
-            'category': extracted['category'],
-            'imageURL': extracted['imageURL'],
+                'id': extracted['_id'],
+                'groupID': extracted['groupID'],
+                'groupName': extracted['groupName'],
+                'category': extracted['category'],
+                'name': extracted['name'],
+                'link': extracted['link'],
+                'brand': extracted['brand'],                
+                'imageURL': extracted['imageURL'],    
+                'price': extracted['price'],            
+                'description': extracted['description'],                          
+                'quantity': extracted['quantity'],
+                'star': extracted['star']
                 }
     return json_util.dumps(processed, ensure_ascii=False).encode('utf-8')
 

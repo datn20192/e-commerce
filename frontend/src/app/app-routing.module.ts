@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
-import { SigninComponent } from './components/signin/signin.component';
 import { HomeProductsComponent } from './components/products/home-products/home-products.component';
 import { GroupProductsComponent } from './components/products/group-products/group-products.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
@@ -19,16 +18,7 @@ const routes: Routes = [
         component: HomeProductsComponent,
         data: {
           title: 'Sản phẩm mới'
-        },
-        children: [
-          {
-            path: '',
-            component: ProductDetailComponent,
-            data: {
-              title: 'Sản phẩm mới'
-            }
-          }
-        ]       
+        }           
       },    
       {
         path: 'dien-thoai',
@@ -49,7 +39,16 @@ const routes: Routes = [
         component: GroupProductsComponent,
         data: {
           title: 'Laptop'
-        }
+        },
+        children: [
+          {
+            path: ':id',
+            component: ProductDetailComponent,
+            data: {
+              title: ''
+            }
+          }
+        ] 
       },
       {
         path: 'thiet-bi-may-tinh',
@@ -85,12 +84,9 @@ const routes: Routes = [
         data: {
           title: 'Tủ Lạnh'
         }
-      }
+      }      
     ]
-  },  
-  {path: "", redirectTo: '/products', pathMatch: "full"},
-  {path: ":id", component: ProductDetailComponent},
-  {path: 'signin', component: SigninComponent}
+  }  
 ];
 
 @NgModule({

@@ -1,19 +1,16 @@
 <ng-container>
     <div class="thumb-wrapper">
-        <a routerLink="/{{product.product_id}}" title="{{product.name}}" style="text-decoration: none; color: inherit;">
+        <a routerLink="/{{product.link}}" title="{{product.name}}" style="text-decoration: none; color: inherit;">
           <div class="img-box">            
-            <img src="{{product.imageURL}}" alt="Photo of {{product.name}}" class="img-responsive img-fluid">
+            <img src="{{product.imageURL[0]}}" alt="Photo of {{product.name}}" class="img-responsive img-fluid">
           </div>
           <div class="thumb-content ">
             <h5 class="product-name">{{product.name}}</h5>
-            <p class="item-price"><span>{{product.price}}đ</span></p>
+            <p class="item-price"><span>{{nomalizedPrice}}đ</span></p>
             <div class="star-rating">
               <ul class="list-inline">
-                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                <li class="list-inline-item"><i class="fa fa-star"></i></li>
-                <li class="list-inline-item"><i class="fa fa-star-o"></i></li>
+                <li class="list-inline-item" *ngFor="let star of lightStars"><i class="fa fa-star"></i></li>                
+                <li class="list-inline-item" *ngFor="let star of darkStars"><i class="fa fa-star-o"></i></li>
               </ul>
             </div>            
           </div>

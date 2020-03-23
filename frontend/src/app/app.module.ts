@@ -60,12 +60,12 @@ import { productCategoryServiceAPI } from './services/productCategory-api.servic
 
 // Component
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { SidebarDComponent } from './components/sidebar-d/sidebar-d.component';
 import { ListProductComponent } from './components/products/common/list-product/list-product.component';
 import { CardProductComponent } from './components/products/common/card-product/card-product.component';
 import { HomeProductsComponent } from './components/products/home-products/home-products.component';
 import { GroupProductsComponent } from './components/products/group-products/group-products.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
