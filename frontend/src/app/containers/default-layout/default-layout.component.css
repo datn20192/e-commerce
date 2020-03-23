@@ -1,4 +1,4 @@
-/* Header */
+/* header */
 .app-header{
     width: 100%;    
 }
@@ -18,11 +18,13 @@
 .modal-title{    
     color: red;
 }
+
+/* body */
 .main{
     background-color: white;
 }
 
 /* Sidebar */
 .sidebar{
-    background-color: rgb(198, 198, 240);
+    border-style: ridge;
 }

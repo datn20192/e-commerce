@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Product } from '../../../models/product.model';
-import { ProductsApiService } from '../../../services/product-api.service';
+import { Product } from '../../../../models/product.model';
+import { ProductsApiService } from '../../../../services/product-api.service';
 
 @Component({
   selector: 'app-list-product',
@@ -35,8 +35,7 @@ export class ListProductComponent {
     if(this.content === 'ALL'){
       this.productsListSubs = this.productsApi.getProducts().subscribe(res => {
         let result = JSON.parse(res);
-        this.productsList = result.data;  
-        console.log(this.productsList); 
+        this.productsList = result.data;        
         this.groupByQuaruple(this.productsList, this.quadrupleProductList);               
       },
         console.error

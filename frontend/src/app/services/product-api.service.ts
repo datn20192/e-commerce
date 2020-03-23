@@ -35,15 +35,20 @@ export class ProductsApiService {
         );
       }
 
-      addProduct(id, name, price, quantity, category, description, imageURL):Observable<any>{
+      addProduct(id, groupID, groupName, category, name, link, brand, imageURL, price, description, quantity, star):Observable<any>{
         var params = {
-          product_id: id,
-          name: name,
-          price: price,
-          quantity: quantity,
+          id: id,
+          groupID: groupID,
+          groupName: groupName,
           category: category,
+          name: name,
+          link: link,
+          brand: brand,
+          imageURL: imageURL,
+          price: price,
           description: description,
-          imageURL: imageURL
+          quantity: quantity,
+          star: star                  
         };
         return this.http.post<any>(`${API_URL}/api/add_product`, params)
         .pipe(
@@ -51,15 +56,20 @@ export class ProductsApiService {
         );
       }
 
-      updateProduct(id, name, price, quantity, category, description, imageURL):Observable<any>{
+      updateProduct(id, groupID, groupName, category, name, link, brand, imageURL, price, description, quantity, star):Observable<any>{
         var params = {
-          product_id: id,
-          name: name,
-          price: price,
-          quantity: quantity,
+          id: id,
+          groupID: groupID,
+          groupName: groupName,
           category: category,
+          name: name,
+          link: link,
+          brand: brand,
+          imageURL: imageURL,
+          price: price,
           description: description,
-          imageURL: imageURL
+          quantity: quantity,
+          star: star
         };
         return this.http.post<any>(`${API_URL}/api/update_product`, params)
         .pipe(

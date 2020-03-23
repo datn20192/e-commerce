@@ -1,33 +1,92 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {NotFoundComponent } from './components/not-found/not-found.component';
-import { DefaultLayoutComponent } from './views/default-layout/default-layout.component';
-import { HomeProductComponent } from './views/home-product/home-product.component';
-import { ProductDetailComponent} from "./components/product-detail/product-detail.component";
-import { SigninComponent } from './components/signin/signin.component';
-// : if request.auth != null
-const routes: Routes = [ 
-  {
-    path: '',
-    redirectTo: 'san-pham-moi',
-    pathMatch: 'full',
-  }, 
+import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
+import { HomeProductsComponent } from './components/products/home-products/home-products.component';
+import { GroupProductsComponent } from './components/products/group-products/group-products.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+
+const routes: Routes = [    
   {
     path: '',
     component: DefaultLayoutComponent,
     data: {
       title: 'Trang chủ'
     },
-    children: [
+    children: [  
       {
-        path: 'san-pham-moi',        
-        loadChildren: () => import('./views/home-product/home-product.module').then(m => m.HomeProductModule)
-      }
+        path: '',
+        component: HomeProductsComponent,
+        data: {
+          title: 'Sản phẩm mới'
+        }           
+      },    
+      {
+        path: 'dien-thoai',
+        component: GroupProductsComponent,
+        data: {
+          title: 'Điện Thoại'
+        }
+      },
+      {
+        path: 'may-tinh-bang',
+        component: GroupProductsComponent,
+        data: {
+          title: 'Máy tính bảng'
+        }
+      },
+      {
+        path: 'laptop',
+        component: GroupProductsComponent,
+        data: {
+          title: 'Laptop'
+        },
+        children: [
+          {
+            path: ':id',
+            component: ProductDetailComponent,
+            data: {
+              title: ''
+            }
+          }
+        ] 
+      },
+      {
+        path: 'thiet-bi-may-tinh',
+        component: GroupProductsComponent,
+        data: {
+          title: 'Thiết Bị Máy Tính'
+        }
+      },
+      {
+        path: 'tivi',
+        component: GroupProductsComponent,
+        data: {
+          title: 'Tivi'
+        }
+      },
+      {
+        path: 'may-dieu-hoa',
+        component: GroupProductsComponent,
+        data: {
+          title: 'Máy Điều Hòa'
+        }
+      },
+      {
+        path: 'may-giat',
+        component: GroupProductsComponent,
+        data: {
+          title: 'Máy Giặt'
+        }
+      },
+      {
+        path: 'tu-lanh',
+        component: GroupProductsComponent,
+        data: {
+          title: 'Tủ Lạnh'
+        }
+      }      
     ]
-  },  
-  {path: "", redirectTo: '/products', pathMatch: "full"},
-  {path: ":id", component: ProductDetailComponent},
-  {path: 'signin', component: SigninComponent}
+  }  
 ];
 
 @NgModule({

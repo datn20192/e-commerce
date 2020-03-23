@@ -14,7 +14,7 @@ export class AuthService {
   // userData: Observable<firebase.User>;
   userData: any; // save logged in user data
   defaultURL = '/assets/img/image.png';
-  isAdmin: boolean;
+  isAdmin: boolean;  
   
 
   constructor(
@@ -22,21 +22,23 @@ export class AuthService {
     private afs: AngularFirestore,
     public router: Router,
     public ngZone: NgZone) {
-      this.angularFireAuth.authState.subscribe(user => {
+      this.angularFireAuth.authState.subscribe(user => {        
         if (user) {
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
-          JSON.parse(localStorage.getItem('user'));
-          this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {
+          JSON.parse(localStorage.getItem('user'));          
+          this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {              
             if (res.length) {
-              this.isAdmin = true;
+              this.isAdmin = true;              
             }
-            else this.isAdmin = false;
+            else{
+              this.isAdmin = false;              
+            } 
           })
         } else {
           localStorage.setItem('user', '');
           // JSON.parse(localStorage.getItem('user'));
-        }
+        }        
       });
   }
 
