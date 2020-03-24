@@ -1,6 +1,9 @@
 <ng-container>
     <div class="thumb-wrapper">
-        <a routerLink="/{{product.link}}" title="{{product.name}}" style="text-decoration: none; color: inherit;">
+        <a data-toggle="modal" (click)="openModal(detailProductModal)" (click)="false" class="nav-link" href="#"  
+        title="{{product.name}}" 
+        style="text-decoration: none; color: inherit;"
+        >
           <div class="img-box">            
             <img src="{{product.imageURL[0]}}" alt="Photo of {{product.name}}" class="img-responsive img-fluid">
           </div>
@@ -9,11 +12,30 @@
             <p class="item-price"><span>{{nomalizedPrice}}đ</span></p>
             <div class="star-rating">
               <ul class="list-inline">
-                <li class="list-inline-item" *ngFor="let star of lightStars"><i class="fa fa-star"></i></li>                
-                <li class="list-inline-item" *ngFor="let star of darkStars"><i class="fa fa-star-o"></i></li>
+                <li class="list-inline-item" *ngFor="let star of nomalizedStars.lightStars"><i class="fa fa-star"></i></li>                
+                <li class="list-inline-item" *ngFor="let star of nomalizedStars.darkStars"><i class="fa fa-star-o"></i></li>
               </ul>
             </div>            
           </div>
-        </a>						
+        </a>		
+        
+        <!-- modal for the detail of product -->
+        <ng-template #detailProductModal >
+          <div class="modal-header bg-danger">
+            <h4 class="modal-title pull-left">Chi tiết sản phẩm</h4>
+            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <app-product-detail 
+              [stars]="nomalizedStars"
+              [price]="nomalizedPrice"
+              [product]="product"
+              (onClose)="modalRef.hide()"
+            >
+            </app-product-detail>
+          </div>
+        </ng-template>
       </div>
 </ng-container>

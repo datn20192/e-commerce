@@ -4,11 +4,11 @@ import { Product } from '../../../../models/product.model';
 import { ProductsApiService } from '../../../../services/product-api.service';
 
 @Component({
-  selector: 'app-list-product',
-  templateUrl: './list-product.component.html',
-  styleUrls: ['./list-product.component.css']
+  selector: 'app-carousel-list-product',
+  templateUrl: './list-product-carousel.component.html',
+  styleUrls: ['./list-product-carousel.component.css']
 })
-export class ListProductComponent {
+export class CarouselListProductComponent {
 
   @Input() title: String;
   @Input() category: String;

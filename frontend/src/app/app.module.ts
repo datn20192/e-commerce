@@ -61,11 +61,12 @@ import { productCategoryServiceAPI } from './services/productCategory-api.servic
 // Component
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SidebarDComponent } from './components/sidebar-d/sidebar-d.component';
-import { ListProductComponent } from './components/products/common/list-product/list-product.component';
+import { CarouselListProductComponent } from './components/products/common/list-product-carousel/list-product-carousel.component';
 import { CardProductComponent } from './components/products/common/card-product/card-product.component';
 import { HomeProductsComponent } from './components/products/home-products/home-products.component';
 import { GroupProductsComponent } from './components/products/group-products/group-products.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { ListProductGridComponent } from './components/products/common/list-product-grid/list-product-grid.component';
 
 @NgModule({
   declarations: [
@@ -76,9 +77,9 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     NotFoundComponent,
     ProductDetailComponent,
     SidebarDComponent,
-    ListProductComponent,
+    CarouselListProductComponent,
     CardProductComponent,    
-    HomeProductsComponent, GroupProductsComponent                 
+    HomeProductsComponent, GroupProductsComponent, ListProductGridComponent                 
   ],
   imports: [
     BrowserModule,

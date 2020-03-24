@@ -58,11 +58,12 @@
         -ms-flex-direction: column;
             flex-direction: column; } 
   
-  .product-title, .price, .sizes {
+  .product-title{
     text-transform: UPPERCASE;
     font-weight: bold; }
   
   .checked, .price span {
+    font-weight: bold;
     color: #ff9f1a; }
   
   .product-title, .rating, .product-description, .price, .vote, .sizes {
@@ -94,6 +95,8 @@
   
   .tooltip-inner {
     padding: 1.3em; }
+
+
 
 
   
