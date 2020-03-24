@@ -10,8 +10,14 @@ import { productCategoryServiceAPI } from '../../services/productCategory-api.se
 })
 export class SidebarDComponent implements OnInit {
 
+  productCategoriesListSubs: Subscription;   
+
+  // Product categories list
+  productCategoriesGroupList: ProductCategory[];  // Categories list is grouped by categories group
+  productCategoryList = [];     // All product categories
+
   constructor(
-    private productCategoryApi: productCategoryServiceAPI
+    private productCategoryApi: productCategoryServiceAPI,    
   ) { }
 
   ngOnInit() {
@@ -22,18 +28,11 @@ export class SidebarDComponent implements OnInit {
     this.productCategoriesListSubs.unsubscribe();
   }
 
-  productCategoriesListSubs: Subscription;
-
-  // product categories list
-  productCategoriesList: ProductCategory[];  
-
-  icon = "fa-mobile";
 
   load(){
     this.productCategoriesListSubs = this.productCategoryApi.getProductCategories().subscribe(res => {
       let result = JSON.parse(res);
-      this.productCategoriesList = result.data;      
-      console.log(this.productCategoriesList[0].children);
+      this.productCategoriesGroupList = result.data;                                
     },
       console.error,      
     );

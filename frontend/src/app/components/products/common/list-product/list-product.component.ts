@@ -11,7 +11,7 @@ import { ProductsApiService } from '../../../../services/product-api.service';
 export class ListProductComponent {
 
   @Input() title: String;
-  @Input() content: String;
+  @Input() category: String;
   
   constructor(
     private productsApi:ProductsApiService
@@ -31,28 +31,25 @@ export class ListProductComponent {
   productsList: Product[];  
   quadrupleProductList = []; 
   
-  load(){
-    if(this.content === 'ALL'){
-      this.productsListSubs = this.productsApi.getProducts().subscribe(res => {
-        let result = JSON.parse(res);
-        this.productsList = result.data;        
-        this.groupByQuaruple(this.productsList, this.quadrupleProductList);               
-      },
-        console.error
-      );
-    }      
+  load(){    
+    this.productsListSubs = this.productsApi.getProductByCategory(this.category).subscribe(res => {
+      let result = JSON.parse(res);
+      this.productsList = result.data;        
+      this.quadrupleProductList = this.groupByQuaruple(this.productsList);                     
+    },
+      console.error
+    );         
   }
 
   // group product list by quaruple
-  groupByQuaruple(productsList, quadrupleProductList){
+  groupByQuaruple(productsList){
     let quadrupleProduct = [];
-    productsList.forEach((element, index) => {
-      quadrupleProduct.push(element);               
-      if((index%3==0 && index>0) || (index == (productsList.length -1))){
-        quadrupleProductList.push(quadrupleProduct);
-        quadrupleProduct = [];
-      }                
-    }); 
+    let quadrupleProductList = [];
+    for (let i = productsList.length-1; i>=0; i=i-4) {      
+      quadrupleProduct = (i>3) ? productsList.slice(i-4,i) : productsList.slice(0,i);      
+      quadrupleProductList.push(quadrupleProduct);      
+    } 
+    return quadrupleProductList;
   }
   
 }

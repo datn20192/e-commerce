@@ -2,6 +2,7 @@ import { Component, TemplateRef } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
+
 @Component({
   selector: 'app-Ecommerce',
   templateUrl: './default-layout.component.html',
@@ -13,7 +14,7 @@ export class DefaultLayoutComponent {
 
   constructor(
     private auth: AuthService,
-    private modalService: BsModalService
+    private modalService: BsModalService    
     ){}
 
   ngOnInit() {    
@@ -38,6 +39,6 @@ export class DefaultLayoutComponent {
   // Modal for sign in and sign up
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);    
-  }
+  }  
 
 }

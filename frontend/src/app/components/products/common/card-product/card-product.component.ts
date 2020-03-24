@@ -23,8 +23,7 @@ export class CardProductComponent implements OnInit {
 
   ngOnInit() {  
     this.productProcessor.nomalizeStarRating(this.product.star, this.lightStars, this.darkStars);
-    this.nomalizedPrice = this.productProcessor.nomalizeProductPrice(this.product.price);   
-    console.log(this.product.link); 
+    this.nomalizedPrice = this.productProcessor.nomalizeProductPrice(this.product.price);      
   } 
   
 }

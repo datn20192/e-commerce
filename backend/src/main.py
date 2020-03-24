@@ -17,9 +17,13 @@ mongo = PyMongo(app)
 def get_all_products():
     return product_api.get_all_products(mongo)
 
-@app.route('/products/<string:id>', methods = ['GET'])
+@app.route('/api/products/<string:id>', methods = ['GET'])
 def get_product_byID(id):
     return product_api.get_product_byID(mongo, id)
+
+@app.route('/api/products/category/<string:category>', methods = ['GET'])
+def get_product_by_category(category):
+    return product_api.get_product_by_category(mongo, category)
 
 @app.route('/api/add_product', methods=['POST'])
 def add_product():
@@ -34,9 +38,13 @@ def delete_product():
     return product_api.delete_product(mongo)
 
 #--------------- product category API ----------------------#
-@app.route('/api/productCategoris', methods = ['GET'])
+@app.route('/api/productCategories', methods = ['GET'])
 def productCategoris():
-    return productCategory_api.get_all_categoris(mongo)    
+    return productCategory_api.get_all_categories(mongo)  
+
+@app.route('/api/productCategories/nonGroup', methods = ['GET'])
+def productCategoriesNonGroup():
+    return productCategory_api.get_all_categories_non_group(mongo)
 
 @app.route('/api/add_productCategory', methods=['POST'])
 def add_productCategory():
