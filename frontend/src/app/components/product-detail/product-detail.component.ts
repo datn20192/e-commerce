@@ -1,35 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductsApiService} from '../../services/product-api.service';
-import { Product } from '../../models/product.model'
-import {Subscription} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Product } from '../../models/product.model';
+
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-  productsListSubs: Subscription;
-  productsListDetail: Product[];
-  id;
+
+  @Input() stars: {};
+  @Input() price: string;
+  @Input() product: Product;
+
+  @Output() onClose = new EventEmitter();  
+  
   constructor(
-    private route: ActivatedRoute,
-    private productsApiService: ProductsApiService) { }
+  
+  ) { }
 
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-     this.id = params['id'];
-
-      this.productsApiService.getProductByID(this.id).subscribe(res => {
-        this.productsListDetail = res;
-        console.log(this.productsListDetail)
-      },
-      console.error
-      );
-    }
-
-  
-
-    )}
+    console.log(this.product.imageURL);
   }
+
+  closeModal(){
+    this.onClose.emit(null);
+  }
+}

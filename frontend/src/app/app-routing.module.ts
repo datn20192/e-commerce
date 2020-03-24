@@ -39,16 +39,7 @@ const routes: Routes = [
         component: GroupProductsComponent,
         data: {
           title: 'Laptop'
-        },
-        children: [
-          {
-            path: ':id',
-            component: ProductDetailComponent,
-            data: {
-              title: ''
-            }
-          }
-        ] 
+        }       
       },
       {
         path: 'thiet-bi-may-tinh',
