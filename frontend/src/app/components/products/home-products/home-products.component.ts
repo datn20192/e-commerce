@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+// Service
+import { productCategoryServiceAPI } from '../../../services/productCategory-api.service';
+
+// Model
+import { CategoryChild } from '../../../models/productCategory.model';
 
 @Component({
   selector: 'app-home-products',
@@ -7,23 +14,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeProductsComponent implements OnInit {
 
-  constructor() { }
+  productCategoryList: CategoryChild[];
+  categoryListSubs: Subscription;
 
-  ngOnInit() {
-    this.load();
+  constructor(
+    private categoryService: productCategoryServiceAPI
+  ) { 
+    
   }
 
-  // Product  
-  listTitle: String;
-  listContent: String;   
-  
+  ngOnInit() {
+    this.load();  
+  }
 
-  load() {    
-    this.listTitle = "Sản phẩm mới";
-    this.listContent = "ALL";
+  ngOnDestroy() {
+    this.categoryListSubs.unsubscribe();
+  }     
 
-    // Get product list
-    
+  load() {               
+    this.categoryListSubs = this.categoryService.getProductCategoriesNonGroup().subscribe(res => {
+      let result = JSON.parse(res);
+      this.productCategoryList = result.data;
+      console.log(this.productCategoryList);
+    });         
   }
 
 }

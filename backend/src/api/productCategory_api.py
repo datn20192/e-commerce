@@ -3,7 +3,7 @@ from bson import json_util
 import json
 from src.config import Response
 
-def get_all_categoris(mongo):
+def get_all_categories(mongo):
     try:
         response = Response()
         processed = []
@@ -22,6 +22,31 @@ def get_all_categoris(mongo):
         response.data = "Datebase connection is false."
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
 
+    return output
+
+def get_all_categories_non_group(mongo):
+    try:
+        response = Response()
+        processed = []
+        extracted = list(mongo.db.productCategory.find({}))        
+        for categoryGroup in extracted:                       
+            for category in categoryGroup['children']:                               
+                processed.append({
+                    'id': category['id'],
+                    'name': category['name'],
+                    'quantity': category['quantity'],
+                    'url': category['url'],
+                    'icon': category['icon']
+                })
+        response.create(Response.SUCCESS)
+        response.data = processed        
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))       
+    except:
+        print(response.data)
+        response.create(Response.ERROR)
+        response.data = "Datebase connection is false."
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        
     return output
 
 def add_category(mongo):

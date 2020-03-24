@@ -103,7 +103,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     ModalModule.forRoot()        
   ],
   providers: [
-    AuthService,ProductsApiService,productCategoryServiceAPI,
+    AuthService,ProductsApiService,productCategoryServiceAPI
     
   ],
   bootstrap: [AppComponent]

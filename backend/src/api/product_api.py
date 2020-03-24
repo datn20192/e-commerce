@@ -8,7 +8,7 @@ def get_all_products(mongo):
         response = Response()
         processed = []
         extracted = list(mongo.db.product.find({}))
-        for product in extracted:
+        for product in extracted:            
             processed.append({
                 'id': product['_id'],
                 'groupID': product['groupID'],
@@ -50,6 +50,35 @@ def get_product_byID(mongo, id):
                 'star': extracted['star']
                 }
     return json_util.dumps(processed, ensure_ascii=False).encode('utf-8')
+
+def get_product_by_category(mongo, category):
+    try:
+        response = Response()
+        processed = []        
+        extracted = list(mongo.db.product.find({'category': category}))              
+        for product in extracted:           
+            processed.append({
+                'id': product['_id'],
+                'groupID': product['groupID'],
+                'groupName': product['groupName'],
+                'category': product['category'],
+                'name': product['name'],
+                'link': product['link'],
+                'brand': product['brand'],                
+                'imageURL': product['imageURL'],    
+                'price': product['price'],            
+                'description': product['description'],                          
+                'quantity': product['quantity'],
+                'star': product['star']
+            })    
+        response.create(Response.SUCCESS)
+        response.data = processed              
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+    except:
+        response.create(Response.ERROR)
+        response.data = "Datebase connection is false."
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+    return output
 
 def add_product(mongo):
     try:
