@@ -13,23 +13,23 @@ export class CarouselListProductComponent {
   @Input() title: String;
   @Input() category: String;
   
+  productsListSubs: Subscription;    
+
+  // Product    
+  productsList: Product[];  
+  quadrupleProductList = [];
+
   constructor(
     private productsApi:ProductsApiService
   ){}
 
-  ngOnInit(){
+  ngOnInit(){    
     this.load();
   }
 
   ngOnDestroy(){
     this.productsListSubs.unsubscribe(); 
-  }
-
-  productsListSubs: Subscription;    
-
-  // Product    
-  productsList: Product[];  
-  quadrupleProductList = []; 
+  }  
   
   load(){    
     this.productsListSubs = this.productsApi.getProductByCategory(this.category).subscribe(res => {

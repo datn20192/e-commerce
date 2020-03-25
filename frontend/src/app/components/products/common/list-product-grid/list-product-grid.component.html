@@ -1,0 +1,26 @@
+<ng-container>
+  <div class="row">
+    <div class="col-3" *ngFor="let product of productsList">
+      <app-card-product [product]="product"></app-card-product>
+    </div>
+  </div>
+  
+  <div class="col-lg-12">
+    <ul class="pagination float-right">
+      <li class="page-item">
+        <a class="page-link" href="" (click)="setPage(0,$event)">
+          <span aria-hidden="true">&laquo;</span>          
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="{'active':i==page}" *ngFor="let p of pages; let i=index">
+        <a class="page-link" href="" (click)="setPage(i,$event)">{{i+1}}</a>
+      </li>      
+      <li class="page-item">
+        <a class="page-link" href="" (click)="setPage(pages.length-1,$event)">
+          <span aria-hidden="true">&raquo;</span>          
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+</ng-container>

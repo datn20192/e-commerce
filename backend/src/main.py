@@ -1,4 +1,5 @@
 from flask import Flask
+from flask import request
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 from .config import Response
@@ -23,7 +24,12 @@ def get_product_byID(id):
 
 @app.route('/api/products/category/<string:category>', methods = ['GET'])
 def get_product_by_category(category):
-    return product_api.get_product_by_category(mongo, category)
+    page = request.args.get("page")
+    numOfElement = request.args.get("num")
+    if page is None and numOfElement is None:
+        return product_api.get_product_by_category(mongo, category)
+    else:
+        return product_api.get_product_by_category_page(mongo, category, page, numOfElement)      
 
 @app.route('/api/add_product', methods=['POST'])
 def add_product():
