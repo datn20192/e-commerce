@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from bson import json_util
 import json
 from src.config import Response
+import math
 
 def get_all_products(mongo):
     try:
@@ -78,6 +79,58 @@ def get_product_by_category(mongo, category):
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+    return output
+
+def get_product_by_category_page(mongo, category, page, numOfElement):
+    try:      
+        page = int(page)
+        numOfElement = int(numOfElement)  
+        response = Response()            
+        productPage = []            # products showed in a page
+        extracted = list(mongo.db.product.find({'category': category}))
+        
+        # information of page      
+        totalElement = len(extracted)
+        totalPages = math.ceil(totalElement/numOfElement)
+        first = (page==1)
+        last = (page==totalPages) 
+        number = page       
+
+        start = (page - 1)*numOfElement
+        for i in range(start, start+numOfElement, 1):
+            productPage.append({
+                'id': extracted[i]['_id'],
+                'groupID': extracted[i]['groupID'],
+                'groupName': extracted[i]['groupName'],
+                'category': extracted[i]['category'],
+                'name': extracted[i]['name'],
+                'link': extracted[i]['link'],
+                'brand': extracted[i]['brand'],                
+                'imageURL': extracted[i]['imageURL'],    
+                'price': extracted[i]['price'],            
+                'description': extracted[i]['description'],                          
+                'quantity': extracted[i]['quantity'],
+                'star': extracted[i]['star']
+            })
+        print(productPage)
+        processed = {
+            'content': productPage,
+            'totalPages': totalPages,
+            'totalElement': totalElement,
+            'first': first,
+            'last': last,
+            'size': numOfElement,
+            'number': number,
+            'sort': ''            
+        } 
+        response.create(Response.SUCCESS)
+        response.data = processed              
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8')) 
+    except:
+        response.create(Response.ERROR)
+        response.data = "Datebase connection is false."
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        
     return output
 
 def add_product(mongo):
