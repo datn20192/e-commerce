@@ -92,11 +92,11 @@ def get_product_by_category_page(mongo, category, page, numOfElement):
         # information of page      
         totalElement = len(extracted)
         totalPages = math.ceil(totalElement/numOfElement)
-        first = (page==1)
-        last = (page==totalPages) 
+        first = (page==0)
+        last = (page==(totalPages-1)) 
         number = page       
 
-        start = (page - 1)*numOfElement
+        start = (page)*numOfElement
         for i in range(start, start+numOfElement, 1):
             productPage.append({
                 'id': extracted[i]['_id'],

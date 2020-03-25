@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-group-products',
@@ -6,10 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./group-products.component.css']
 })
 export class GroupProductsComponent implements OnInit {
+  
+  private category:string = '';
 
-  constructor() { }
+  constructor(
+    private sharedService: SharedService
+  ) { }
 
   ngOnInit() {
+    this.sharedService.categoryClick.subscribe(categoryId => this.category=categoryId);
   }
 
 }

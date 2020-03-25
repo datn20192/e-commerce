@@ -10,6 +10,7 @@
         routerLinkActive="active-link"
         class="font-weight-light list-group-item list-group-item-action flex-column align-items-start"
         *ngFor="let categoryProduct of categoryGroup.children"
+        (click)="clickSideBar(categoryProduct.id)"
       >
         <span class="fa {{categoryProduct.icon}} fa-fw fa-lg mr-1"></span> 
         <span class="menu-collapsed">{{categoryProduct.name}}</span>        
