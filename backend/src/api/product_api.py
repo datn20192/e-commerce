@@ -56,7 +56,8 @@ def get_product_by_category(mongo, category):
     try:
         response = Response()
         processed = []        
-        extracted = list(mongo.db.product.find({'category': category}))              
+        extracted = list(mongo.db.product.find({'category': category}))    
+        print(len(extracted))          
         for product in extracted:           
             processed.append({
                 'id': product['_id'],
@@ -112,7 +113,7 @@ def get_product_by_category_page(mongo, category, page, numOfElement):
                 'quantity': extracted[i]['quantity'],
                 'star': extracted[i]['star']
             })
-        print(productPage)
+        
         processed = {
             'content': productPage,
             'totalPages': totalPages,

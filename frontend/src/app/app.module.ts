@@ -56,7 +56,7 @@ const APP_CONTAINERS = [
 
 // Service
 import {ProductsApiService} from './services/product-api.service';
-import { productCategoryServiceAPI } from './services/productCategory-api.service';
+import { ProductCategoryServiceAPI } from './services/productCategory-api.service';
 import { SharedService } from './services/shared.service';
 
 // Component
@@ -105,7 +105,7 @@ import { ListProductGridComponent } from './components/products/common/list-prod
     ModalModule.forRoot()        
   ],
   providers: [
-    AuthService,ProductsApiService,productCategoryServiceAPI, SharedService
+    AuthService,ProductsApiService,ProductCategoryServiceAPI, SharedService
     
   ],
   bootstrap: [AppComponent]

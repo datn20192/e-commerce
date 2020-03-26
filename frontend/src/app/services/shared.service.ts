@@ -4,13 +4,13 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable()
 export class SharedService {
 
-  private category = new BehaviorSubject('');
+  private category = new BehaviorSubject({});
   categoryClick = this.category.asObservable();
 
   constructor() { }
 
-  setCategory(categoryId: string) {
-    this.category.next(categoryId)
+  setCategory(categoryList) {
+    this.category.next(categoryList);
   }
   
 }

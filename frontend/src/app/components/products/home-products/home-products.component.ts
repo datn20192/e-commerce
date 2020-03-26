@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 // Service
-import { productCategoryServiceAPI } from '../../../services/productCategory-api.service';
+import { ProductCategoryServiceAPI } from '../../../services/productCategory-api.service';
 
 // Model
 import { CategoryChild } from '../../../models/productCategory.model';
@@ -18,7 +18,7 @@ export class HomeProductsComponent implements OnInit {
   categoryListSubs: Subscription;
 
   constructor(
-    private categoryService: productCategoryServiceAPI
+    private categoryService: ProductCategoryServiceAPI
   ) { 
     
   }
@@ -34,7 +34,7 @@ export class HomeProductsComponent implements OnInit {
   load() {               
     this.categoryListSubs = this.categoryService.getProductCategoriesNonGroup().subscribe(res => {
       let result = JSON.parse(res);
-      this.productCategoryList = result.data;
+      this.productCategoryList = result.data.filter(category => category.quantity>0);
       console.log(this.productCategoryList);
     });         
   }

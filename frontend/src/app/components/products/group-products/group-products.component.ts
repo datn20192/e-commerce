@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedService } from '../../../services/shared.service';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { ProductCategoryServiceAPI } from '../../../services/productCategory-api.service';
+
+// Model
+import { CategoryChild } from '../../../models/productCategory.model';
 
 @Component({
   selector: 'app-group-products',
@@ -7,15 +12,38 @@ import { SharedService } from '../../../services/shared.service';
   styleUrls: ['./group-products.component.css']
 })
 export class GroupProductsComponent implements OnInit {
-  
-  private category:string = '';
 
-  constructor(
-    private sharedService: SharedService
+  private productCategoryList: CategoryChild[];
+  private categoryListSubs: Subscription;
+  
+  private url:string = '';
+  private category = {};  
+
+  private showList: boolean = false;
+
+  constructor(    
+    private router: Router,
+    private categoryApi: ProductCategoryServiceAPI
   ) { }
 
   ngOnInit() {
-    this.sharedService.categoryClick.subscribe(categoryId => this.category=categoryId);
+    this.load();    
+  }
+
+  ngOnDestroy() {
+    this.categoryListSubs.unsubscribe();
+  }
+
+  load() {    
+    this.url = this.router.url;
+    this.categoryListSubs = this.categoryApi.getProductCategoriesNonGroup().subscribe(res => {
+      let result = JSON.parse(res);
+      this.productCategoryList = result.data;      
+      this.category = this.productCategoryList.filter(element => element.url===this.url)[0];
+      this.showList = true;      
+    },
+      console.error
+    );
   }
 
 }

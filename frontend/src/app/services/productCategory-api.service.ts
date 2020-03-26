@@ -6,7 +6,7 @@ import { API_URL} from '../../environments/environment';
 import { ProductCategory, CategoryChild } from '../models/productCategory.model';
 
 @Injectable()
-export class productCategoryServiceAPI {
+export class ProductCategoryServiceAPI {
     constructor(private http: HttpClient) {}
     private static _handleError(err: HttpErrorResponse | any) {
         return throwError(err.message || 'Error: Unable to complete request.');
@@ -16,14 +16,14 @@ export class productCategoryServiceAPI {
     getProductCategories(): Observable<any> {
         return this.http.get<ProductCategory[]>(`${API_URL}/api/productCategories`)
         .pipe(
-            catchError(productCategoryServiceAPI._handleError)
+            catchError(ProductCategoryServiceAPI._handleError)
         );
     }
 
     getProductCategoriesNonGroup(): Observable<any> {
         return this.http.get<CategoryChild[]>(`${API_URL}/api/productCategories/nonGroup`)
         .pipe(
-            catchError(productCategoryServiceAPI._handleError)
+            catchError(ProductCategoryServiceAPI._handleError)
         );
     }
     
@@ -31,7 +31,7 @@ export class productCategoryServiceAPI {
         var params = {category_id: id};
         return this.http.post<any>(`${API_URL}/api/delete_productCategory`, params)
         .pipe(
-            catchError(productCategoryServiceAPI._handleError)
+            catchError(ProductCategoryServiceAPI._handleError)
         );
     }
 
@@ -43,7 +43,7 @@ export class productCategoryServiceAPI {
         };
         return this.http.post<any>(`${API_URL}/api/add_productCategory`, params)
         .pipe(
-            catchError(productCategoryServiceAPI._handleError)
+            catchError(ProductCategoryServiceAPI._handleError)
         );
     }
 
@@ -55,7 +55,7 @@ export class productCategoryServiceAPI {
         }
         return this.http.post<any>(`${API_URL}/api/update_productCategory`, params)
         .pipe(
-            catchError(productCategoryServiceAPI._handleError)
+            catchError(ProductCategoryServiceAPI._handleError)
         );
     }   
     

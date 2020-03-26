@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ProductCategory } from '../../models/productCategory.model';
-import { productCategoryServiceAPI } from '../../services/productCategory-api.service';
-import { SharedService } from '../../services/shared.service';
+import { ProductCategoryServiceAPI } from '../../services/productCategory-api.service';
 
 @Component({
   selector: 'app-sidebar-d',
@@ -18,8 +17,7 @@ export class SidebarDComponent implements OnInit {
   productCategoryList = [];     // All product categories
 
   constructor(
-    private productCategoryApi: productCategoryServiceAPI,  
-    private sharedService: SharedService  
+    private productCategoryApi: ProductCategoryServiceAPI      
   ) { }
 
   ngOnInit() {
@@ -38,10 +36,6 @@ export class SidebarDComponent implements OnInit {
     },
       console.error,      
     );
-  }
-
-  clickSideBar(categoyId) {
-    this.sharedService.setCategory(categoyId);
-  }
+  }  
 
 }
