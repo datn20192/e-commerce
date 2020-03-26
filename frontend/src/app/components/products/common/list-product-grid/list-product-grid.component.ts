@@ -10,7 +10,7 @@ import { Product } from '../../../../models/product.model';
 })
 export class ListProductGridComponent implements OnInit {
   
-  @Input() category: string;
+  @Input() category: string; 
 
   private productsListSubs: Subscription;
 
@@ -36,11 +36,11 @@ export class ListProductGridComponent implements OnInit {
     this.load();
   }
 
-  load() {
+  load() {    
     this.productsListSubs = this.productApi.getProductByCategoryPage(this.category, this.page, 12).subscribe(res => {      
       let result = JSON.parse(res);      
       this.productsList = result.data['content'];      
-      this.pages = new Array(result.data['totalPages']);
+      this.pages = new Array(result.data['totalPages']);     
     },
       console.error
     );

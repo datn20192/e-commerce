@@ -9,7 +9,7 @@ export class ProductCategory{
 export interface CategoryChild {
     id: string,
     name: string,
-    quantity: string,
+    quantity: number,
     url: string,
     icon: string
 }
