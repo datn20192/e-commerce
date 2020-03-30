@@ -13,8 +13,8 @@ import { User } from '../models/user.model';
 export class AuthService {
   // userData: Observable<firebase.User>;
   userData: any; // save logged in user data
-  defaultURL = '/assets/img/image.png';
-  isAdmin: boolean;  
+  defaultURL = '/assets/img/image.png';   
+  isAdmin: boolean;
   
 
   constructor(
@@ -26,19 +26,19 @@ export class AuthService {
         if (user) {
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
-          JSON.parse(localStorage.getItem('user'));          
+          JSON.parse(localStorage.getItem('user'));                  
           this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {              
             if (res.length) {
-              this.isAdmin = true;              
+              this.isAdmin = true;             
             }
             else{
-              this.isAdmin = false;              
-            } 
-          })
+              this.isAdmin = false;        
+            }             
+          });
         } else {
           localStorage.setItem('user', '');
           // JSON.parse(localStorage.getItem('user'));
-        }        
+        }          
       });
   }
 
@@ -93,7 +93,15 @@ export class AuthService {
     }
     if (user !== null) { if ( user.email !== null) { user.emailVerified = true; }  }
     return (user !== null && user.emailVerified !== false) ? true : false;
-  }
+  }  
+
+  // get isAdmin(): boolean {
+  //   let user = null;
+  //   if ( localStorage.getItem('user') !== '') {
+  //     user = JSON.parse(localStorage.getItem('user'));
+  //   }
+  //   if (user !-=)
+  // }
 
   // Sign in with Google
   GoogleAuth() {
@@ -139,9 +147,9 @@ export class AuthService {
 
   // Sign out
   signOut() {
-    return this.angularFireAuth.auth.signOut().then(() => {
-      this.isAdmin = false;
+    return this.angularFireAuth.auth.signOut().then(() => {      
       this.userData = null;
+      this.isAdmin = false;
       localStorage.removeItem('user');
       // this.router.navigate(['sign-in']);
     });

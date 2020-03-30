@@ -1,24 +1,28 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
-import { HomeProductsComponent } from './components/products/home-products/home-products.component';
-import { GroupProductsComponent } from './components/products/group-products/group-products.component';
+import { ProductListComponent } from './home/home-products/product-list.component';
+import { GroupProductsComponent } from './home/group-products/group-products.component';
+import { PaymentComponent } from './components/checkout/payment/payment.component';
+import { ShippingComponent } from './components/checkout/shipping/shipping.component';
+
+// guards
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [    
+
   {
     path: '',
-    component: DefaultLayoutComponent,
+    component: ProductListComponent,
     data: {
       title: 'Trang chủ'
-    },
-    children: [  
-      {
-        path: '',
-        component: HomeProductsComponent,
-        data: {
-          title: 'Sản phẩm mới'
-        }           
-      },    
+    }
+  },
+  
+  { 
+    path: 'customers', 
+    loadChildren: () => import('./customers/customers').then(m => m.CustomersModule) 
+  },
+  
       {
         path: 'dien-thoai',
         component: GroupProductsComponent,
@@ -74,9 +78,7 @@ const routes: Routes = [
         data: {
           title: 'Tủ Lạnh'
         }
-      }      
-    ]
-  }  
+      },     
 ];
 
 @NgModule({

@@ -47,40 +47,35 @@ import { ChartsModule } from 'ng2-charts';
 // bootstrap
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-// Import containers
-import { DefaultLayoutComponent } from './containers';
-
-const APP_CONTAINERS = [
-  DefaultLayoutComponent
-];
-
 // Service
 import {ProductsApiService} from './services/product-api.service';
 import { ProductCategoryServiceAPI } from './services/productCategory-api.service';
-import { SharedService } from './services/shared.service';
+
+// Guards
+import { AuthGuard } from './guards/auth.guard';
 
 // Component
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { SidebarDComponent } from './components/sidebar-d/sidebar-d.component';
-import { CarouselListProductComponent } from './components/products/common/list-product-carousel/list-product-carousel.component';
-import { CardProductComponent } from './components/products/common/card-product/card-product.component';
-import { HomeProductsComponent } from './components/products/home-products/home-products.component';
-import { GroupProductsComponent } from './components/products/group-products/group-products.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-import { ListProductGridComponent } from './components/products/common/list-product-grid/list-product-grid.component';
+import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
+import { ProductListComponent } from './home/home-products/product-list.component';
+import { GroupProductsComponent } from './home/group-products/group-products.component';
+import { CardProductComponent } from './home/products/card-product/card-product.component';
+import { CarouselListProductComponent } from './home/products/list-product-carousel/list-product-carousel.component';
+import { ListProductGridComponent } from './home/products/list-product-grid/list-product-grid.component';
+import { ProductDetailComponent } from './home/products/product-detail/product-detail.component';
+import { PaymentComponent } from './components/checkout/payment/payment.component';
+import { ShippingComponent } from './components/checkout/shipping/shipping.component';
 
 @NgModule({
   declarations: [
-    AppComponent,    
-    ...APP_CONTAINERS,    
+    AppComponent,       
     SigninComponent,
     SignupComponent,    
-    NotFoundComponent,
-    ProductDetailComponent,
-    SidebarDComponent,
-    CarouselListProductComponent,
-    CardProductComponent,    
-    HomeProductsComponent, GroupProductsComponent, ListProductGridComponent                 
+    NotFoundComponent,    
+    SidebarDComponent, 
+    ProductListComponent, GroupProductsComponent, CardProductComponent, 
+    CarouselListProductComponent, ListProductGridComponent, ProductDetailComponent,
+    PaymentComponent, ShippingComponent               
   ],
   imports: [
     BrowserModule,
@@ -102,10 +97,11 @@ import { ListProductGridComponent } from './components/products/common/list-prod
     TabsModule.forRoot(),
     ChartsModule,
     PerfectScrollbarModule,
-    ModalModule.forRoot()        
+    ModalModule.forRoot(),         
   ],
   providers: [
-    AuthService,ProductsApiService,ProductCategoryServiceAPI, SharedService
+    AuthService,ProductsApiService,ProductCategoryServiceAPI, 
+    AuthGuard
     
   ],
   bootstrap: [AppComponent]
