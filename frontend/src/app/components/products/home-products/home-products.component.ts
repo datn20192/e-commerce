@@ -6,6 +6,7 @@ import { ProductCategoryServiceAPI } from '../../../services/productCategory-api
 
 // Model
 import { CategoryChild } from '../../../models/productCategory.model';
+import { ItemCartService } from '../../../services/item-cart.service';
 
 @Component({
   selector: 'app-home-products',
@@ -18,20 +19,22 @@ export class HomeProductsComponent implements OnInit {
   categoryListSubs: Subscription;
 
   constructor(
-    private categoryService: ProductCategoryServiceAPI
+    private categoryService: ProductCategoryServiceAPI,
+    private icService: ItemCartService,
   ) { 
     
   }
 
   ngOnInit() {
-    this.load();  
+    this.load();
   }
 
   ngOnDestroy() {
     this.categoryListSubs.unsubscribe();
   }     
 
-  load() {               
+  load() {
+                   
     this.categoryListSubs = this.categoryService.getProductCategoriesNonGroup().subscribe(res => {
       let result = JSON.parse(res);
       this.productCategoryList = result.data.filter(category => category.quantity>0);

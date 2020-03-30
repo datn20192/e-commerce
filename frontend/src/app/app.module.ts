@@ -68,6 +68,7 @@ import { HomeProductsComponent } from './components/products/home-products/home-
 import { GroupProductsComponent } from './components/products/group-products/group-products.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ListProductGridComponent } from './components/products/common/list-product-grid/list-product-grid.component';
+import { CartComponent } from './components/cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +81,7 @@ import { ListProductGridComponent } from './components/products/common/list-prod
     SidebarDComponent,
     CarouselListProductComponent,
     CardProductComponent,    
-    HomeProductsComponent, GroupProductsComponent, ListProductGridComponent                 
+    HomeProductsComponent, GroupProductsComponent, ListProductGridComponent, CartComponent                 
   ],
   imports: [
     BrowserModule,
@@ -105,7 +106,7 @@ import { ListProductGridComponent } from './components/products/common/list-prod
     ModalModule.forRoot()        
   ],
   providers: [
-    AuthService,ProductsApiService,ProductCategoryServiceAPI, SharedService
+    AuthService,ProductsApiService,ProductCategoryServiceAPI, SharedService,CartComponent
     
   ],
   bootstrap: [AppComponent]
