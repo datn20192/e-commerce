@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ProductsApiService } from '../../../services/product-api.service';
+import { HomeApiService } from '../../home.service';
 import { Product } from '../../../models/product.model';
 
 @Component({
@@ -19,7 +19,7 @@ export class ListProductGridComponent implements OnInit {
   private pages:number[]; 
 
   constructor(
-    private productApi : ProductsApiService
+    private productApi : HomeApiService
   ) { }
 
   ngOnInit() {        

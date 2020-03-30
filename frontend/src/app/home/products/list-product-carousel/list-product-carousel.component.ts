@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Product } from '../../../models/product.model';
-import { ProductsApiService }from '../../../services/product-api.service';
+import { HomeApiService }from '../../home.service';
 
 @Component({
   selector: 'app-carousel-list-product',
@@ -20,7 +20,7 @@ export class CarouselListProductComponent {
   quadrupleProductList = [];
 
   constructor(
-    private productsApi:ProductsApiService
+    private productsApi:HomeApiService
   ){}
 
   ngOnInit(){    

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 // Service
-import { ProductCategoryServiceAPI } from '../../services/productCategory-api.service';
+import { HomeApiService } from '../home.service';
 
 // Model
 import { CategoryChild } from '../../models/productCategory.model';
@@ -17,7 +17,7 @@ export class ProductListComponent {
     categoryListSubs: Subscription;
     
     constructor(
-      private categoryService: ProductCategoryServiceAPI
+      private categoryService: HomeApiService
     ) { 
       
     }

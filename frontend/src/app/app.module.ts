@@ -51,18 +51,13 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {ProductsApiService} from './services/product-api.service';
 import { ProductCategoryServiceAPI } from './services/productCategory-api.service';
 
-// Guards
-import { AuthGuard } from './guards/auth.guard';
+// Module
+import { HomeModule } from './home/home.module';
 
 // Component
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
-import { ProductListComponent } from './home/home-products/product-list.component';
-import { GroupProductsComponent } from './home/group-products/group-products.component';
-import { CardProductComponent } from './home/products/card-product/card-product.component';
-import { CarouselListProductComponent } from './home/products/list-product-carousel/list-product-carousel.component';
-import { ListProductGridComponent } from './home/products/list-product-grid/list-product-grid.component';
-import { ProductDetailComponent } from './home/products/product-detail/product-detail.component';
+
 import { PaymentComponent } from './components/checkout/payment/payment.component';
 import { ShippingComponent } from './components/checkout/shipping/shipping.component';
 
@@ -72,9 +67,7 @@ import { ShippingComponent } from './components/checkout/shipping/shipping.compo
     SigninComponent,
     SignupComponent,    
     NotFoundComponent,    
-    SidebarDComponent, 
-    ProductListComponent, GroupProductsComponent, CardProductComponent, 
-    CarouselListProductComponent, ListProductGridComponent, ProductDetailComponent,
+    SidebarDComponent,  
     PaymentComponent, ShippingComponent               
   ],
   imports: [
@@ -97,11 +90,13 @@ import { ShippingComponent } from './components/checkout/shipping/shipping.compo
     TabsModule.forRoot(),
     ChartsModule,
     PerfectScrollbarModule,
-    ModalModule.forRoot(),         
+    ModalModule.forRoot(),   
+    HomeModule      
   ],
   providers: [
-    AuthService,ProductsApiService,ProductCategoryServiceAPI, 
-    AuthGuard
+    AuthService,  
+    ProductsApiService,
+    ProductCategoryServiceAPI
     
   ],
   bootstrap: [AppComponent]

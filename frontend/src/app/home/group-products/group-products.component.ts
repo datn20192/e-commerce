@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { ProductCategoryServiceAPI } from '../../services/productCategory-api.service';
+import { HomeApiService } from '../home.service';
 
 // Model
 import { CategoryChild } from '../../models/productCategory.model';
@@ -23,7 +23,7 @@ export class GroupProductsComponent implements OnInit {
 
   constructor(    
     private router: Router,
-    private categoryApi: ProductCategoryServiceAPI
+    private categoryApi: HomeApiService
   ) { }
 
   ngOnInit() {       
