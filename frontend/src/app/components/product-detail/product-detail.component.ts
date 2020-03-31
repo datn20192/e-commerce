@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Product } from '../../models/product.model';
+import { ItemCartService } from '../../services/item-cart.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,15 +16,19 @@ export class ProductDetailComponent implements OnInit {
   @Output() onClose = new EventEmitter();  
   
   constructor(
+    private icService: ItemCartService,
   
   ) { }
 
 
   ngOnInit() {
-    console.log(this.product.imageURL);
+    localStorage.setItem('item',' ');
   }
 
   closeModal(){
+    
+    this.icService.addToCart(this.product);
+    this.icService.loadItemCart();
     this.onClose.emit(null);
   }
 }

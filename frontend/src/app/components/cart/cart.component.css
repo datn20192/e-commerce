@@ -1,0 +1,68 @@
+
+.form-cart{
+    display: flex;
+    max-width: 60%;
+    font-size: 14px;
+}
+.form-cart-left{
+    margin-left:2em;
+}
+/* shopping-cart-item */
+.form-cart .shopping-cart-item{
+    padding: 20px;
+    display: flex;
+    width: 100%;
+    margin: 0 20px 20px 20px;
+    border-bottom: 2px solid #333333
+}
+.col-right{
+    display: flex;
+}
+.col-right .card-body{
+    width: 542px;
+    padding: 10px;
+}
+.card-body .info-product{
+    width: auto;
+}
+.col-right .box-price{
+    height: 5em;
+    padding: 10px;
+}
+.col-right .btn-group{
+    margin-left: 40px;
+    height: 5em;
+    padding: 10px;
+}
+.col-right .btn-group button {
+    height: 30px;
+}
+.col-right .btn-group input {
+    height: 30px;
+    width: 40px;
+}
+/* Box-fee*/
+.form-cart-right{
+    margin-left: 5em;
+    float: right;
+}
+.box-fee{
+    width: 350px;
+    padding: 10px;
+    border: 1px solid #333333;
+    margin: 10px;
+}
+.box-fee span strong{
+    color: #fe3834;
+    font-size: 22px;
+    font-weight: 400;
+    float: right;
+}
+.text-babel{
+    margin-top: 5px;
+    display: inline-block
+}
+.box-fee .btn-checkout{
+    margin-top: 10px;
+    padding: 10px;
+}

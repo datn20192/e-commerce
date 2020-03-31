@@ -1,0 +1,37 @@
+<ng-container>
+    <div class="form-cart">
+        <div class="form-cart-left">
+            <div class="shopping-cart-item" *ngFor="let product of icService.showItemCart">
+                <img width=110px height=110px class="img-responsive"
+                    src="{{product.imageURL[0]}}">
+                <div class="col-right">
+                    <div class="card-body">
+                        <div class="info-product">
+                            <a routerLink="/" class="card-title">{{product.name}}</a>
+                            <p class="card-text">Thương hiệu: {{product.brand}}</p>
+                            <button class="btn btn-danger" (click)="removeItem(product)">Xóa</button>
+                        </div>
+                    </div>
+                    <div class="box-price">
+                        <strong class="h5">{{productProcessor.nomalizeProductPrice(product.price)}}đ</strong>
+                    </div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary" (click)="onDecrease(product)">-</button>
+                        <input type="tel" value="{{product.quantityPurchased}}">
+                        <button type="button" class="btn btn-secondary" (click)="onIncrease(product)">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-cart-right" *ngIf="!icService.isEmpty">
+            <div class="purchase">
+                <div class="box-fee">
+                    <p class="text-babel"></p>
+                    <span>Thành tiền:<strong>{{nomalizedTotalPrice}}đ</strong></span>
+                    <hr>
+                    <button type="button" class="btn btn-danger btn-block btn-checkout">Tiến hành đặt hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

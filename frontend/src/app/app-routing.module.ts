@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DefaultLayoutComponent } from './containers/default-layout/default-layout.component';
 import { HomeProductsComponent } from './components/products/home-products/home-products.component';
 import { GroupProductsComponent } from './components/products/group-products/group-products.component';
+import { CartComponent } from './components/cart/cart.component';
 
 const routes: Routes = [    
   {
@@ -74,7 +75,14 @@ const routes: Routes = [
         data: {
           title: 'Tủ Lạnh'
         }
-      }      
+      },
+      {
+        path: 'checkout',
+        component: CartComponent,
+        data: {
+        title: 'Giỏ hàng'
+        }
+      }       
     ]
   }  
 ];
