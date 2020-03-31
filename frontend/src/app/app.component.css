@@ -1,11 +1,29 @@
+/* header */
+.app-header{
+    width: 100%;    
+}
+.search-container{
+    width: 40%;
+}
+.fa-search{   
+    margin-right: 5px;
+}
+.form-control{
+    border-radius: 0px;
+    width: 300px;
+}
+.nav-item{
+    margin-left: 10px;    
+}
+.modal-title{    
+    color: red;
+}
+
 /* body */
 .main{
     background-color: white;
 }
-body{
-    font-size: 14px;
-    font-family: "Roboto, sans-serif";
-}
+
 /* Sidebar */
 .sidebar{
     border-style: ridge;

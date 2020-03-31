@@ -47,41 +47,24 @@ import { ChartsModule } from 'ng2-charts';
 // bootstrap
 import { ModalModule } from 'ngx-bootstrap/modal';
 
-// Import containers
-import { DefaultLayoutComponent } from './containers';
-
-const APP_CONTAINERS = [
-  DefaultLayoutComponent
-];
-
 // Service
 import {ProductsApiService} from './services/product-api.service';
 import { ProductCategoryServiceAPI } from './services/productCategory-api.service';
-import { SharedService } from './services/shared.service';
+
+// Module
+import { HomeModule } from './home/home.module';
 
 // Component
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { SidebarDComponent } from './components/sidebar-d/sidebar-d.component';
-import { CarouselListProductComponent } from './components/products/common/list-product-carousel/list-product-carousel.component';
-import { CardProductComponent } from './components/products/common/card-product/card-product.component';
-import { HomeProductsComponent } from './components/products/home-products/home-products.component';
-import { GroupProductsComponent } from './components/products/group-products/group-products.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-import { ListProductGridComponent } from './components/products/common/list-product-grid/list-product-grid.component';
-import { CartComponent } from './components/cart/cart.component';
+import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
 
 @NgModule({
   declarations: [
-    AppComponent,    
-    ...APP_CONTAINERS,    
+    AppComponent,       
     SigninComponent,
     SignupComponent,    
-    NotFoundComponent,
-    ProductDetailComponent,
-    SidebarDComponent,
-    CarouselListProductComponent,
-    CardProductComponent,    
-    HomeProductsComponent, GroupProductsComponent, ListProductGridComponent, CartComponent                 
+    NotFoundComponent,    
+    SidebarDComponent,                  
   ],
   imports: [
     BrowserModule,
@@ -103,10 +86,13 @@ import { CartComponent } from './components/cart/cart.component';
     TabsModule.forRoot(),
     ChartsModule,
     PerfectScrollbarModule,
-    ModalModule.forRoot()        
+    ModalModule.forRoot(),   
+    HomeModule      
   ],
   providers: [
-    AuthService,ProductsApiService,ProductCategoryServiceAPI, SharedService,CartComponent
+    AuthService,  
+    ProductsApiService,
+    ProductCategoryServiceAPI
     
   ],
   bootstrap: [AppComponent]

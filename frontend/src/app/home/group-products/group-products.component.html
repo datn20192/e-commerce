@@ -1,0 +1,8 @@
+<ng-container>
+    <div class="col-lg-12">
+        <h3>{{category.name}}: 
+            <span class="text-muted">{{category.quantity}} kết quả</span>
+        </h3>
+    </div>
+    <app-list-product-grid [category]="category.id" *ngIf="showList"></app-list-product-grid>
+</ng-container>
