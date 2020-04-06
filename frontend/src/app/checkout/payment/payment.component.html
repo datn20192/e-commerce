@@ -1,0 +1,63 @@
+<ng-container>
+    <div class="col-12">
+      <h3>2. Hình thức thanh toán</h3>
+    </div>
+    <div class="row">
+        <div class="col-7">                       
+            <div class="card">
+              <div class="card-body">
+                <form #paymentForm="ngForm" (ngSubmit)="onSubmit()">                  
+                    <div class="custom-control custom-radio" *ngFor="let type of typeOfPaymentArr">
+                      <input class="custom-control-input" type="radio" value="{{type.value}}" name="typeOfPayment" id="{{type.value}}" [(ngModel)]="typeOfPayment" >
+                      <label class="custom-control-label" for="{{type.value}}">
+                        {{type.name}}
+                      </label>
+                    </div>                               
+                    <div class="card" *ngIf="(typeOfPayment=='card')">          
+                      <div class="card-header bg-danger">
+                        <strong>Thông tin thẻ</strong>            
+                      </div>           
+                      <div class="card-body">
+                          <div [formGroup]="cardInforForm">
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <div class="form-group">
+                                  <label for="name">Tên in trên thẻ</label>
+                                  <input type="text" class="form-control" formControlName="name" placeholder="Nhập tên thẻ..">
+                                </div>
+                              </div>
+                            </div><!--/.row-->
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <div class="form-group">
+                                  <label for="cardNumber">Số thẻ</label>
+                                  <input type="text" class="form-control" formControlName="cardNumber" placeholder="0000 0000 0000 0000">
+                                </div>
+                              </div>
+                            </div><!--/.row-->
+                            <div class="row">
+                              <div class="form-group col-sm-4">
+                                <label for="ccmonth">Tháng</label>
+                                <input pattern="[a-zA-Z ]*">
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="form-group">
+                                  <label for="securityCode">Mã bảo mật</label>
+                                  <input type="text" class="form-control" formControlName="securityCode" placeholder="123">
+                                </div>
+                              </div>
+                            </div><!--/.row-->
+                          </div>
+                      </div>
+                    </div>                                       
+                    <button type="submit" [disabled]="!paymentForm.valid">Submit</button>
+                </form>
+              </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <app-bill></app-bill>
+        </div>
+    </div> 
+     
+</ng-container>

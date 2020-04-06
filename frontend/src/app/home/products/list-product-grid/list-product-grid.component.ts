@@ -22,7 +22,7 @@ export class ListProductGridComponent implements OnInit {
     private productApi : HomeApiService
   ) { }
 
-  ngOnInit() {        
+  ngOnInit() {            
     this.load();
   }
 
@@ -50,7 +50,8 @@ export class ListProductGridComponent implements OnInit {
   load() {    
     this.productsListSubs = this.productApi.getProductByCategoryPage(this.category, this.page, 12).subscribe(res => {      
       let result = JSON.parse(res);      
-      this.productsList = result.data['content'];      
+      this.productsList = result.data['content'];  
+      console.log(this.productsList);    
       this.pages = new Array(result.data['totalPages']);     
     },
       console.error

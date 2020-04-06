@@ -3,7 +3,7 @@ from flask import request
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 from .config import Response
-from .api import product_api, productCategory_api
+from .api import product_api, productCategory_api, customer_api
 
 app = Flask(__name__)
 
@@ -63,3 +63,8 @@ def update_productCategory():
 @app.route('/api/delete_productCategory', methods=['POST'])
 def delete_productCategory():
     return productCategory_api.delete_category(mongo)
+
+#--------------- customer api -----------------------#
+@app.route('/api/customer/<string:account>', methods = ['GET'])
+def get_customer_by_account(account):
+    return customer_api.get_customer_by_account(mongo, account)

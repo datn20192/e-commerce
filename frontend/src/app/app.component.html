@@ -48,10 +48,10 @@
       <a class="nav-link" href="#"><i class="icon-location-pin font-2xl"></i><span>Theo dõi đơn hàng</span></a>
       </li>
       <li class="nav-item d-md-down-none" *ngIf="!(auth.isAdmin)">
-      <a class="nav-link" href="#">
+      <a class="nav-link" routerLink="/checkout/cart">
           <i class="icon-basket font-2xl"></i>          
           <span>Giỏ hàng</span>      
-          <span class="badge-pill badge-danger">5</span>
+          <span class="badge-pill badge-danger">{{icService.lengthCart}}</span>
       </a>             
       <li class="nav-item d-md-down-none" *ngIf="auth.isAdmin">
       <a class="nav-link" href="#"><i class="fa fa-line-chart font-2xl"></i><span>Thống kê</span></a>
@@ -113,4 +113,4 @@
   <span><a href="https://coreui.io">CoreUI</a> &copy; 2018 creativeLabs.</span>
   <span class="ml-auto">Powered by <a href="https://coreui.io/angular">CoreUI for Angular</a></span>
 </app-footer>
-  
+

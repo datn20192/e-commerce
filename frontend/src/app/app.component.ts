@@ -2,6 +2,7 @@ import { Component, TemplateRef } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
+import { ItemCartService } from './services/item-cart.service';
 
 @Component({
   selector: 'app-root',
@@ -14,11 +15,12 @@ export class AppComponent {
 
   constructor(
     private auth: AuthService,
-    private modalService: BsModalService    
+    private modalService: BsModalService,
+    private icService: ItemCartService     
     ){}
 
   ngOnInit() {    
-    
+    this.icService.loadItemCart();
   }
   
   ngOnDestroy() {
@@ -44,5 +46,4 @@ export class AppComponent {
         keyboard: true
       });    
   }  
-
 }

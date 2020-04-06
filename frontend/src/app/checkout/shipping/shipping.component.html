@@ -1,0 +1,96 @@
+<ng-container>
+    <div class="col-12">
+        <h3>1. Địa chỉ giao hàng</h3>
+    </div>
+    <div class="row">
+        <div class="col-7">            
+            <div class="card">
+                <div class="card-header bg-danger">
+                    <strong>Thông tin địa chỉ</strong> 
+                  </div>
+                  <div class="card-body">
+                    <form #shippingForm="ngForm" (ngSubmit)="onSubmit()" class="form-horizontal">                
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="name">Tên</label>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" placeholder="Nhập tên.."
+                                  id="name" required [(ngModel)]="customer.name"
+                                  name="name" #name="ngModel"
+                          >
+                          <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                            Không được để trống
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="phoneNumber">Điện thoại</label>
+                        <div class="col-md-8">
+                          <input type="text" class="form-control" placeholder="Nhập số điện thoại.." 
+                                  id="phoneNumber" required [(ngModel)]="customer.phoneNumber"
+                                  name="phoneNumber" #phoneNumber="ngModel"
+                          >
+                        </div>
+                      </div>                     
+                      <h3>Địa chỉ</h3>
+                      <div class="form-group row">
+                        <label class="col-md-4 col-form-label" for="province">Tỉnh/Thành phố</label>
+                        <div class="col-md-8">
+                          <select class="form-control" id="province" required
+                                  [(ngModel)]="customer.address.province"
+                                  name="province" #province="ngModel"
+                          >                          
+                            <option value="1">Option #1</option>
+                            <option value="2">Option #2</option>
+                            <option value="3">Option #3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-md-4 col-form-label" for="district">Quận/Huyện</label>
+                          <div class="col-md-8">
+                            <select class="form-control" id="district" required
+                                    [(ngModel)]="customer.address.district"
+                                    name="district" #district="ngModel"
+                            >                            
+                              <option value="1">Option #1</option>
+                              <option value="2">Option #2</option>
+                              <option value="3">Option #3</option>
+                            </select>
+                          </div>
+                      </div>
+                      <div class="form-group row">
+                          <label class="col-md-4 col-form-label" for="subDistrict">Phường/Xã</label>
+                          <div class="col-md-8">
+                            <select class="form-control" id="subDistrict" required
+                                    [(ngModel)]="customer.address.subDistrict"
+                                    name="subDistrict" #subDistrict="ngModel"
+                            >                            
+                              <option value="1">Option #1</option>
+                              <option value="2">Option #2</option>
+                              <option value="3">Option #3</option>
+                            </select>                          
+                          </div>
+                      </div>            
+                      <div class="form-group row">
+                          <label class="col-md-4 col-form-label" for="details">Chi tiết</label>
+                          <div class="col-md-8">
+                              <textarea rows="4" class="form-control" placeholder="Nhập số nhà.., ngõ.., đường.."
+                                        id="details" required [(ngModel)]="customer.address.details"
+                                        name="details" #details="ngModel"
+                              >
+                              </textarea>
+                              <div [hidden]="details.valid || details.pristine" class="alert alert-danger">
+                                Không được để trống
+                              </div>
+                          </div>
+                      </div>                           
+                        
+                      <div class="float-right">
+                        <button type="submit" [disabled]="!shippingForm.form.valid" class="btn btn-sm btn-primary"> Xác nhận</button>
+                      </div>                                       
+                    </form>
+                  </div>                                                       
+            </div>
+        </div>        
+    </div>
+</ng-container>

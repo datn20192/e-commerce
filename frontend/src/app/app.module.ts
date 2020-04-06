@@ -58,17 +58,14 @@ import { HomeModule } from './home/home.module';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
 
-import { PaymentComponent } from './components/checkout/payment/payment.component';
-import { ShippingComponent } from './components/checkout/shipping/shipping.component';
-
 @NgModule({
   declarations: [
     AppComponent,       
     SigninComponent,
     SignupComponent,    
     NotFoundComponent,    
-    SidebarDComponent,  
-    PaymentComponent, ShippingComponent               
+    SidebarDComponent,                  
+
   ],
   imports: [
     BrowserModule,
@@ -90,8 +87,7 @@ import { ShippingComponent } from './components/checkout/shipping/shipping.compo
     TabsModule.forRoot(),
     ChartsModule,
     PerfectScrollbarModule,
-    ModalModule.forRoot(),   
-    HomeModule      
+    ModalModule.forRoot(),          
   ],
   providers: [
     AuthService,  

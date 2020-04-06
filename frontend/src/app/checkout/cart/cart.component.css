@@ -1,0 +1,14 @@
+.btn-group{
+    margin-left: 40px;
+    height: 5em;
+    
+}
+.btn-group button {
+    height: 30px;
+    text-align: center;
+}
+.btn-group input {
+    height: 30px;
+    width: 30px;
+    text-align: center;
+}

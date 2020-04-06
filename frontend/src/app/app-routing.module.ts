@@ -10,8 +10,8 @@ const routes: Routes = [
   },
   
   { 
-    path: 'customers', 
-    loadChildren: () => import('./checkout/checkout').then(m => m.CheckoutModule) 
+    path: 'checkout', 
+    loadChildren: () => import('./checkout/checkout.module').then(m => m.CheckoutModule) 
   },
 
   { path: '**', component: NotFoundComponent }
