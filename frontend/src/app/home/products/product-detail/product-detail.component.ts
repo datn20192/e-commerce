@@ -22,13 +22,11 @@ export class ProductDetailComponent implements OnInit {
 
 
   ngOnInit() {
-    localStorage.setItem('item',' ');
+    
   }
 
   closeModal(){
-    
     this.icService.addToCart(this.product);
-    this.icService.loadItemCart();
     this.onClose.emit(null);
   }
 }

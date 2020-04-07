@@ -1,8 +1,9 @@
-import { Component, TemplateRef } from '@angular/core';
+import { Component, TemplateRef, OnInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ItemCartService } from './services/item-cart.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,22 +11,22 @@ import { ItemCartService } from './services/item-cart.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {  
+export class AppComponent implements OnInit{  
 
-  modalRef: BsModalRef;  
+  modalRef: BsModalRef; 
 
   constructor(
     private auth: AuthService,
     private modalService: BsModalService,
-    private icService: ItemCartService     
+    private icService: ItemCartService,
+    public router: Router,  
     ){}
 
-  ngOnInit() {    
+  ngOnInit() {
     this.icService.loadItemCart();
   }
   
   ngOnDestroy() {
-  
   }
  
   signOut() {    
@@ -46,6 +47,5 @@ export class AppComponent {
         backdrop:'static',         
         keyboard: true
       });    
-  }  
-
+  } 
 }
