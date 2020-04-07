@@ -6,6 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 // import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
+import { ItemCartService } from './item-cart.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,11 +14,18 @@ import { User } from '../models/user.model';
 export class AuthService {
   // userData: Observable<firebase.User>;
   userData: any; // save logged in user data
-  defaultURL = '/assets/img/image.png';   
-  isAdmin: boolean;
-  
+  defaultURL = '/assets/img/image.png';
+  isAdmin: boolean = false;  
+  userDefault = {uid: '',
+                  email: '',
+                  displayName: '',
+                  photoURL: '',
+                  emailVerified: false,
+                  cart: []
+                };
 
   constructor(
+    private icService: ItemCartService,
     private angularFireAuth: AngularFireAuth,
     private afs: AngularFirestore,
     public router: Router,
@@ -26,19 +34,19 @@ export class AuthService {
         if (user) {
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
-          JSON.parse(localStorage.getItem('user'));                  
+          JSON.parse(localStorage.getItem('user'));   
+          this.icService.loadItemCart();
+
           this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {              
             if (res.length) {
-              this.isAdmin = true;             
-            }
-            else{
-              this.isAdmin = false;        
-            }             
-          });
+              this.isAdmin = true;              
+            } 
+          })
+          // this.icService.loadItemCart();
         } else {
-          localStorage.setItem('user', '');
-          // JSON.parse(localStorage.getItem('user'));
-        }          
+          this.userData = false;
+          localStorage.setItem('user', JSON.stringify(this.userDefault));
+        }
       });
   }
 
@@ -50,19 +58,22 @@ export class AuthService {
         this.SendVerificationMail();
         this.SetUserData(result.user);
       }).catch((error) => {
-        window.alert(error.message);
+        window.alert(error.message);  
       });
   }
 
   /* Sign in */
   SignIn(email: string, password: string) {
     return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password)
-    .then((result) => {
+    .then(result => {
       this.ngZone.run(() => {
         // this.router.navigate(['image', 'list']);
       });
-      this.SetUserData(result.user);
-    }).catch((error) => {
+      this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {
+        if(!res.length) this.SetUserData(result.user);
+      })           
+    })
+    .catch((error) => {
       window.alert(error.message);
     });
   }
@@ -90,8 +101,9 @@ export class AuthService {
     let user = null;
     if ( localStorage.getItem('user') !== '') {
       user = JSON.parse(localStorage.getItem('user'));
+      
     }
-    if (user !== null) { if ( user.email !== null) { user.emailVerified = true; }  }
+    if (user !== null) { if ( user.email !== '') { user.emailVerified = true; }  }
     return (user !== null && user.emailVerified !== false) ? true : false;
   }  
 
@@ -122,7 +134,9 @@ export class AuthService {
        this.ngZone.run(() => {
           //this.router.navigate(['image', 'list']);
         });
-       this.SetUserData(result.user);
+        this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {
+          if(!res.length) this.SetUserData(result.user);
+        })
     }).catch((error) => {
       window.alert(error);
     });
@@ -136,7 +150,7 @@ export class AuthService {
       displayName:  user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      
+      cart: []
     };
 
     this.userData = userData;
@@ -151,6 +165,7 @@ export class AuthService {
       this.userData = null;
       this.isAdmin = false;
       localStorage.removeItem('user');
+      localStorage.setItem('user', JSON.stringify(this.userDefault));
       // this.router.navigate(['sign-in']);
     });
   }

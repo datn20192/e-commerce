@@ -9,24 +9,24 @@
                 <tr *ngFor="let product of icService.showItemCart">
                   <th scope="row" class="border-0">
                     <div class="p-2">
-                        <img src="{{product.imageURL[0]}}" alt="" width="70" class="img-fluid rounded shadow-sm align-top">
+                        <img src="{{product.product.imageURL[0]}}" alt="" width="70" class="img-fluid rounded shadow-sm align-top">
                       <div class="ml-3 d-inline-block col-8">
                         <h5 class="mb-0"> 
-                            <a href="#" class="text-dark d-inline-block">{{product.name}}</a>
+                            <a href="#" class="text-dark d-inline-block">{{product.product.name}}</a>
                         </h5>
-                        <span class="text-muted font-weight-normal font-italic d-block">Thương hiệu: {{product.brand}}</span>
+                        <span class="text-muted font-weight-normal font-italic d-block">Thương hiệu: {{product.product.brand}}</span>
                       </div>
                     </div>
                   </th>
-                  <td class="border-0"><strong>{{productProcessor.nomalizeProductPrice(product.price)}}đ</strong></td>
+                  <td class="border-0"><strong>{{productProcessor.nomalizeProductPrice(product.product.price)}}đ</strong></td>
                   <td class="border-0">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn border-secondary" (click)="onDecrease(product)">-</button>
+                        <button type="button" class="btn border-secondary" (click)="icService.onDecrease(product.product)">-</button>
                         <input type="tel" value="{{product.quantityPurchased}}" disabled>
-                        <button type="button" class="btn border-secondary" (click)="onIncrease(product)">+</button>
+                        <button type="button" class="btn border-secondary" (click)="icService.onIncrease(product.product)">+</button>
                     </div>
                   </td>
-                  <td class="border-0"><a (click)="false" class="text-dark" (click)="removeItem(product)"><i class="fa fa-trash"></i></a></td>
+                  <td class="border-0"><a (click)="false" class="text-dark" (click)="icService.remove(product.product)"><i class="fa fa-trash"></i></a></td>
                 </tr>            
               </tbody>
             </table>
@@ -36,7 +36,7 @@
             <div class="card purchase">                
                 <div class="card-body">  
                     <p class="text-babel"></p>                  
-                    <span>Thành tiền:<strong>{{nomalizedTotalPrice}}đ</strong></span>
+                    <span>Thành tiền:<strong>{{icService.nomalizedTotalPrice}}đ</strong></span>
                     <hr>
                     <button type="button" class="btn btn-danger btn-block btn-checkout" (click)="proceedToCheckout()">Tiến hành đặt hàng</button>
                 </div>
