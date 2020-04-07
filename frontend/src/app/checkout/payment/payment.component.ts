@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+
+import { Card } from '../../models/bill.model';
 
 @Component({
     selector: 'app-payment',
@@ -20,18 +21,15 @@ export class PaymentComponent {
             value: "card",
             name: "Thanh toán bằng thẻ quốc tế "           
         }
-    ];
-    
-    private cardInforForm = this.fb.group({
-        name: [''],
-        cardNumber: [''],
-        validThru: [''],
-        securityCode: ['']
-    });    
+    ];       
+
+    private card = new Card("", "", "", "");
 
     constructor(
-        private fb: FormBuilder
-    ) { }
+    
+    ) {
+        this.typeOfPayment = 'cash';
+     }
 
     ngOnInit() {
         
@@ -40,4 +38,9 @@ export class PaymentComponent {
     onSubmit() {
         console.log(this.typeOfPayment);
     }
+
+    slash() {
+        this.card.validThru = this.card.validThru + '/'
+    }
+    
 }

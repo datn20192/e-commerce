@@ -2,7 +2,11 @@
     <div class="card">
         <div class="card-header bg-primary">            
             <strong>Địa chỉ giao hàng</strong>  
-            <a class="float-right btn btn-warning btn-sm" href="/checkout/shipping">Sửa</a>                          
+            <a class="float-right btn btn-warning btn-sm text-dark" 
+                (click)="navigate('/checkout/shipping')"
+            >
+            Sửa
+            </a>                          
         </div>
         <div class="card-body">
           <h5>Nguyễn Văn A</h5>          
@@ -12,7 +16,11 @@
     <div class="card">
         <div class="card-header bg-primary">            
             <strong>Đơn hàng</strong><span> (2 sản phẩm)</span>  
-            <a class="float-right btn btn-warning btn-sm" href="/checkout/cart">Sửa</a>                          
+            <a class="float-right btn btn-warning btn-sm text-dark" 
+                (click)="navigate('/checkout/cart')"
+            >
+            Sửa
+            </a>                          
         </div>
         <div class="card-body">   
             <div class="row">

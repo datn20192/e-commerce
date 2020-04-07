@@ -18,3 +18,12 @@ export class Cart {
         public quantity: number,        
     ) {}
 }
+
+export class Card {
+    constructor(
+        public name: string,
+        public cardNumber: string,
+        public validThru: string,
+        public securityCode: string
+    ) {}
+}

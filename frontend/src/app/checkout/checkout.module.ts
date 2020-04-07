@@ -9,13 +9,20 @@ import { ShippingComponent } from './shipping/shipping.component';
 import { BillComponent } from './bill/bill.component';
 import { PaymentComponent } from './payment/payment.component';
 
+// Directive
+import { NumbericInput } from '../shared/directives/numberic-input.directive';
+import { MonthYearInput } from '../shared/directives/month-year-input.directive';
+
 @NgModule({
   declarations: [
     CheckoutComponent,
     CartComponent,
     ShippingComponent,
     BillComponent,
-    PaymentComponent
+    PaymentComponent,
+
+    NumbericInput,
+    MonthYearInput
   ],
   imports: [
     CommonModule,
