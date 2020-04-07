@@ -5,6 +5,7 @@ import {catchError} from 'rxjs/operators';
 import { API_URL} from '../../environments/environment';
 
 import { Customer } from '../models/user.model';
+import { TypeOfPayment } from '../models/bill.model';
 
 @Injectable({
     providedIn: 'root',
@@ -19,6 +20,14 @@ export class CheckoutApiService {
     getCustomerByAccount(account): Observable<any> {       
         return this.http.get<Customer> (`${API_URL}/api/customer/${account}`)
         .pipe (
+            catchError(CheckoutApiService._handleError)
+        )
+    }
+
+    // Get all of payment types
+    getAllTypeOfPayment(): Observable<any> {
+        return this.http.get<TypeOfPayment>(`${API_URL}/api/payment/types`)
+        .pipe(
             catchError(CheckoutApiService._handleError)
         )
     }

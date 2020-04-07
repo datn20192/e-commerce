@@ -27,3 +27,10 @@ export class Card {
         public securityCode: string
     ) {}
 }
+
+export class TypeOfPayment {
+    constructor(
+        public value: string,
+        public name: string
+    ) {}
+}

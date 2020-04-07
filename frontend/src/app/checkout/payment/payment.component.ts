@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
+import { Subscription } from 'rxjs';
 
-import { Card } from '../../models/bill.model';
+import { CheckoutApiService } from '../checkout.service';
+import { Card, TypeOfPayment } from '../../models/bill.model';
+import { catchError } from 'rxjs/operators';
 
 @Component({
     selector: 'app-payment',
@@ -10,29 +13,32 @@ import { Card } from '../../models/bill.model';
 
 export class PaymentComponent {
 
+    private typeOfPaymentSubs: Subscription;
+
     private typeOfPayment: string;
-
-    private typeOfPaymentArr: object[] = [];       
-
+    private typeOfPaymentArr: TypeOfPayment[];     
     private card = new Card("", "", "", "");
 
     constructor(
-    
+        private checkoutApi: CheckoutApiService
     ) { }
 
     ngOnInit() {
-        this.typeOfPaymentArr = [
-            {
-                value: "cash",
-                name: "Thanh toán tiền mặt khi nhận hàng"            
-            },
-            {
-                value: "card",
-                name: "Thanh toán bằng thẻ quốc tế "           
-            }
-        ];
-        this.typeOfPayment = 'cash';
-        console.log('<*>-<*>');
+        this.load();
+    }
+
+    ngOnDestroy() {
+        this.typeOfPaymentSubs.unsubscribe();
+    }
+
+    load() {
+        this.typeOfPaymentSubs = this.checkoutApi.getAllTypeOfPayment().subscribe(res => {
+            let result = JSON.parse(res);
+            this.typeOfPaymentArr = result.data;
+            this.typeOfPayment = 'cash'
+        },
+            console.error
+        );
     }
 
     onSubmit() {
