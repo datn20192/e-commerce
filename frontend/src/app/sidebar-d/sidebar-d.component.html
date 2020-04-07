@@ -6,8 +6,8 @@
       </li>
       <!-- End Separator -->
       <!-- Menu -->
-      <a routerLink="{{categoryProduct.url}}" 
-        routerLinkActive="active-link"
+      <a [routerLink]="categoryProduct.url" 
+        routerActive="active"
         class="font-weight-light list-group-item list-group-item-action flex-column align-items-start"
         *ngFor="let categoryProduct of categoryGroup.children"        
       >

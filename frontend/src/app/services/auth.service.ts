@@ -105,7 +105,15 @@ export class AuthService {
     }
     if (user !== null) { if ( user.email !== '') { user.emailVerified = true; }  }
     return (user !== null && user.emailVerified !== false) ? true : false;
-  }
+  }  
+
+  // get isAdmin(): boolean {
+  //   let user = null;
+  //   if ( localStorage.getItem('user') !== '') {
+  //     user = JSON.parse(localStorage.getItem('user'));
+  //   }
+  //   if (user !-=)
+  // }
 
   // Sign in with Google
   GoogleAuth() {
@@ -153,9 +161,9 @@ export class AuthService {
 
   // Sign out
   signOut() {
-    return this.angularFireAuth.auth.signOut().then(() => {
-      this.isAdmin = false;
+    return this.angularFireAuth.auth.signOut().then(() => {      
       this.userData = null;
+      this.isAdmin = false;
       localStorage.removeItem('user');
       localStorage.setItem('user', JSON.stringify(this.userDefault));
       // this.router.navigate(['sign-in']);

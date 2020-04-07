@@ -51,9 +51,6 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import {ProductsApiService} from './services/product-api.service';
 import { ProductCategoryServiceAPI } from './services/productCategory-api.service';
 
-// Module
-import { HomeModule } from './home/home.module';
-
 // Component
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
@@ -65,6 +62,7 @@ import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
     SignupComponent,    
     NotFoundComponent,    
     SidebarDComponent,                  
+
   ],
   imports: [
     BrowserModule,
@@ -86,8 +84,7 @@ import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
     TabsModule.forRoot(),
     ChartsModule,
     PerfectScrollbarModule,
-    ModalModule.forRoot(),   
-    HomeModule      
+    ModalModule.forRoot(),          
   ],
   providers: [
     AuthService,  

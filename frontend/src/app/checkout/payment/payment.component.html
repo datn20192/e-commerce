@@ -1,0 +1,88 @@
+<ng-container>
+    <div class="col-12">
+      <h3>2. Hình thức thanh toán</h3>
+    </div>
+    <div class="row">
+        <div class="col-7">                       
+            <div class="card">
+              <div class="card-body">
+                <form #paymentForm="ngForm" (ngSubmit)="onSubmit()">                  
+                    <div class="custom-control custom-radio" *ngFor="let type of typeOfPaymentArr; let i=index">
+                      <input class="custom-control-input" type="radio" value="{{type.value}}" name="type" 
+                              id="{{type.value}}" [(ngModel)]="typeOfPayment" checked="(i===0)"
+                      >
+                      <label class="custom-control-label" for="{{type.value}}">
+                        {{type.name}}
+                      </label>
+                    </div>                               
+                    <div class="card" *ngIf="(typeOfPayment=='card')">          
+                      <div class="card-header bg-danger">
+                        <strong>Thông tin thẻ</strong>            
+                      </div>           
+                      <div class="card-body">                          
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <div class="form-group">
+                                  <label for="name">Tên in trên thẻ</label>
+                                  <input type="text" class="form-control"  placeholder="Nhập tên thẻ.."
+                                          id="name" required [(ngModel)]="card.name"
+                                          name="name" #name="ngModel"
+                                  >
+                                  <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                                    Không được để trống
+                                  </div>
+                                </div>
+                              </div>
+                            </div><!--/.row-->
+                            <div class="row">
+                              <div class="col-sm-12">
+                                <div class="form-group">
+                                  <label for="cardNumber">Số thẻ</label>
+                                  <input [NumbericInput]=16 class="form-control" placeholder="0000 0000 0000 0000"
+                                          id="cardNumber" required [(ngModel)]="card.cardNumber"
+                                          name="cardNumber" #cardNumber="ngModel"
+                                  >
+                                  <div [hidden]="cardNumber.valid || cardNumber.pristine" class="alert alert-danger">
+                                    Không được để trống
+                                  </div>
+                                </div>
+                              </div>
+                            </div><!--/.row-->
+                            <div class="row">
+                              <div class="form-group col-sm-4">
+                                <label for="ccmonth">Ngày hết hạn</label>
+                                <input MonthYearInput (nomalized)="slash()" 
+                                        class="form-control" placeholder="MM/YYYY"
+                                        id="validThru" required [(ngModel)]="card.validThru"
+                                        name="validThru" #validThru="ngModel"
+                                >
+                                <div [hidden]="validThru.valid || validThru.pristine" class="alert alert-danger">
+                                  Không được để trống
+                                </div>
+                              </div>
+                              <div class="col-sm-4">
+                                <div class="form-group">
+                                  <label for="securityCode">Mã bảo mật</label>
+                                  <input [NumbericInput]=3 class="form-control" placeholder="123"
+                                          id="securityCode" required [(ngModel)]="card.securityCode"
+                                          name="securityCode" #securityCode="ngModel"
+                                  >
+                                  <div [hidden]="securityCode.valid || securityCode.pristine" class="alert alert-danger">
+                                    Không được để trống
+                                  </div>
+                                </div>
+                              </div>
+                            </div><!--/.row-->                          
+                      </div>
+                    </div>                                       
+                    <button type="submit" [disabled]="!paymentForm.valid" class="btn btn-sm btn-primary">Submit</button>
+                </form>
+              </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <app-bill></app-bill>
+        </div>
+    </div> 
+     
+</ng-container>

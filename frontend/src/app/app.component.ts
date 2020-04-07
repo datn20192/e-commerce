@@ -5,7 +5,6 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { ItemCartService } from './services/item-cart.service';
 import { Router } from '@angular/router';
 
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -47,5 +46,7 @@ export class AppComponent implements OnInit{
         backdrop:'static',         
         keyboard: true
       });    
+
   } 
+
 }

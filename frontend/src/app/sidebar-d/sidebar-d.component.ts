@@ -10,7 +10,7 @@ import { ProductCategoryServiceAPI } from '../services/productCategory-api.servi
 })
 export class SidebarDComponent implements OnInit {
 
-  productCategoriesListSubs: Subscription;   
+  private productCategoriesListSubs: Subscription;     
 
   // Product categories list
   productCategoriesGroupList: ProductCategory[];  // Categories list is grouped by categories group
@@ -32,7 +32,7 @@ export class SidebarDComponent implements OnInit {
   load() {
     this.productCategoriesListSubs = this.productCategoryApi.getProductCategories().subscribe(res => {
       let result = JSON.parse(res);
-      this.productCategoriesGroupList = result.data;                                
+      this.productCategoriesGroupList = result.data;                              
     },
       console.error,      
     );

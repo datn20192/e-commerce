@@ -4,9 +4,22 @@ export class User {
     displayName: string;
     photoURL: string;
     emailVerified: boolean;
-    cart: [];
+}
 
-    constructor() {
-        this.uid = new Date().getTime().toString();
-    }
+export class Customer  {
+    constructor(        
+        public account: string,
+        public name: string,
+        public phoneNumber: string,
+        public address: Address
+    ) {}
+}
+
+export class Address {
+    constructor(
+        public province: string,
+        public district: string,
+        public subDistrict: string,
+        public details: string
+    ) {}
 }
