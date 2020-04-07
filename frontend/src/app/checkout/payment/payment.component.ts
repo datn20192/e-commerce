@@ -12,27 +12,27 @@ export class PaymentComponent {
 
     private typeOfPayment: string;
 
-    private typeOfPaymentArr: object[] = [
-        {
-            value: "cash",
-            name: "Thanh toán tiền mặt khi nhận hàng"            
-        },
-        {
-            value: "card",
-            name: "Thanh toán bằng thẻ quốc tế "           
-        }
-    ];       
+    private typeOfPaymentArr: object[] = [];       
 
     private card = new Card("", "", "", "");
 
     constructor(
     
-    ) {
-        this.typeOfPayment = 'cash';
-     }
+    ) { }
 
     ngOnInit() {
-        
+        this.typeOfPaymentArr = [
+            {
+                value: "cash",
+                name: "Thanh toán tiền mặt khi nhận hàng"            
+            },
+            {
+                value: "card",
+                name: "Thanh toán bằng thẻ quốc tế "           
+            }
+        ];
+        this.typeOfPayment = 'cash';
+        console.log('<*>-<*>');
     }
 
     onSubmit() {

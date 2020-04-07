@@ -4,6 +4,11 @@ export class User {
     displayName: string;
     photoURL: string;
     emailVerified: boolean;
+    cart: [];
+
+    constructor() {
+        this.uid = new Date().getTime().toString();
+    }
 }
 
 export class Customer  {

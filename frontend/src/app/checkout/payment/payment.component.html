@@ -7,9 +7,9 @@
             <div class="card">
               <div class="card-body">
                 <form #paymentForm="ngForm" (ngSubmit)="onSubmit()">                  
-                    <div class="custom-control custom-radio" *ngFor="let type of typeOfPaymentArr; let i=index">
+                    <div class="custom-control custom-radio" *ngFor="let type of typeOfPaymentArr">
                       <input class="custom-control-input" type="radio" value="{{type.value}}" name="type" 
-                              id="{{type.value}}" [(ngModel)]="typeOfPayment" checked="(i===0)"
+                              id="{{type.value}}" [(ngModel)]="typeOfPayment" 
                       >
                       <label class="custom-control-label" for="{{type.value}}">
                         {{type.name}}

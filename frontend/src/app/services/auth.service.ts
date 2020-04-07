@@ -7,6 +7,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 import { Router } from '@angular/router';
 import { User } from '../models/user.model';
 import { ItemCartService } from './item-cart.service';
+import { Cart } from '../models/cart.model';
 
 @Injectable({
   providedIn: 'root'
