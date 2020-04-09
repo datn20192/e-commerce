@@ -5,15 +5,15 @@ export class User {
     photoURL: string;
     emailVerified: boolean;
     cart: [];
+    infor: {}
 
     constructor() {
         this.uid = new Date().getTime().toString();
     }
 }
 
-export class Customer  {
-    constructor(        
-        public account: string,
+export class UserInfor  {
+    constructor(               
         public name: string,
         public phoneNumber: string,
         public address: Address

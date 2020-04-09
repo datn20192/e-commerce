@@ -9,11 +9,11 @@
           </div>
           <div class="thumb-content ">
             <h5 class="product-name">{{product.name}}</h5>
-            <p class="item-price"><span>{{nomalizedPrice}}đ</span></p>
+            <p class="item-price"><span>{{product.price | productPrice}}</span></p>
             <div class="star-rating">
               <ul class="list-inline">
-                <li class="list-inline-item" *ngFor="let star of nomalizedStars.lightStars"><i class="fa fa-star"></i></li>                
-                <li class="list-inline-item" *ngFor="let star of nomalizedStars.darkStars"><i class="fa fa-star-o"></i></li>
+                <li class="list-inline-item" *ngFor="let star of (product.star | productStar: true)"><i class="fa fa-star"></i></li>                
+                <li class="list-inline-item" *ngFor="let star of (product.star | productStar: false)"><i class="fa fa-star-o"></i></li>
               </ul>
             </div>            
           </div>
@@ -28,9 +28,7 @@
             </button>
           </div>
           <div class="modal-body">
-            <app-product-detail 
-              [stars]="nomalizedStars"
-              [price]="nomalizedPrice"
+            <app-product-detail               
               [product]="product"
               (onClose)="modalRef.hide()"
             >

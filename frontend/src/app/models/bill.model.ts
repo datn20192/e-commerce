@@ -1,10 +1,10 @@
 import { Product } from './product.model';
-import { Customer } from './user.model';
+import { UserInfor } from './user.model';
 
 export class Bill {
     constructor(        
         public cart: Cart[],
-        public customer: Customer,
+        public userInfor: UserInfor,
         public date: string,
         public totalMoney: number,
         public status: boolean,

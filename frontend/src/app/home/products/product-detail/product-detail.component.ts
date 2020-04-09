@@ -9,9 +9,7 @@ import { ItemCartService } from '../../../services/item-cart.service';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
-
-  @Input() stars: {};
-  @Input() price: string;
+ 
   @Input() product: Product;
 
   @Output() onClose = new EventEmitter();  

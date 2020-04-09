@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs/';
-import { Product } from '../models/product.model';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireDatabase } from 'angularfire2/database';
-import { compileInjectable } from '@angular/compiler';
-import { User } from '../models/user.model';
-import { ProductProcessor } from '../functions/product.function';
 import { Cart } from '../models/cart.model';
 
 @Injectable({
@@ -17,12 +13,7 @@ export class ItemCartService {
   isEmpty: boolean = true;
   listAfterRemove = [];
   lengthCart: number = 0; //length cart
-  //quantityPurchased: number = 1; // quantity want to buy
-  totalPrice: any; // total price
-  nomalizedTotalPrice: string;// total price had converted VND
-
-
-  productProcessor = new ProductProcessor(); // call function convert price
+  //quantityPurchased: number = 1; // quantity want to buy  
 
   item: Cart = { product: null, quantityPurchased: 1 };
   constructor(
@@ -75,9 +66,7 @@ export class ItemCartService {
       cartRef = this.afs.doc(`users/${userUID}`);
       return of(cartRef.snapshotChanges().subscribe(res => {
         this.showItemCart = res.payload.data().cart;
-        this.lengthCart = this.showItemCart.reduce((prev, curr) => prev += curr.quantityPurchased, 0);
-        this.totalPrice = this.showItemCart.reduce((prev, curr) => prev += Number(curr.product.price) * Number(curr.quantityPurchased), 0);
-        this.nomalizedTotalPrice = this.productProcessor.nomalizeProductPrice(this.totalPrice.toString());
+        this.lengthCart = this.showItemCart.reduce((prev, curr) => prev += curr.quantityPurchased, 0);        
         this.isEmpty = (this.showItemCart.length) ? false : true;
       }))
     } else {
