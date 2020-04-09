@@ -1,10 +1,10 @@
 import { Product } from './product.model';
-import { Customer } from './user.model';
+import { UserInfor } from './user.model';
 
 export class Bill {
     constructor(        
         public cart: Cart[],
-        public customer: Customer,
+        public userInfor: UserInfor,
         public date: string,
         public totalMoney: number,
         public status: boolean,
@@ -25,5 +25,12 @@ export class Card {
         public cardNumber: string,
         public validThru: string,
         public securityCode: string
+    ) {}
+}
+
+export class TypeOfPayment {
+    constructor(
+        public value: string,
+        public name: string
     ) {}
 }

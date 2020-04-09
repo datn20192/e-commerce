@@ -3,9 +3,6 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { ItemCartService } from '../../services/item-cart.service';
-import { ProductProcessor } from '../../functions/product.function';
-import { Cart } from '../../models/bill.model';
-
 
 @Component({
   selector: 'app-cart',
@@ -21,7 +18,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private icService: ItemCartService,
     private route: Router
   ) { }
-  productProcessor = new ProductProcessor();
+ 
   listItemSub: Subscription;
   
   ngOnInit() {

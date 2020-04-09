@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
+import { SharedModule } from '../shared/shared-module';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
@@ -10,10 +11,12 @@ import { CarouselListProductComponent } from './products/list-product-carousel/l
 import { ListProductGridComponent } from './products/list-product-grid/list-product-grid.component';
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 
+// Pipe
+import { ProductStar } from '../shared/pipes/product/product-star.pipe';
 
 @NgModule({
     imports: [
-        CommonModule,
+        SharedModule,       
         HomeRoutingModule
     ],
     declarations: [
@@ -23,7 +26,9 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
         CardProductComponent,
         CarouselListProductComponent,
         ListProductGridComponent,
-        ProductDetailComponent
+        ProductDetailComponent,
+
+        ProductStar
     ]
 })
 

@@ -18,7 +18,7 @@
                       </div>
                     </div>
                   </th>
-                  <td class="border-0"><strong>{{productProcessor.nomalizeProductPrice(product.product.price)}}đ</strong></td>
+                  <td class="border-0"><strong>{{product.product.price | productPrice}}</strong></td>
                   <td class="border-0">
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" class="btn border-secondary" (click)="icService.onDecrease(product.product)">-</button>
@@ -36,7 +36,7 @@
             <div class="card purchase">                
                 <div class="card-body">  
                     <p class="text-babel"></p>                  
-                    <span>Thành tiền:<strong>{{icService.nomalizedTotalPrice}}đ</strong></span>
+                    <span>Thành tiền:<strong>{{icService.showItemCart | cartTotalMoney | productPrice}}</strong></span>
                     <hr>
                     <button type="button" class="btn btn-danger btn-block btn-checkout" (click)="proceedToCheckout()">Tiến hành đặt hàng</button>
                 </div>

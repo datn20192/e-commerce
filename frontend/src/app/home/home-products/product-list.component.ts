@@ -38,7 +38,9 @@ export class ProductListComponent {
       this.categoryListSubs = this.categoryService.getProductCategoriesNonGroup().subscribe(res => {
         let result = JSON.parse(res);
         this.productCategoryList = result.data.filter(category => category.quantity>0);        
-      });         
+      },
+        console.error
+      );         
     }
 
 }

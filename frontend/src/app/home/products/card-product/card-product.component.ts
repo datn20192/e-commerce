@@ -2,7 +2,6 @@ import { Component, TemplateRef, OnInit, Input } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { Product } from '../../../models/product.model';
-import { ProductProcessor } from '../../../functions/product.function';
 
 @Component({
   selector: 'app-card-product',
@@ -13,25 +12,14 @@ export class CardProductComponent implements OnInit {
 
   @Input() product: Product;
 
-  modalRef: BsModalRef;
-
-  //------------- nomalized value for presentation -------------------//
-  productProcessor = new ProductProcessor();
-    // star
-  nomalizedStars = {
-    lightStars: [],
-    darkStars: [],
-  };  
-    // price
-  nomalizedPrice: string; 
+  modalRef: BsModalRef; 
 
   constructor(
     private modalService: BsModalService
   ) { }
 
   ngOnInit() {  
-    this.productProcessor.nomalizeStarRating(this.product.star, this.nomalizedStars.lightStars, this.nomalizedStars.darkStars);
-    this.nomalizedPrice = this.productProcessor.nomalizeProductPrice(this.product.price);      
+    
   } 
 
   // Modal for detail product

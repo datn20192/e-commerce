@@ -21,7 +21,8 @@ export class AuthService {
                   displayName: '',
                   photoURL: '',
                   emailVerified: false,
-                  cart: []
+                  cart: [],
+                  infor: {}
                 };
 
   constructor(
@@ -34,8 +35,7 @@ export class AuthService {
         if (user) {
           this.userData = user;
           localStorage.setItem('user', JSON.stringify(this.userData));
-          JSON.parse(localStorage.getItem('user'));   
-          this.icService.loadItemCart();
+          JSON.parse(localStorage.getItem('user'));            
 
           this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {              
             if (res.length) {
@@ -70,7 +70,11 @@ export class AuthService {
         // this.router.navigate(['image', 'list']);
       });
       this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {
-        if(!res.length) this.SetUserData(result.user);
+        if(!res.length) {
+          this.SetUserData(result.user)
+          .then(()=>this.icService.loadItemCart());
+        }
+        else this.icService.loadItemCart();
       })           
     })
     .catch((error) => {
@@ -135,7 +139,13 @@ export class AuthService {
           //this.router.navigate(['image', 'list']);
         });
         this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {
-          if(!res.length) this.SetUserData(result.user);
+          if(!res.length) {
+            this.SetUserData(result.user)
+            .then(() => this.icService.loadItemCart());
+          }
+          else {
+            this.icService.loadItemCart();
+          }
         })
     }).catch((error) => {
       window.alert(error);
@@ -150,7 +160,8 @@ export class AuthService {
       displayName:  user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
-      cart: []
+      cart: [],
+      infor: {}
     };
 
     this.userData = userData;
@@ -166,7 +177,7 @@ export class AuthService {
       this.isAdmin = false;
       localStorage.removeItem('user');
       localStorage.setItem('user', JSON.stringify(this.userDefault));
-      // this.router.navigate(['sign-in']);
+      this.router.navigate(['/']);
     });
   }
 

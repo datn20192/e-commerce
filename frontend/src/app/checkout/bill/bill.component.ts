@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Bill } from '../../models/bill.model';
+import { User } from '../../models/user.model';
 
 @Component({
     selector: 'app-bill',
@@ -11,22 +11,19 @@ import { Bill } from '../../models/bill.model';
 
 export class BillComponent {
 
-    @Input() bill:Bill;
-
-    private address:string = '';
+    @Input() user:User;    
 
     constructor(
         private route: Router
     ) {}
 
-    ngOnInit() {
-        console.log(this.bill);
+    ngOnInit() {        
         this.load();    
+        console.log(this.user);
     }
 
     load() {
-        let addressArr = this.bill.customer.address;
-        this.address = `${addressArr.details}, ${addressArr.subDistrict}, ${addressArr.district}, ${addressArr.province}`;
+        
     }
 
     navigate(path:string) {

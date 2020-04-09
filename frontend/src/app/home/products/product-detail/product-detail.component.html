@@ -26,12 +26,12 @@
                     <h3 class="product-title">{{product.name}}</h3>
                     <div class="rating">
                         <div class="stars">
-                            <span class="fa fa-star checked" *ngFor="let star of stars.lightStars"></span>                            
-                            <span class="fa fa-star" *ngFor="let star of stars.darkStars"></span>
+                            <span class="fa fa-star checked" *ngFor="let star of (product.star | productStar : true)"></span>                            
+                            <span class="fa fa-star" *ngFor="let star of (product.star | productStar: false)"></span>
                         </div>
                         <span class="review-no">41 lượt mua</span>
                     </div>
-                    <h4 class="price"><span>{{price}}đ</span></h4>
+                    <h4 class="price"><span>{{product.price | productPrice}}</span></h4>
                     <ul class="product-description">
                         <li *ngFor="let des of product.description">{{des}}</li>
                     </ul>                                                                           
