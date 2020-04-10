@@ -11,7 +11,9 @@
     <div class="form-group">
         <input type="password" class="form-control" placeholder="Password" formControlName="password">
     </div>
-    <input type="submit" class="btn btn-primary btn-block" value="Đăng nhập" (click)="onSubmit(formSignin); closeModal()">
+    <div class="text-center">
+        <input type="submit" class="btn btn-success" value="Đăng nhập" (click)="onSubmit(formSignin); closeModal()">
+    </div>    
     <div class="form-footer">
         <a href="/">Quên mật khẩu?</a>
     </div>

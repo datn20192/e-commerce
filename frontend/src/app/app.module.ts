@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+
+import { SharedModule } from './shared/shared-module';
 
 /* Impotr AngularFire Modules */
 import { AngularFireModule } from 'angularfire2';
@@ -17,8 +17,6 @@ import { AppComponent } from './app.component';
 
 // Firebase config
 import { environment } from '../environments/environment';
-import { SigninComponent } from './components/signin/signin.component';
-import { SignupComponent } from './components/signup/signup.component';
 
 /* Auth service */
 import { AuthService } from './services/auth.service';
@@ -57,9 +55,7 @@ import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
 
 @NgModule({
   declarations: [
-    AppComponent,       
-    SigninComponent,
-    SignupComponent,    
+    AppComponent,   
     NotFoundComponent,    
     SidebarDComponent,                  
 
@@ -67,14 +63,12 @@ import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     AngularFirestoreModule,    
     HttpClientModule,
-    FormsModule,
     AppAsideModule,
     AppBreadcrumbModule.forRoot(),
     AppHeaderModule,
@@ -84,7 +78,9 @@ import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
     TabsModule.forRoot(),
     ChartsModule,
     PerfectScrollbarModule,
-    ModalModule.forRoot(),          
+    ModalModule.forRoot(),   
+    
+    SharedModule
   ],
   providers: [
     AuthService,  
