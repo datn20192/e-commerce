@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home.component';
 import { GroupProductsComponent } from './group-products/group-products.component';
 import { ProductListComponent } from './home-products/product-list.component';
+import { SigninSignupComponent } from '../../shared/components/signin-signup/signin-signup.component';
 
 const homeRoutes: Routes = [
     {
@@ -18,6 +19,14 @@ const homeRoutes: Routes = [
               component: ProductListComponent,
               data: {
                 title: 'Sản phẩm mới'
+              }
+            },
+
+            {
+              path: 'signin-signup',
+              component: SigninSignupComponent,
+              data: {
+                title: 'Đăng nhập & Đăng ký'
               }
             },
 

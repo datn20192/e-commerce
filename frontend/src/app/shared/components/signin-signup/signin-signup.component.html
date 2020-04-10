@@ -1,0 +1,57 @@
+<ng-container>
+    <div class="row">
+        <div class="col-7">
+            <ul class="nav nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link border border-bottom-0 active" 
+                        data-toggle="tab" href="#signin"
+                        [ngClass]="{ 'active': activeTab==='signin' }"
+                        (click)="clickTab('signin')"
+                    >
+                    Đăng nhập
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link border border-bottom-0" 
+                        data-toggle="tab" href="#signup"
+                        [ngClass]="{ 'active': activeTab==='signup' }"
+                        (click)="clickTab('signup')"
+                    >
+                    Đăng ký
+                    </a>
+                </li>                
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active container" id="signin"
+                        [ngClass]="{ 'active': activeTab==='signin' }"
+                >
+                    <app-signin></app-signin>
+                </div>
+                <div class="tab-pane container" id="signup"
+                        [ngClass]="{ 'active': activeTab==='signup' }"
+                >
+                    <app-signup></app-signup>
+                </div>
+            </div>
+        </div>
+        <div class="col-5">
+            <div class="card-header bg-primary">            
+                <strong>Đơn hàng</strong>
+            </div>
+            <div class="card-body">   
+                <div class="row" >
+                    <div class="col-7">
+                        <strong>1 x </strong><a href="#" class="text-blue ">{{product.name}}</a>
+                    
+                    </div>       
+                    <div class="col-5">
+                        <span class="float-right">{{product.price | productPrice}}</span>
+                    </div>
+                </div>  
+                <hr>      
+                <strong>Thành tiền:</strong>
+                <div class="float-right">{{product.price | productPrice}}</div>
+            </div>
+        </div>
+    </div>
+</ng-container>

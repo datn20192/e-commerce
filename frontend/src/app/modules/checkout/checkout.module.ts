@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { FormsModule, ReactiveFormsModule }   from '@angular/forms';
 
 import { SharedModule } from '../../shared/shared-module';
 
@@ -30,10 +29,8 @@ import { CartAddressInfor } from '../../shared/pipes/cart/cart-address-infor.pip
     
     CartAddressInfor
   ],
-  imports: [    
-    FormsModule,
+  imports: [
     CheckoutRoutingModule,
-    ReactiveFormsModule,
     SharedModule
   ]
 })
