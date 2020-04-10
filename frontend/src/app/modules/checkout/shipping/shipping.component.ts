@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { CheckoutApiService } from '../checkout.service';
 
-import { UserInfor, Address, User } from '../../models/user.model';
+import { UserInfor, Address, User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-shipping',

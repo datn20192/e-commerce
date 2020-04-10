@@ -3,8 +3,8 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { CheckoutApiService } from '../checkout.service';
-import { Card, TypeOfPayment } from '../../models/bill.model';
-import { User } from '../../models/user.model';
+import { Card, TypeOfPayment } from '../../../models/bill.model';
+import { User } from '../../../models/user.model';
 import { catchError } from 'rxjs/operators';
 
 @Component({

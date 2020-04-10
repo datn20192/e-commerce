@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 import { HomeApiService } from '../home.service';
 
 // Model
-import { CategoryChild } from '../../models/productCategory.model';
+import { CategoryChild } from '../../../models/productCategory.model';
 
 @Component({
   selector: 'app-group-products',

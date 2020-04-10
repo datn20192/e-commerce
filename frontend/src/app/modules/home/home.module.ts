@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../shared/shared-module';
+import { SharedModule } from '../../shared/shared-module';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
@@ -12,7 +12,7 @@ import { ListProductGridComponent } from './products/list-product-grid/list-prod
 import { ProductDetailComponent } from './products/product-detail/product-detail.component';
 
 // Pipe
-import { ProductStar } from '../shared/pipes/product/product-star.pipe';
+import { ProductStar } from '../../shared/pipes/product/product-star.pipe';
 
 @NgModule({
     imports: [

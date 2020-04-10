@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { HomeApiService } from '../../home.service';
-import { Product } from '../../../models/product.model';
+import { Product } from '../../../../models/product.model';
 
 @Component({
   selector: 'app-list-product-grid',

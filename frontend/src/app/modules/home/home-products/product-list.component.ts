@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs';
 import { HomeApiService } from '../home.service';
 
 // Model
-import { CategoryChild } from '../../models/productCategory.model';
-import { ItemCartService } from '../../services/item-cart.service';
+import { CategoryChild } from '../../../models/productCategory.model';
+import { ItemCartService } from '../../../services/item-cart.service';
 
 @Component({
   selector: 'app-customers',
