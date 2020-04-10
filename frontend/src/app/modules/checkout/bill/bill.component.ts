@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from '../../models/user.model';
+import { User } from '../../../models/user.model';
 
 @Component({
     selector: 'app-bill',

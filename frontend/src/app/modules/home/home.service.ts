@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import { HttpClient, HttpErrorResponse} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs/';
 import {catchError} from 'rxjs/operators';
-import { API_URL} from '../../environments/environment';
-import { ProductCategory, CategoryChild } from '../models/productCategory.model';
+import { API_URL} from '../../../environments/environment';
+import { ProductCategory, CategoryChild } from '../../models/productCategory.model';
 
 @Injectable({
     providedIn: 'root',

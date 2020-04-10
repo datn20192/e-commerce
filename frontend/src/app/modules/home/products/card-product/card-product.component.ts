@@ -1,7 +1,7 @@
 import { Component, TemplateRef, OnInit, Input } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
-import { Product } from '../../../models/product.model';
+import { Product } from '../../../../models/product.model';
 
 @Component({
   selector: 'app-card-product',

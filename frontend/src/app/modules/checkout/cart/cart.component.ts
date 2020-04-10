@@ -2,7 +2,7 @@ import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { ItemCartService } from '../../services/item-cart.service';
+import { ItemCartService } from '../../../services/item-cart.service';
 
 @Component({
   selector: 'app-cart',

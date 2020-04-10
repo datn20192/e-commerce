@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { Product } from '../../../models/product.model';
+import { Product } from '../../../../models/product.model';
 import { HomeApiService }from '../../home.service';
 
 @Component({

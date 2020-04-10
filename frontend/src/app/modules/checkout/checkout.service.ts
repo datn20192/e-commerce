@@ -5,10 +5,10 @@ import {catchError} from 'rxjs/operators';
 
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
-import { API_URL} from '../../environments/environment';
+import { API_URL} from '../../../environments/environment';
 
-import { UserInfor, Address } from '../models/user.model';
-import { TypeOfPayment } from '../models/bill.model';
+import { UserInfor, Address } from '../../models/user.model';
+import { TypeOfPayment } from '../../models/bill.model';
 
 @Injectable({
     providedIn: 'root',
