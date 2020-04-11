@@ -25,6 +25,24 @@ export class AuthService {
                   infor: {}
                 };
 
+  // Returns true when user is looged in and email is verified
+  get isLoggedIn(): boolean {
+    let user = null;
+    if ( localStorage.getItem('user') !== '') {
+      user = JSON.parse(localStorage.getItem('user'));      
+    }
+    if (user !== null) { if ( user.email !== '') { user.emailVerified = true; }  }     
+    return (user !== null && user.emailVerified !== false) ? true : false;
+  }  
+
+  // get isAdmin(): boolean {
+  //   let user = null;
+  //   if ( localStorage.getItem('user') !== '') {
+  //     user = JSON.parse(localStorage.getItem('user'));
+  //   }
+  //   if (user !-=)
+  // }
+
   constructor(
     private icService: ItemCartService,
     private angularFireAuth: AngularFireAuth,
@@ -32,22 +50,25 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone) {
       this.angularFireAuth.authState.subscribe(user => {        
-        if (user) {
-          this.userData = user;
-          localStorage.setItem('user', JSON.stringify(this.userData));
-          JSON.parse(localStorage.getItem('user'));            
-
-          this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {              
-            if (res.length) {
-              this.isAdmin = true;              
-            } 
-          })
-          // this.icService.loadItemCart();
-        } else {
+        if (user && this.isLoggedIn===true) {
+          this.setUser(user);       
+        } else {          
           this.userData = false;
           localStorage.setItem('user', JSON.stringify(this.userDefault));
         }
       });
+  }
+
+  /* Load user when signed in */
+  private setUser(user) {
+    this.userData = user;          
+    localStorage.setItem('user', JSON.stringify(this.userData));
+    JSON.parse(localStorage.getItem('user'));               
+    this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {              
+      if (res.length) {
+        this.isAdmin = true;              
+      } 
+    })
   }
 
   /* Sign up*/
@@ -66,15 +87,17 @@ export class AuthService {
   SignIn(email: string, password: string) {
     return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password)
     .then(result => {
+      // Set user information to local storage
+      this.setUser(result.user);
+
       this.ngZone.run(() => {
         // this.router.navigate(['image', 'list']);
       });
       this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {
         if(!res.length) {
-          this.SetUserData(result.user)
-          .then(()=>this.icService.loadItemCart());
+          this.SetUserData(result.user);          
         }
-        else this.icService.loadItemCart();
+        this.icService.loadItemCart();
       })           
     })
     .catch((error) => {
@@ -98,30 +121,11 @@ export class AuthService {
     }).catch((error) => {
       window.alert(error);
     });
-  }
-
-  // Returns true when user is looged in and email is verified
-  get isLoggedIn(): boolean {
-    let user = null;
-    if ( localStorage.getItem('user') !== '') {
-      user = JSON.parse(localStorage.getItem('user'));
-      
-    }
-    if (user !== null) { if ( user.email !== '') { user.emailVerified = true; }  }
-    return (user !== null && user.emailVerified !== false) ? true : false;
   }  
-
-  // get isAdmin(): boolean {
-  //   let user = null;
-  //   if ( localStorage.getItem('user') !== '') {
-  //     user = JSON.parse(localStorage.getItem('user'));
-  //   }
-  //   if (user !-=)
-  // }
 
   // Sign in with Google
   GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
+    return this.AuthLogin(new auth.GoogleAuthProvider());    
   }
 
   // Sign in with FB
@@ -132,21 +136,21 @@ export class AuthService {
 
 
   // Auth logic to run auth providers
-  AuthLogin(provider) {
+  private AuthLogin(provider) {
     return this.angularFireAuth.auth.signInWithPopup(provider)
-    .then((result) => {
-       this.ngZone.run(() => {
-          //this.router.navigate(['image', 'list']);
-        });
-        this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {
-          if(!res.length) {
-            this.SetUserData(result.user)
-            .then(() => this.icService.loadItemCart());
-          }
-          else {
-            this.icService.loadItemCart();
-          }
-        })
+    .then((result) => {    
+      // Set user information to local storage
+      this.setUser(result.user);
+
+      this.ngZone.run(() => {
+        //this.router.navigate(['image', 'list']);
+      });
+      this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {          
+        if(!res.length) {            
+          this.SetUserData(result.user);            
+        }
+        this.icService.loadItemCart();
+      });
     }).catch((error) => {
       window.alert(error);
     });

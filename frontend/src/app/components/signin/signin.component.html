@@ -1,8 +1,8 @@
 <form [formGroup]="formSignin" >
     <p class="hint-text">Đăng nhập với tài khoản mạng xã hội</p>
     <div class="form-group social-btn clearfix">
-        <button type="button"  class="btn btn-danger pull-left" (click)="authentification.GoogleAuth(); closeModal()"><i class="fa fa-google-plus"></i> Google</button>
-        <button type="button"  class="btn btn-info pull-right"  (click)="authentification.FacebookAuth(); closeModal()"><i class="fa fa-facebook"></i> Facebook</button>
+        <button type="button"  class="btn btn-danger pull-left" (click)="googleSignin()"><i class="fa fa-google-plus"></i> Google</button>
+        <button type="button"  class="btn btn-info pull-right"  (click)="facebookLogin()"><i class="fa fa-facebook"></i> Facebook</button>
     </div>
     <div class="or-seperator"><b>Hoặc</b></div>
     <div class="form-group">
@@ -12,7 +12,7 @@
         <input type="password" class="form-control" placeholder="Password" formControlName="password">
     </div>
     <div class="text-center">
-        <input type="submit" class="btn btn-success" value="Đăng nhập" (click)="onSubmit(formSignin); closeModal()">
+        <input type="submit" class="btn btn-success" value="Đăng nhập" (click)="onSubmit(formSignin)">
     </div>    
     <div class="form-footer">
         <a href="/">Quên mật khẩu?</a>

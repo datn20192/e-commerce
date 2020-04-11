@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Product } from '../../../models/product.model';
 
@@ -26,9 +27,9 @@ export class SigninSignupComponent {
 
     private activeTab = 'signin';
 
-    constructor() {
-
-    }
+    constructor(
+        private route: Router
+    ) { }
 
     ngOnInit() {
     
@@ -36,5 +37,9 @@ export class SigninSignupComponent {
 
     clickTab(tab:string) {
         this.activeTab = tab;
+    }
+
+    submitSignin() {
+        this.route.navigate(['/']);
     }
 }
