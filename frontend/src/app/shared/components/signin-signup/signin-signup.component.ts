@@ -2,6 +2,9 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Product } from '../../../models/product.model';
+import { Cart } from '../../../models/cart.model';
+
+import { ItemCartService } from '../../../services/item-cart.service';
 
 @Component({
     selector: 'app-signin-signup',
@@ -25,14 +28,17 @@ export class SigninSignupComponent {
         "4.7"
     );
 
+    private cart: Cart[];
+
     private activeTab = 'signin';
 
     constructor(
-        private route: Router
+        private route: Router,
+        private itemCartService: ItemCartService
     ) { }
 
     ngOnInit() {
-    
+        this.cart = this.itemCartService.showItemCart;
     }
 
     clickTab(tab:string) {

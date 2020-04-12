@@ -1,7 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router'
+
 import { Product } from '../../../../models/product.model';
 
 import { ItemCartService } from '../../../../services/item-cart.service';
+import { AuthService } from '../../../../services/auth.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -15,8 +18,9 @@ export class ProductDetailComponent implements OnInit {
   @Output() onClose = new EventEmitter();  
   
   constructor(
-    private icService: ItemCartService,
-  
+    private route: Router,
+    private authService: AuthService,
+    private icService: ItemCartService,  
   ) { }
 
 
@@ -26,6 +30,7 @@ export class ProductDetailComponent implements OnInit {
 
   closeModal(){
     this.icService.addToCart(this.product);
+    if(this.authService.isLoggedIn===false) this.route.navigate(['/signin-signup']);      
     this.onClose.emit(null);
   }
 }

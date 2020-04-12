@@ -4,6 +4,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Cart } from '../models/cart.model';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -13,7 +14,9 @@ export class ItemCartService {
   isEmpty: boolean = true;
   listAfterRemove = [];
   lengthCart: number = 0; //length cart
-  //quantityPurchased: number = 1; // quantity want to buy  
+  //quantityPurchased: number = 1; // quantity want to buy 
+  
+  private userUID: string = '';     // Save uid of user in local storage
 
   item: Cart = { product: null, quantityPurchased: 1 };
   constructor(
@@ -21,16 +24,15 @@ export class ItemCartService {
     private db: AngularFireDatabase,
   ) { }
 
-  addToCart(product) {
-    const userUID = JSON.parse(localStorage.getItem('user')).uid;
-    const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${userUID}`);
+  addToCart(product) {        
     this.listItemCart = this.showItemCart;
     if (!this.listItemCart.length) {
       this.item.quantityPurchased = 1;
       this.item.product = product;
       this.listItemCart.push(this.item);
-      cartRef.set({ "cart": this.listItemCart }, { merge: true });
-      console.log("Buoc 1");
+
+      // save items into cart
+      this.addCart(this.listItemCart, this.userUID);
     }
     else {
       let count = 0;
@@ -38,10 +40,9 @@ export class ItemCartService {
         element => {
               if (element.product.id["$oid"] === product.id["$oid"]) {
                 element.quantityPurchased += 1;
-                console.log(this.listItemCart)
-                cartRef.set({ "cart": this.listItemCart }, { merge: true });
-                console.log("Buoc 2");
-              } else {
+                // save items into cart
+                this.addCart(this.listItemCart, this.userUID);
+                } else {
                 count += 1;
               }
             
@@ -50,27 +51,38 @@ export class ItemCartService {
               this.item.product = product;
               this.item.quantityPurchased = 1;
               this.listItemCart.push(this.item);
-              cartRef.set({ "cart": this.listItemCart }, { merge: true });
-              console.log("Buoc 3")
-            }
+              // save items into cart
+              this.addCart(this.listItemCart, this.userUID);
+              }
           })
       this.isEmpty = false;
       this.loadItemCart();
     }
   }
 
+  /* Adding cart depends on login status */
+  private addCart(cart: any[], userUID: string) {
+    if(userUID !== '') {
+      const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${userUID}`);
+      cartRef.set({ 'cart': cart }, { merge: true });
+    } 
+    else localStorage.setItem('tmpCart', JSON.stringify(cart)); 
+  }
+
   loadItemCart(): Observable<any> {
     let cartRef: AngularFirestoreDocument<any>;
-    const userUID = JSON.parse(localStorage.getItem('user')).uid;
-    if (userUID !== '') {
-      cartRef = this.afs.doc(`users/${userUID}`);
+    this.userUID = JSON.parse(localStorage.getItem('user')).uid;
+    if (this.userUID !== '') {
+      cartRef = this.afs.doc(`users/${this.userUID}`);
       return of(cartRef.snapshotChanges().subscribe(res => {
         this.showItemCart = res.payload.data().cart;
         this.lengthCart = this.showItemCart.reduce((prev, curr) => prev += curr.quantityPurchased, 0);        
         this.isEmpty = (this.showItemCart.length) ? false : true;
       }))
     } else {
-      return;
+      this.showItemCart = JSON.parse(localStorage.getItem('tmpCart'));
+      this.lengthCart = this.showItemCart.reduce((prev, curr) => prev += curr.quantityPurchased, 0);
+      this.isEmpty = (this.showItemCart.length) ? false : true;
     }
   }
 

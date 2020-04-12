@@ -55,6 +55,11 @@ export class AuthService {
         } else {          
           this.userData = false;
           localStorage.setItem('user', JSON.stringify(this.userDefault));
+          
+          if(!JSON.parse(localStorage.getItem('tmpCart'))) {
+            localStorage.setItem('tmpCart', JSON.stringify([]));
+          }
+          
         }
       });
   }
@@ -63,7 +68,7 @@ export class AuthService {
   private setUser(user) {
     this.userData = user;          
     localStorage.setItem('user', JSON.stringify(this.userData));
-    JSON.parse(localStorage.getItem('user'));               
+    // JSON.parse(localStorage.getItem('user'));               
     this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {              
       if (res.length) {
         this.isAdmin = true;              
