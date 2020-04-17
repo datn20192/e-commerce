@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,9 +16,10 @@ export class SigninComponent implements OnInit {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.pattern(/['0-9a-zA-Z']{6,}/)])
   });
-  constructor(private authentification: AuthService) { }
 
-  @Output() onClose = new EventEmitter();
+  @Output() onClick = new EventEmitter();
+
+  constructor(private authentification: AuthService) { }  
 
   ngOnInit() {
   }
@@ -29,14 +30,30 @@ export class SigninComponent implements OnInit {
       const email = formValue.value['email'];
       const password = formValue.value['password'];
       this.authentification.SignIn(email, password);
-      this.formSignin.reset();
+      if(this.authentification.isLoggedIn === true) {
+        this.formSignin.reset();
+        this.signinClick();
+      }      
     } else {
       console.error("Invalid")
     }
   }
 
-  closeModal(){
-    this.onClose.emit(null);
+  googleSignin() {
+    this.authentification.GoogleAuth().then(()=>{
+      if(this.authentification.isLoggedIn===true) this.signinClick();
+    });      
+  }
+
+  facebookLogin() {
+    this.authentification.FacebookAuth().then(() => {
+      if(this.authentification.isLoggedIn===true) this.signinClick();
+    }); 
+    
+  }
+
+  signinClick() {
+    this.onClick.emit(null);
   }
 
 }

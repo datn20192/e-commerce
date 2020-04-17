@@ -12,7 +12,7 @@
           <span aria-hidden="true">&laquo;</span>          
         </a>
       </li>
-      <li class="page-item" [ngClass]="{'active':i==page}" *ngFor="let p of pages; let i=index">
+      <li class="page-item" [ngClass]="{'active':i==currentPage}" *ngFor="let p of pages; let i=index">
         <a class="page-link" href="" (click)="setPage(i,$event); scrollPageUp($event)">{{i+1}}</a>
       </li>      
       <li class="page-item">

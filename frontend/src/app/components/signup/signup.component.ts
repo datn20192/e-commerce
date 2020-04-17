@@ -73,7 +73,7 @@ export class SignupComponent implements OnInit {
   }
 
   // close Modal
-  closeModal(){
+  signupClick(){
     this.onClose.emit(null);
   }
 

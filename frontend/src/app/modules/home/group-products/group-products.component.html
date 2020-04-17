@@ -4,5 +4,11 @@
             <span class="text-muted">{{category.quantity}} kết quả</span>
         </h3>
     </div>
-    <app-list-product-grid [category]="category.id" *ngIf="showList"></app-list-product-grid>
+    <app-list-product-grid [productsList]="productsList" 
+                            [pages] = "pages"
+                            [currentPage] = "page"
+                            (selectedPage) = "showCurrentPage($event)"
+                            *ngIf="showList"
+    >
+    </app-list-product-grid>
 </ng-container>
