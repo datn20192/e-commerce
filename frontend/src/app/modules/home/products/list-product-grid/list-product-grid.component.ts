@@ -1,6 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { HomeApiService } from '../../home.service';
 import { Product } from '../../../../models/product.model';
 
 @Component({
@@ -10,20 +9,19 @@ import { Product } from '../../../../models/product.model';
 })
 export class ListProductGridComponent implements OnInit {
   
-  @Input() category: string; 
+  @Input() productsList: Product[]; 
+  @Input() pages: number[];
+  @Input() currentPage: number;
+
+  @Output() selectedPage = new EventEmitter();
 
   private productsListSubs: Subscription;
-
-  private productsList: Product[];  
-  private page:number = 0;
-  private pages:number[]; 
-
+  
   constructor(
-    private productApi : HomeApiService
   ) { }
 
   ngOnInit() {            
-    this.load();
+    
   }
 
   ngOndestroy() {
@@ -32,8 +30,7 @@ export class ListProductGridComponent implements OnInit {
 
   setPage(i, event:any) {    
     event.preventDefault();
-    this.page = i;
-    this.load();    
+    this.selectedPage.emit(i);    
   }
 
   scrollPageUp(event:any){
@@ -45,17 +42,6 @@ export class ListProductGridComponent implements OnInit {
           window.clearInterval(scrollToTop);
       }
     }, 22);
-  }
-
-  load() {    
-    this.productsListSubs = this.productApi.getProductByCategoryPage(this.category, this.page, 12).subscribe(res => {      
-      let result = JSON.parse(res);      
-      this.productsList = result.data['content'];  
-      console.log(this.productsList);    
-      this.pages = new Array(result.data['totalPages']);     
-    },
-      console.error
-    );
-  }
+  }  
 
 }

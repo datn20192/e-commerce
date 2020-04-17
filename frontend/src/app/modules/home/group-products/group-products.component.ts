@@ -5,6 +5,7 @@ import { HomeApiService } from '../home.service';
 
 // Model
 import { CategoryChild } from '../../../models/productCategory.model';
+import { Product } from 'src/app/models/product.model';
 
 @Component({
   selector: 'app-group-products',
@@ -15,9 +16,16 @@ export class GroupProductsComponent implements OnInit {
 
   private productCategoryList: CategoryChild[];
   private categoryListSubs: Subscription;
+  private categoryListPageSubs: Subscription;
   
   private url:string = '';
-  private category = {};  
+  private category:CategoryChild;  
+
+  /* product list for current page */
+  private page:number = 0;    // show automatically products list in page 0
+  private productsList: Product[];       // products in current page
+  private pages: number[];    // total page with specific category selected      
+
 
   private showList: boolean = false;
 
@@ -32,6 +40,7 @@ export class GroupProductsComponent implements OnInit {
 
   ngOnDestroy() {
     this.categoryListSubs.unsubscribe();
+    this.categoryListPageSubs.unsubscribe();
   }
 
   load() {    
@@ -41,8 +50,28 @@ export class GroupProductsComponent implements OnInit {
     this.categoryListSubs = this.categoryApi.getProductCategoriesNonGroup().subscribe(res => {
       let result = JSON.parse(res);
       this.productCategoryList = result.data;      
-      this.category = this.productCategoryList.filter(element => element.url===this.url)[0];
-      this.showList = true;      
+      this.category = this.productCategoryList.filter(element => element.url===this.url)[0];   
+      console.log(this.category);       
+      this.categoryListPageSubs = this.categoryApi.getProductByCategoryPage(this.category.id, this.page, 12).subscribe(res => {      
+        let result = JSON.parse(res);      
+        this.productsList = result.data['content'];  
+        console.log(this.productsList);    
+        this.pages = new Array(result.data['totalPages']);   
+        this.showList = true;    
+      },
+        console.error
+      );
+    },
+      console.error
+    );
+  }
+
+  showCurrentPage(currentPage) {
+    this.categoryListPageSubs = this.categoryApi.getProductByCategoryPage(this.category.id, currentPage, 12).subscribe(res => {
+      let result = JSON.parse(res);      
+      this.productsList = result.data['content'];     
+      this.pages = new Array(result.data['totalPages']);
+      this.page = currentPage;
     },
       console.error
     );
