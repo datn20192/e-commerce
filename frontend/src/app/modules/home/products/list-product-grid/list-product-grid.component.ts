@@ -51,7 +51,8 @@ export class ListProductGridComponent implements OnInit {
     this.productsListSubs = this.productApi.getProductByCategoryPage(this.category, this.page, 12).subscribe(res => {      
       let result = JSON.parse(res);      
       this.productsList = result.data['content'];  
-      console.log(this.productsList);    
+      console.log(this.productsList); 
+      console.log(this.category);
       this.pages = new Array(result.data['totalPages']);     
     },
       console.error

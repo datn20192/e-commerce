@@ -1,12 +1,15 @@
 import {Injectable} from '@angular/core';
 import { HttpClient, HttpErrorResponse} from '@angular/common/http';
-import { Observable, throwError } from 'rxjs/';
-import {catchError} from 'rxjs/operators';
+import { Observable, throwError, BehaviorSubject, of } from 'rxjs/';
+import {catchError, tap} from 'rxjs/operators';
 import { API_URL} from '../../environments/environment';
 import { Product} from '../models/product.model';
 
 @Injectable()
 export class ProductsApiService {
+  searchedSubject = new BehaviorSubject('');
+  currentSearchedString = this.searchedSubject.asObservable();
+  
     constructor(private http: HttpClient) {}
     private static _handleError(err: HttpErrorResponse | any) {
         return throwError(err.message || 'Error: Unable to complete request.');
@@ -37,6 +40,13 @@ export class ProductsApiService {
       getProductByCategoryPage(category, page, numberOfElement): Observable<any> {        
         return this.http.get<any>(`${API_URL}/api/products/category/${category}?page=${page}&num=${numberOfElement}`)
         .pipe(
+          catchError(ProductsApiService._handleError)
+        )
+      }
+      getProductByFilter(searchedString, page, numberOfElement): Observable<any> {      
+        return this.http.get<any>(`${API_URL}/api/products/search/${searchedString.trim()}?page=${page}&num=${numberOfElement}`)
+        .pipe(
+          tap(foundProducts => console.log("foundProducts", foundProducts)),
           catchError(ProductsApiService._handleError)
         )
       }
@@ -89,6 +99,10 @@ export class ProductsApiService {
         .pipe(
           catchError(ProductsApiService._handleError)
         );
+      }
+      search(s: string): void{
+        console.log(`searchedString = ${s}`);
+        this.searchedSubject.next(s);
       }
 
     }

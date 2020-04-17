@@ -5,6 +5,7 @@ import { HomeComponent } from './home.component';
 import { GroupProductsComponent } from './group-products/group-products.component';
 import { ProductListComponent } from './home-products/product-list.component';
 import { SigninSignupComponent } from '../../shared/components/signin-signup/signin-signup.component';
+import { SearchComponent } from './search/search.component';
 
 const homeRoutes: Routes = [
     {
@@ -86,6 +87,13 @@ const homeRoutes: Routes = [
                   title: 'Tủ Lạnh'
                 }
               },
+              {
+                path: 'search',
+                component: SearchComponent,
+                data: {
+                  title: 'Tìm kiếm'
+                }
+              }
         ]
     },    
 ]

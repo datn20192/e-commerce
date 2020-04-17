@@ -30,7 +30,14 @@ def get_product_by_category(category):
         return product_api.get_product_by_category(mongo, category)
     else:
         return product_api.get_product_by_category_page(mongo, category, page, numOfElement)      
-
+@app.route('/api/products/search/<string:searchedString>', methods = ['GET'])
+def get_product_by_filter(searchedString):
+    page = request.args.get("page")
+    numOfElement = request.args.get("num")
+    if page is None and numOfElement is None:
+        return []
+    else:
+        return product_api.get_product_by_filter(mongo, searchedString, page, numOfElement)     
 @app.route('/api/add_product', methods=['POST'])
 def add_product():
     return product_api.add_product(mongo)

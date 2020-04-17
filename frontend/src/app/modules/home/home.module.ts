@@ -13,6 +13,7 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 
 // Pipe
 import { ProductStar } from '../../shared/pipes/product/product-star.pipe';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
     imports: [
@@ -28,7 +29,9 @@ import { ProductStar } from '../../shared/pipes/product/product-star.pipe';
         ListProductGridComponent,
         ProductDetailComponent,
 
-        ProductStar
+        ProductStar,
+
+        SearchComponent
     ]
 })
 

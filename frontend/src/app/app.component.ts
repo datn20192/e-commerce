@@ -4,6 +4,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ItemCartService } from './services/item-cart.service';
 import { Router } from '@angular/router';
+import { ProductsApiService } from './services/product-api.service';
 
 @Component({
   selector: 'app-root',
@@ -12,13 +13,14 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit{  
 
-  modalRef: BsModalRef; 
+  modalRef: BsModalRef;
 
   constructor(
     private auth: AuthService,
     private modalService: BsModalService,
     private icService: ItemCartService,
-    public router: Router,  
+    public router: Router,
+    private productApi: ProductsApiService
     ){}
 
   ngOnInit() {
@@ -27,7 +29,9 @@ export class AppComponent implements OnInit{
   
   ngOnDestroy() {
   }
- 
+  searchEnter(){
+    this.router.navigate(['search'])
+  }
   signOut() {    
     this.auth.signOut();
   }
@@ -47,6 +51,7 @@ export class AppComponent implements OnInit{
         keyboard: true
       });    
 
-  } 
-
+  }
+  
+  
 }
