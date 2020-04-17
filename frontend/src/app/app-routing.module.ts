@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [      
 
@@ -11,7 +13,8 @@ const routes: Routes = [
   
   { 
     path: 'checkout', 
-    loadChildren: () => import('./modules/checkout/checkout.module').then(m => m.CheckoutModule) 
+    loadChildren: () => import('./modules/checkout/checkout.module').then(m => m.CheckoutModule),
+    canLoad: [AuthGuard] 
   },  
 
   { path: '**', component: NotFoundComponent }

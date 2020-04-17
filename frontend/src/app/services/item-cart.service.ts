@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs/';
+import { Observable, of, BehaviorSubject } from 'rxjs/';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireDatabase } from 'angularfire2/database';
+
 import { Cart } from '../models/cart.model';
+import { Product } from '../models/product.model';
 
 
 @Injectable({
@@ -19,6 +21,7 @@ export class ItemCartService {
   private userUID: string = '';     // Save uid of user in local storage
 
   item: Cart = { product: null, quantityPurchased: 1 };
+
   constructor(
     private afs: AngularFirestore,
     private db: AngularFireDatabase,
@@ -66,23 +69,20 @@ export class ItemCartService {
       const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${userUID}`);
       cartRef.set({ 'cart': cart }, { merge: true });
     } 
-    else localStorage.setItem('tmpCart', JSON.stringify(cart)); 
   }
 
   loadItemCart(): Observable<any> {
     let cartRef: AngularFirestoreDocument<any>;
     this.userUID = JSON.parse(localStorage.getItem('user')).uid;
     if (this.userUID !== '') {
-      cartRef = this.afs.doc(`users/${this.userUID}`);
+      cartRef = this.afs.doc(`users/${this.userUID}`);      
       return of(cartRef.snapshotChanges().subscribe(res => {
         this.showItemCart = res.payload.data().cart;
         this.lengthCart = this.showItemCart.reduce((prev, curr) => prev += curr.quantityPurchased, 0);        
-        this.isEmpty = (this.showItemCart.length) ? false : true;
+        this.isEmpty = (this.showItemCart.length) ? false : true;        
       }))
     } else {
-      this.showItemCart = JSON.parse(localStorage.getItem('tmpCart'));
-      this.lengthCart = this.showItemCart.reduce((prev, curr) => prev += curr.quantityPurchased, 0);
-      this.isEmpty = (this.showItemCart.length) ? false : true;
+      return;
     }
   }
 
@@ -120,5 +120,6 @@ export class ItemCartService {
       }
     })
     this.loadItemCart();
-  }
+  }   
+ 
 }

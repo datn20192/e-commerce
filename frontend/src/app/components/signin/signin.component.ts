@@ -40,8 +40,7 @@ export class SigninComponent implements OnInit {
   }
 
   googleSignin() {
-    this.authentification.GoogleAuth().then((res)=>{
-      console.log(this.authentification.isLoggedIn);
+    this.authentification.GoogleAuth().then(()=>{
       if(this.authentification.isLoggedIn===true) this.signinClick();
     });      
   }

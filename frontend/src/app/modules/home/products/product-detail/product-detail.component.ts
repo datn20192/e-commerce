@@ -29,8 +29,10 @@ export class ProductDetailComponent implements OnInit {
   }
 
   closeModal(){
-    this.icService.addToCart(this.product);
-    if(this.authService.isLoggedIn===false) this.route.navigate(['/signin-signup']);      
+    if(this.authService.isLoggedIn===true) this.icService.addToCart(this.product);
+    else {
+      this.route.navigate(['/signin-signup']);     
+    } 
     this.onClose.emit(null);
   }
 }
