@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { SigninSignupGuard } from '../../guards/signin-signup.guard';
+
 import { HomeComponent } from './home.component';
 import { GroupProductsComponent } from './group-products/group-products.component';
 import { ProductListComponent } from './home-products/product-list.component';
@@ -25,6 +27,7 @@ const homeRoutes: Routes = [
             {
               path: 'signin-signup',
               component: SigninSignupComponent,
+              canActivate: [SigninSignupGuard],
               data: {
                 title: 'Đăng nhập & Đăng ký'
               }
