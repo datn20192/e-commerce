@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from '../../../models/user.model';
+import { User, UserInfor } from '../../../models/user.model';
 
 @Component({
     selector: 'app-bill',
@@ -11,19 +11,14 @@ import { User } from '../../../models/user.model';
 
 export class BillComponent {
 
-    @Input() user:User;    
+    @Input() user:User;        
 
     constructor(
         private route: Router
     ) {}
 
     ngOnInit() {        
-        this.load();    
-        console.log(this.user);
-    }
-
-    load() {
-        
+       
     }
 
     navigate(path:string) {

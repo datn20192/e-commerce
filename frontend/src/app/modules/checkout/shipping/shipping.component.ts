@@ -17,7 +17,7 @@ export class ShippingComponent implements OnInit {
 
   private account: string = '';
   private address = new Address("", "", "", "");
-  private userInfor = new UserInfor("", "", this.address);
+  public userInfor = new UserInfor("", "", this.address);
  
   constructor(
     private route: Router,
