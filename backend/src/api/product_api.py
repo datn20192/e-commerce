@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from bson import json_util
 import json
-from src.config import Response
+from config import Response
 import math
 
 def get_all_products(mongo):

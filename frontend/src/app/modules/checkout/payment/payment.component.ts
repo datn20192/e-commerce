@@ -18,13 +18,13 @@ export class PaymentComponent {
     private typeOfPaymentSubs: Subscription;
     private userInforSubs: Subscription;
 
-    private typeOfPayment: string;
-    private typeOfPaymentArr: TypeOfPayment[];     
+    public typeOfPayment: string;
+    public typeOfPaymentArr: TypeOfPayment[];     
     private card = new Card("", "", "", "");
     // private userInfor = new UserInfor("", "", new Address("", "", "", ""));
     private user: User;
 
-    private showBill:boolean = false;
+    public showBill:boolean = false;
 
     constructor(
         private route: Router,

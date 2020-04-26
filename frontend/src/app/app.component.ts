@@ -15,7 +15,7 @@ export class AppComponent implements OnInit{
   modalRef: BsModalRef; 
 
   constructor(
-    private auth: AuthService,
+    public auth: AuthService,
     private modalService: BsModalService,
     private icService: ItemCartService,
     public router: Router,  
@@ -48,5 +48,7 @@ export class AppComponent implements OnInit{
       });    
 
   } 
+
+  submit() {}
 
 }

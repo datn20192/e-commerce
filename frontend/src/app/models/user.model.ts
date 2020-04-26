@@ -5,7 +5,7 @@ export class User {
     photoURL: string;
     emailVerified: boolean;
     cart: [];
-    infor: {}
+    infor: UserInfor;
 
     constructor() {
         this.uid = new Date().getTime().toString();

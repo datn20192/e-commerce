@@ -2,8 +2,8 @@ from flask import Flask
 from flask import request
 from flask_pymongo import PyMongo
 from flask_cors import CORS
-from .config import Response
-from .api import product_api, productCategory_api, typeOfPayment_api
+from config import Response
+from api import product_api, productCategory_api, typeOfPayment_api
 
 app = Flask(__name__)
 
@@ -69,3 +69,4 @@ def delete_productCategory():
 @app.route('/api/payment/types', methods = ['GET'])
 def get_all_type_of_payment():
     return typeOfPayment_api.get_all_type_of_payment(mongo)
+

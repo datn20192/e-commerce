@@ -5,7 +5,7 @@ import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 // import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { User } from '../models/user.model';
+import { User, UserInfor, Address } from '../models/user.model';
 import { ItemCartService } from './item-cart.service';
 
 @Injectable({
@@ -170,7 +170,7 @@ export class AuthService {
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
       cart: [],
-      infor: {}
+      infor: user.infor
     };
 
     this.userData = userData;

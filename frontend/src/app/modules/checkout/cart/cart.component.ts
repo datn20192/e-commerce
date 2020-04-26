@@ -15,7 +15,7 @@ import { ItemCartService } from '../../../services/item-cart.service';
 export class CartComponent implements OnInit, OnDestroy {
 
   constructor(
-    private icService: ItemCartService,
+    public icService: ItemCartService,
     private route: Router
   ) { }
  

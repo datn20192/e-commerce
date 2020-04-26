@@ -19,7 +19,7 @@ export class GroupProductsComponent implements OnInit {
   private categoryListPageSubs: Subscription;
   
   private url:string = '';
-  private category:CategoryChild;  
+  public category:CategoryChild;  
 
   /* product list for current page */
   private page:number = 0;    // show automatically products list in page 0
@@ -27,7 +27,7 @@ export class GroupProductsComponent implements OnInit {
   private pages: number[];    // total page with specific category selected      
 
 
-  private showList: boolean = false;
+  public showList: boolean = false;
 
   constructor(    
     private router: Router,
