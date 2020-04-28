@@ -26,11 +26,11 @@ def get_all_products(mongo):
             })    
         response.create(Response.SUCCESS)
         response.data = processed        
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
 
@@ -50,7 +50,7 @@ def get_product_byID(mongo, id):
                 'quantity': extracted['quantity'],
                 'star': extracted['star']
                 }
-    return json_util.dumps(processed, ensure_ascii=False).encode('utf-8')
+    return json_util.dumps(processed, ensure_ascii=False)
 
 def get_product_by_category(mongo, category):
     try:
@@ -75,11 +75,11 @@ def get_product_by_category(mongo, category):
             })    
         response.create(Response.SUCCESS)
         response.data = processed              
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     return output
 
 def get_product_by_category_page(mongo, category, page, numOfElement):
@@ -126,11 +126,11 @@ def get_product_by_category_page(mongo, category, page, numOfElement):
         } 
         response.create(Response.SUCCESS)
         response.data = processed              
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8')) 
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False)) 
     except:
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
         
     return output
 
@@ -141,11 +141,11 @@ def add_product(mongo):
         mongo.db.product.insert(params)
         response.create(Response.SUCCESS)
         response.data = 'Product was created.'       
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
     
@@ -156,11 +156,11 @@ def update_product(mongo):
         mongo.db.product.update({'product_id': params['product_id']}, {'$set': params})
         response.create(Response.SUCCESS)
         response.data = 'Product was updated.'
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
         response.data = 'Datebase connection is false.'
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
 
@@ -171,10 +171,10 @@ def delete_product(mongo):
         mongo.db.product.remove({'product_id': params['product_id']})
         response.create(Response.SUCCESS)
         response.data = 'Product was deleted.'
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
         response.data = 'Datebase connection is false.'
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output

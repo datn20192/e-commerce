@@ -16,9 +16,9 @@ def get_all_type_of_payment(mongo):
             })
         response.create(Response.SUCCESS)
         response.data = processed
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
