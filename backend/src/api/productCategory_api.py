@@ -16,11 +16,11 @@ def get_all_categories(mongo):
             })    
         response.create(Response.SUCCESS)
         response.data = processed             
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
 
@@ -40,12 +40,12 @@ def get_all_categories_non_group(mongo):
                 })
         response.create(Response.SUCCESS)
         response.data = processed        
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))       
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))       
     except:
         print(response.data)
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
         
     return output
 
@@ -56,11 +56,11 @@ def add_category(mongo):
         mongo.db.productCategory.insert(params)
         response.create(Response.SUCCESS)
         response.data = 'category was created.'       
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
     
@@ -71,11 +71,11 @@ def update_category(mongo):
         mongo.db.productCategory.update({'id': params['id']}, {'$set': params})
         response.create(Response.SUCCESS)
         response.data = 'category was updated.'
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
         response.data = 'Datebase connection is false.'
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
 
@@ -86,10 +86,10 @@ def delete_category(mongo):
         mongo.db.productCategory.remove({'id': params['id']})
         response.create(Response.SUCCESS)
         response.data = 'category was deleted.'
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
         response.data = 'Datebase connection is false.'
-        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8'))
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
