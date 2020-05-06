@@ -46,7 +46,6 @@ export class PaymentComponent {
             if(infor !== {}) {
                 this.user = res.payload.data();
                 this.showBill = true;
-                console.log(this.user);
             }
             else this.route.navigate(['checkout/shipping']);
         },
