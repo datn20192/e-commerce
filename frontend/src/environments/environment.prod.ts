@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:5000';
+export const API_URL = 'https://ec2-3-86-198-226.compute-1.amazonaws.com';
 
 export const environment = {
   production: true,

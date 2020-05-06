@@ -46,16 +46,13 @@ export class GroupProductsComponent implements OnInit {
   load() {    
     // get category from url
     this.url = this.router.url;
-    console.log(this.url);
     this.categoryListSubs = this.categoryApi.getProductCategoriesNonGroup().subscribe(res => {
       let result = JSON.parse(res);
       this.productCategoryList = result.data;      
       this.category = this.productCategoryList.filter(element => element.url===this.url)[0];   
-      console.log(this.category);       
       this.categoryListPageSubs = this.categoryApi.getProductByCategoryPage(this.category.id, this.page, 12).subscribe(res => {      
         let result = JSON.parse(res);      
-        this.productsList = result.data['content'];  
-        console.log(this.productsList);    
+        this.productsList = result.data['content'];     
         this.pages = new Array(result.data['totalPages']);   
         this.showList = true;    
       },
