@@ -145,6 +145,7 @@ export class AuthService {
     return this.angularFireAuth.auth.signInWithPopup(provider)
     .then((result) => {    
       // Set user information to local storage
+      console.log(result);
       this.setUser(result.user);
 
       this.ngZone.run(() => {
