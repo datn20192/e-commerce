@@ -16,8 +16,7 @@ export class ShippingComponent implements OnInit {
   userInforSubs: Subscription;
 
   private account: string = '';
-  private address = new Address("", "", "", "");
-  public userInfor = new UserInfor("", "", this.address);
+  public userInfor = new UserInfor("", "", new Address("", "", "", ""));
  
   constructor(
     private route: Router,
@@ -40,8 +39,8 @@ export class ShippingComponent implements OnInit {
   load() {
     this.account = JSON.parse(localStorage.getItem('user')).email;    
     this.userInforSubs = this.checkoutApi.getUserInfor().subscribe(res => {                  
-      let infor = res.payload.data().infor;     
-      if(infor !== {}) this.userInfor = res.payload.data().infor;           
+      let infor = JSON.stringify(res.payload.data().infor);     
+      if (infor != '{}') this.userInfor = res.payload.data().infor;          
     });
   }
   

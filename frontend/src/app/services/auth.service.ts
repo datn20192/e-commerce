@@ -80,8 +80,6 @@ export class AuthService {
   signUp(email: string, password: string) {
       return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
       .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign up and returns promise */
-        this.SendVerificationMail();
         this.SetUserData(result.user);
       }).catch((error) => {
         window.alert(error.message);  
@@ -100,21 +98,13 @@ export class AuthService {
       });
       this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {
         if(!res.length) {
-          this.SetUserData(result.user);          
+          this.SetUserData(result.user);               
         }
         this.icService.loadItemCart();
       })           
     })
     .catch((error) => {
       window.alert(error.message);
-    });
-  }
-
-  // Send email verfificaiton when new user sign up
-  SendVerificationMail() {
-    return this.angularFireAuth.auth.currentUser.sendEmailVerification()
-    .then(() => {
-      this.router.navigate(['verify-email-address']);
     });
   }
 
@@ -151,7 +141,7 @@ export class AuthService {
       this.ngZone.run(() => {
         //this.router.navigate(['image', 'list']);
       });
-      this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {          
+      this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {            
         if(!res.length) {            
           this.SetUserData(result.user);            
         }
@@ -171,13 +161,14 @@ export class AuthService {
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
       cart: [],
-      infor: user.infor
-    };
-
+      infor: {}
+    };    
     this.userData = userData;
+    console.log(userData);
     return userRef.set(userData, {
       merge: true
-    });
+    })
+    .catch((error) => window.alert(error));
   }
 
   // Sign out

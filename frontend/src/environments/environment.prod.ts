@@ -1,4 +1,4 @@
-export const API_URL = 'https://api.datn20192-dd.ga';
+export const API_URL = 'https://datn20192-dd.ga';
 
 export const environment = {
   production: true,

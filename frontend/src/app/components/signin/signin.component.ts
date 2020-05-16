@@ -29,11 +29,12 @@ export class SigninComponent implements OnInit {
     if (this.formSignin.valid) {
       const email = formValue.value['email'];
       const password = formValue.value['password'];
-      this.authentification.SignIn(email, password);
-      if(this.authentification.isLoggedIn === true) {
-        this.formSignin.reset();
-        this.signinClick();
-      }      
+      this.authentification.SignIn(email, password).then(()=> {
+        if(this.authentification.isLoggedIn === true) {
+          this.formSignin.reset();
+          this.signinClick();
+        }     
+      });       
     } else {
       console.error("Invalid")
     }
