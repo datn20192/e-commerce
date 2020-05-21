@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { CarouselModule } from 'ngx-bootstrap/carousel'
 
 import { SharedModule } from '../../shared/shared-module';
 
@@ -16,6 +17,7 @@ import { ProductStar } from '../../shared/pipes/product/product-star.pipe';
 
 @NgModule({
     imports: [
+        CarouselModule,
         SharedModule,       
         HomeRoutingModule
     ],
@@ -29,7 +31,7 @@ import { ProductStar } from '../../shared/pipes/product/product-star.pipe';
         ProductDetailComponent,
 
         ProductStar
-    ]
+    ],
 })
 
 export class HomeModule {}
