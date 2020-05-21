@@ -37,7 +37,7 @@ export class SignupComponent implements OnInit {
 
   constructor(private auth: AuthService) { }
 
-  @Output() onClose = new EventEmitter();
+  @Output() onClick = new EventEmitter();
 
   ngOnInit() {
   }
@@ -58,7 +58,7 @@ export class SignupComponent implements OnInit {
       if (password === confirm) {
         if (terms) {
           this.auth.signUp(email, password).then(
-            () => { alert('Đăng kí thành công'); this.isSubmitted = false; }
+            () => { alert('Đăng kí thành công'); this.isSubmitted = false; this.signupClick();}
           ).catch(
             (error) => { alert(error); }
           );
@@ -74,7 +74,7 @@ export class SignupComponent implements OnInit {
 
   // close Modal
   signupClick(){
-    this.onClose.emit(null);
+    this.onClick.emit(null);
   }
 
 }

@@ -21,7 +21,7 @@ export class SigninSignupComponent {
         this.activeTab = tab;
     }
 
-    submitSignin() {
+    submit() {
         this.route.navigate(['/']);         
     }
 }

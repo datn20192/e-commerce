@@ -25,12 +25,12 @@
                 <div class="tab-pane active container" id="signin"
                         [ngClass]="{ 'active': activeTab==='signin' }"
                 >
-                    <app-signin (onClick)="submitSignin()"></app-signin>
+                    <app-signin (onClick)="submit()"></app-signin>
                 </div>
                 <div class="tab-pane container" id="signup"
                         [ngClass]="{ 'active': activeTab==='signup' }"
                 >
-                    <app-signup></app-signup>
+                    <app-signup (onclick)="submit()"></app-signup>
                 </div>
             </div>
         </div>
