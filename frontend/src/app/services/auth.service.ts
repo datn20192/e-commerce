@@ -54,12 +54,7 @@ export class AuthService {
           this.setUser(user);       
         } else {          
           this.userData = false;
-          localStorage.setItem('user', JSON.stringify(this.userDefault));
-          
-          if(!JSON.parse(localStorage.getItem('tmpCart'))) {
-            localStorage.setItem('tmpCart', JSON.stringify([]));
-          }
-          
+          localStorage.setItem('user', JSON.stringify(this.userDefault));                           
         }
       });
   }

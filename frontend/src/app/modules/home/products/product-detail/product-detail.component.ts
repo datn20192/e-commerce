@@ -31,6 +31,7 @@ export class ProductDetailComponent implements OnInit {
   closeModal(){
     if(this.authService.isLoggedIn===true) this.icService.addToCart(this.product);
     else {
+      this.icService.setProductToLocalStorage(this.product);
       this.route.navigate(['/signin-signup']);     
     } 
     this.onClose.emit(null);
