@@ -2,6 +2,7 @@
 node_modules
 dist
 e2e
+environments
 __pycache__
 wsgi.py
 main.ini
