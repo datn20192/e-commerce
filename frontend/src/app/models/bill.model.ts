@@ -1,21 +1,29 @@
 import { Product } from './product.model';
-import { UserInfor } from './user.model';
 
-export class Bill {
-    constructor(        
-        public cart: Cart[],
-        public userInfor: UserInfor,
-        public date: string,
-        public totalMoney: number,
-        public status: boolean,
-        public typeOfPayment: string    
-    ) { }
+// export class Bill {
+//     constructor(        
+//         public cart: Cart[],
+//         public infor: {},
+//         public date: Date,
+//         public totalMoney: number,
+//         public status: boolean,
+//         public typeOfPayment: string    
+//     ) { }
+// }
+
+export interface Bill {
+    cart: Cart[];
+    infor: {};
+    date: string;
+    totalMoney: number;
+    status: boolean;
+    typeOfPayment: string;
 }
 
 export class Cart {
     constructor(
         public product: Product,
-        public quantity: number,        
+        public quantityPurchased: number,        
     ) {}
 }
 
@@ -33,4 +41,11 @@ export class TypeOfPayment {
         public value: string,
         public name: string
     ) {}
+}
+
+export interface Customer{
+    uid: string;
+    email: string;
+    bill: Bill;
+    
 }

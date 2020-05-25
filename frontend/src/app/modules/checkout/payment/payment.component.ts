@@ -3,9 +3,9 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { CheckoutApiService } from '../checkout.service';
-import { Card, TypeOfPayment } from '../../../models/bill.model';
+import { Card, TypeOfPayment, Customer, Bill } from '../../../models/bill.model';
 import { User } from '../../../models/user.model';
-import { catchError } from 'rxjs/operators';
+import { CartFunction } from '../../../shared/functions/cart.function';
 
 @Component({
     selector: 'app-payment',
@@ -21,10 +21,10 @@ export class PaymentComponent {
     public typeOfPayment: string;
     public typeOfPaymentArr: TypeOfPayment[];     
     private card = new Card("", "", "", "");
-    // private userInfor = new UserInfor("", "", new Address("", "", "", ""));
     private user: User;
 
     public showBill:boolean = false;
+    private customer: Customer;         // save bill
 
     constructor(
         private route: Router,
@@ -46,6 +46,7 @@ export class PaymentComponent {
             if(infor !== {}) {
                 this.user = res.payload.data();
                 this.showBill = true;
+                this.customer = this.createBill(this.user);
             }
             else this.route.navigate(['checkout/shipping']);
         },
@@ -61,12 +62,42 @@ export class PaymentComponent {
     }
 
     onSubmit() {
-        console.log(this.typeOfPayment);
+        if(this.typeOfPayment==="cash") {
+            this.checkoutApi.addBill(this.customer).subscribe(res => {
+                let result = JSON.parse(res);
+                if(result.code !== 200) alert('Đặt hàng thất bại.')
+                else {
+                    this.checkoutApi.deleteAllProducts();
+                    alert('Đặt hàng thàng công. Tiếp tục mua sắm..');
+                    this.route.navigate(['']);
+                }
+            },
+                console.error
+            );
+        }
     }
 
     // Nomalize the valid thru input
     slash() {
         this.card.validThru = this.card.validThru + '/'
+    }
+
+    // create bill
+    private createBill(user:User): Customer {
+        let customer: Customer = {
+            uid: user.uid,
+            email: user.email,
+            bill: {
+                cart: user.cart,
+                infor: user.infor,
+                date: new Date().toLocaleString("en-US", {timeZone:"Asia/Ho_Chi_Minh"}),
+                totalMoney: CartFunction.totalMoney(user.cart),
+                status: false,
+                typeOfPayment: this.typeOfPayment
+            }
+        };               
+
+        return customer;
     }
     
 }
