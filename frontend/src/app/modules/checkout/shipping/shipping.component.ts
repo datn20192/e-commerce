@@ -32,7 +32,7 @@ export class ShippingComponent implements OnInit {
   }
 
   onSubmit() {
-    this.route.navigate(['/checkout/payment']);  
+    this.route.navigate(['/thanh-toan/hoa-don']);  
     this.checkoutApi.addUserInfor(this.userInfor);
   }
 

@@ -21,7 +21,7 @@ const routes: Routes = [
     canActivateChild: [AuthGuard],
     children: [     
       {
-        path: 'cart',
+        path: 'gio-hang',
         component: CartComponent,
         data : {
           title: 'Giỏ hàng'
@@ -29,7 +29,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'shipping',
+        path: 'dia-chi-giao-hang',
         component: ShippingComponent,
         canActivate: [CheckoutGuard],
         data : {
@@ -38,7 +38,7 @@ const routes: Routes = [
       },
 
       {
-        path: 'payment',
+        path: 'hoa-don',
         component: PaymentComponent,
         canActivate: [CheckoutGuard],
         data : {

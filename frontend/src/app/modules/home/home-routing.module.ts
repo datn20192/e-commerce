@@ -25,7 +25,7 @@ const homeRoutes: Routes = [
             },
 
             {
-              path: 'signin-signup',
+              path: 'dangnhap-dangky',
               component: SigninSignupComponent,
               canActivate: [SigninSignupGuard],
               data: {

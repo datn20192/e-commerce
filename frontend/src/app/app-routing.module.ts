@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   
   { 
-    path: 'checkout', 
+    path: 'thanh-toan', 
     loadChildren: () => import('./modules/checkout/checkout.module').then(m => m.CheckoutModule),
     canLoad: [AuthGuard] 
   },  

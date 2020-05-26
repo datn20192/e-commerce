@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { AuthService } from 'src/app/services/auth.service';
@@ -21,6 +22,7 @@ export class SigninComponent implements OnInit {
   @Output() onClick = new EventEmitter();
 
   constructor(
+    private router: Router,
     private authentification: AuthService,
     private itemCartService: ItemCartService
   ) { }  
@@ -60,6 +62,7 @@ export class SigninComponent implements OnInit {
   signinClick() {
     this.itemCartService.addTmpProductToCart();
     this.onClick.emit(null);
+    if(this.router.url == '/dangnhap-dangky') this.router.navigate([''])
   }
 
 }
