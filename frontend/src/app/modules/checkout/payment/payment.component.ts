@@ -42,13 +42,12 @@ export class PaymentComponent {
 
     load() {
         this.userInforSubs = this.checkoutApi.getUserInfor().subscribe(res => {
-            let infor = res.payload.data().infor;     
-            if(infor !== {}) {
-                this.user = res.payload.data();
+            let userFB = res.payload.data();     
+            if(userFB.infor !== {} && userFB.cart.length!=0) {
+                this.user = userFB;
                 this.showBill = true;
                 this.customer = this.createBill(this.user);
-            }
-            else this.route.navigate(['checkout/shipping']);
+            }            
         },
             console.error
         );

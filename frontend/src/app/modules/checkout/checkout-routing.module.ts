@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from '../../guards/auth.guard';
+import { CheckoutGuard } from '../../guards/checkout.guard';
 
 import { CheckoutComponent } from './checkout.component';
 
@@ -17,11 +18,11 @@ const routes: Routes = [
       title: 'Đặt hàng'
     },
     canActivate: [AuthGuard],
+    canActivateChild: [AuthGuard],
     children: [     
       {
         path: 'cart',
         component: CartComponent,
-        canActivateChild: [AuthGuard],
         data : {
           title: 'Giỏ hàng'
         }
@@ -30,7 +31,7 @@ const routes: Routes = [
       {
         path: 'shipping',
         component: ShippingComponent,
-        canActivateChild: [AuthGuard],
+        canActivate: [CheckoutGuard],
         data : {
           title: 'Địa chỉ giao hàng'
         }
@@ -39,7 +40,7 @@ const routes: Routes = [
       {
         path: 'payment',
         component: PaymentComponent,
-        canActivateChild: [AuthGuard],
+        canActivate: [CheckoutGuard],
         data : {
           title: 'Thanh toán & Đặt mua'
         }

@@ -1,9 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
+import { Observable } from 'rxjs';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from 'angularfire2/auth';
 // import { AngularFireStorage } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-// import { AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { User, UserInfor, Address } from '../models/user.model';
 import { ItemCartService } from './item-cart.service';
@@ -48,10 +48,10 @@ export class AuthService {
     private angularFireAuth: AngularFireAuth,
     private afs: AngularFirestore,
     public router: Router,
-    public ngZone: NgZone) {
+    public ngZone: NgZone) {      
       this.angularFireAuth.authState.subscribe(user => {        
         if (user && this.isLoggedIn===true) {
-          this.setUser(user);       
+          this.setUser(user);   
         } else {          
           this.userData = false;
           localStorage.setItem('user', JSON.stringify(this.userDefault));                           
@@ -175,5 +175,12 @@ export class AuthService {
       this.router.navigate(['/']);
     });
   }
+
+  // Get infor of user from firebase
+  getUserInfor(): Observable<any> {  
+    const userUID = JSON.parse(localStorage.getItem('user')).uid;
+    return this.afs.doc(`users/${userUID}`).valueChanges();  
+  }
+  
 
 }
