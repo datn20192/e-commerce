@@ -19,11 +19,10 @@ export class SigninSignupGuard implements CanActivate {
     ) {}
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-        let url: string = state.url;
-        return !this.checkLogin(url);
+        return !this.checkLogin();
     }    
 
-    checkLogin(url: string): boolean {
+    checkLogin(): boolean {
         if(this.authService.isLoggedIn === false) return false;
         
         this.router.navigate(['/']);

@@ -11,7 +11,7 @@ def get_all_products(mongo):
         extracted = list(mongo.db.product.find({}))
         for product in extracted:            
             processed.append({
-                'id': product['_id'],
+                'id': str(product['_id']),
                 'groupID': product['groupID'],
                 'groupName': product['groupName'],
                 'category': product['category'],
@@ -37,7 +37,7 @@ def get_all_products(mongo):
 def get_product_byID(mongo, id):
     extracted= mongo.db.product.find_one_or_404({'_id': id})
     processed = {
-                'id': extracted['_id'],
+                'id': str(extracted['_id']),
                 'groupID': extracted['groupID'],
                 'groupName': extracted['groupName'],
                 'category': extracted['category'],
@@ -56,11 +56,10 @@ def get_product_by_category(mongo, category):
     try:
         response = Response()
         processed = []        
-        extracted = list(mongo.db.product.find({'category': category}))    
-        print(len(extracted))          
+        extracted = list(mongo.db.product.find({'category': category}))
         for product in extracted:           
             processed.append({
-                'id': product['_id'],
+                'id': str(product['_id']),
                 'groupID': product['groupID'],
                 'groupName': product['groupName'],
                 'category': product['category'],
@@ -100,7 +99,7 @@ def get_product_by_category_page(mongo, category, page, numOfElement):
         start = (page)*numOfElement
         for i in range(start, start+numOfElement, 1):
             productPage.append({
-                'id': extracted[i]['_id'],
+                'id': str(extracted[i]['_id']),
                 'groupID': extracted[i]['groupID'],
                 'groupName': extracted[i]['groupName'],
                 'category': extracted[i]['category'],

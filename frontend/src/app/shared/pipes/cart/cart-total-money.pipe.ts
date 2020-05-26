@@ -1,10 +1,11 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 import { Cart } from '../../../models/cart.model';
+import { CartFunction } from '../../functions/cart.function';
 
 @Pipe({name: 'cartTotalMoney'})
 export class CartTotalMoney implements PipeTransform {
   transform(cart: Cart[]): string {
-    return cart.reduce((prev, curr) => prev += Number(curr.product.price) * Number(curr.quantityPurchased), 0).toString();    
+    return CartFunction.totalMoney(cart).toString();    
   }
 }

@@ -51,7 +51,7 @@ export class GroupProductsComponent implements OnInit {
       this.productCategoryList = result.data;      
       this.category = this.productCategoryList.filter(element => element.url===this.url)[0];   
       this.categoryListPageSubs = this.categoryApi.getProductByCategoryPage(this.category.id, this.page, 12).subscribe(res => {      
-        let result = JSON.parse(res);      
+        let result = JSON.parse(res);
         this.productsList = result.data['content'];     
         this.pages = new Array(result.data['totalPages']);   
         this.showList = true;    

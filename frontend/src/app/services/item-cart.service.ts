@@ -27,6 +27,21 @@ export class ItemCartService {
     private db: AngularFireDatabase,
   ) { }
 
+  //----------------------- temporary product ------------------//
+  setProductToLocalStorage(product: Product) {
+    localStorage.setItem('tmpProduct', JSON.stringify(product));
+  }
+
+  addTmpProductToCart() {
+    let tmpProduct = localStorage.getItem('tmpProduct');  
+    if(tmpProduct) {
+      this.addToCart(JSON.parse(tmpProduct));
+      localStorage.removeItem('tmpProduct');
+    }
+    else return;
+  }
+
+
   addToCart(product) {        
     this.listItemCart = this.showItemCart;
     if (!this.listItemCart.length) {
@@ -120,6 +135,6 @@ export class ItemCartService {
       }
     })
     this.loadItemCart();
-  }   
+  }     
  
 }

@@ -33,7 +33,7 @@ export class CartComponent implements OnInit, OnDestroy {
 
 
   proceedToCheckout() {            
-    this.route.navigate(['/checkout/shipping']);
+    this.route.navigate(['/thanh-toan/dia-chi-giao-hang']);
   }
 }
 

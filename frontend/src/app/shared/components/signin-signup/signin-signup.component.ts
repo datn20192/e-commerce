@@ -22,6 +22,6 @@ export class SigninSignupComponent {
     }
 
     submit() {
-        this.route.navigate(['/']);         
+            
     }
 }

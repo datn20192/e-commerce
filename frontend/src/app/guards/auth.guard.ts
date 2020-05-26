@@ -17,7 +17,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     constructor(
         private authService: AuthService,
         private router: Router
-    ) {}
+    ) {}    
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
         let url: string = state.url;
@@ -34,10 +34,10 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         return this.checkLogin(url);
     }
 
-    checkLogin(url: string): boolean {
+    private checkLogin(url: string): boolean {
         if(this.authService.isLoggedIn === true) return true;
         
-        this.router.navigate(['/signin-signup']);
+        this.router.navigate(['/dangnhap-dangky']);
         return false;
     }
 }

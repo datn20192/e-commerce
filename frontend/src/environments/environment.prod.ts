@@ -1,4 +1,4 @@
-export const API_URL = 'https://datn20192-dd.ga';
+export const API_URL = 'http://localhost:5000';
 
 export const environment = {
   production: true,
