@@ -40,6 +40,12 @@ export class ProductsApiService {
           catchError(ProductsApiService._handleError)
         )
       }
+      getProductByFilter(searchedString, page, numberOfElement): Observable<any> {      
+        return this.http.get<any>(`${API_URL}/api/products/search/${searchedString.trim()}?page=${page}&num=${numberOfElement}`)
+        .pipe(
+          catchError(ProductsApiService._handleError)
+        )
+      }
 
       deleteProduct(id):Observable<any>{
         var params = {product_id: id};

@@ -14,12 +14,16 @@ import { ProductDetailComponent } from './products/product-detail/product-detail
 
 // Pipe
 import { ProductStar } from '../../shared/pipes/product/product-star.pipe';
-
+import { SearchComponent } from '../search/search.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { DashboardService } from '../../services/dashboard.service';
+import { ChartsModule } from 'ng2-charts';
 @NgModule({
     imports: [
         CarouselModule,
         SharedModule,       
-        HomeRoutingModule
+        HomeRoutingModule,
+        ChartsModule
     ],
     declarations: [
         HomeComponent,
@@ -29,9 +33,13 @@ import { ProductStar } from '../../shared/pipes/product/product-star.pipe';
         CarouselListProductComponent,
         ListProductGridComponent,
         ProductDetailComponent,
-
+        SearchComponent,
+        DashboardComponent,
         ProductStar
     ],
+    providers: [
+        DashboardService
+    ]
 })
 
 export class HomeModule {}
