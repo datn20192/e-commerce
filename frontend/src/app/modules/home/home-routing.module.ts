@@ -7,6 +7,8 @@ import { HomeComponent } from './home.component';
 import { GroupProductsComponent } from './group-products/group-products.component';
 import { ProductListComponent } from './home-products/product-list.component';
 import { SigninSignupComponent } from '../../shared/components/signin-signup/signin-signup.component';
+import { DashboardComponent } from '../dashboard/dashboard.component';
+import { SearchComponent } from '../search/search.component';
 
 const homeRoutes: Routes = [
     {
@@ -87,6 +89,20 @@ const homeRoutes: Routes = [
                 component: GroupProductsComponent,
                 data: {
                   title: 'Tủ Lạnh'
+                }
+              },
+              {
+                path: 'search',
+                component: SearchComponent,
+                data: {
+                  title: 'Tìm kiếm'
+                }
+              },
+              {
+                path: 'dashboard',
+                component: DashboardComponent,
+                data: {
+                  title: 'Thống kê'
                 }
               },
         ]

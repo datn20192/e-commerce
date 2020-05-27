@@ -7,10 +7,10 @@
   [asideMenuToggler]="'lg'"
 >  
   <div class="search-container nav navbar-nav d-md-down-none">
-      <form (ngSubmit)="submit()" class="form-inline">
-      <input type="text" class="form-control" placeholder="Nhập tên sản phẩm.." name="search">
-      <button type="submit" class="btn btn-square btn-secondary"><i class="fa fa-search"></i>Tìm kiếm</button>
-      </form>
+    <form class="form-inline">
+      <input #seachInput type="text" class="form-control" placeholder="Nhập tên sản phẩm..."(keyup)="share.search(seachInput.value)">
+      <button type="submit" class="btn btn-square btn-secondary" (click)="searchEnter()"><i class="fa fa-search" ></i>Tìm kiếm</button>
+    </form>
   </div>
   <ul class="nav navbar-nav ml-auto" *ngIf="!(auth.userData) && !(auth.isLoggedIn)">             
     <li class="nav-item d-md-down-none">
@@ -54,7 +54,7 @@
           <span class="badge-pill badge-danger">{{icService.lengthCart}}</span>
       </a>             
       <li class="nav-item d-md-down-none" *ngIf="auth.isAdmin">
-      <a class="nav-link" href="#"><i class="fa fa-line-chart font-2xl"></i><span>Thống kê</span></a>
+      <a class="nav-link" [routerLink]="['/dashboard']"><i class="fa fa-line-chart font-2xl"></i><span>Thống kê</span></a>
       </li>
       <li class="nav-item d-md-down-none" *ngIf="(auth.isAdmin)">
       <a class="nav-link" href="#">
