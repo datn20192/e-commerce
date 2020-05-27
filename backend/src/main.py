@@ -3,7 +3,7 @@ from flask import request
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 from config import Response
-from api import product_api, productCategory_api, typeOfPayment_api, customer_api
+from api import bill_api, productCategory_api, product_api, typeOfPayment_api
 
 app = Flask(__name__)
 
@@ -29,8 +29,16 @@ def get_product_by_category(category):
     if page is None and numOfElement is None:
         return product_api.get_product_by_category(mongo, category)
     else:
-        return product_api.get_product_by_category_page(mongo, category, page, numOfElement)      
+        return product_api.get_product_by_category_page(mongo, category, page, numOfElement)
 
+@app.route('/api/products/search/<string:searchedString>', methods = ['GET'])          
+def get_product_by_filter(searchedString):
+    page = request.args.get("page")
+    numOfElement = request.args.get("num")
+    if page is None and numOfElement is None:
+        return []
+    else:
+        return product_api.get_product_by_filter(mongo, searchedString, page, numOfElement)
 @app.route('/api/add_product', methods=['POST'])
 def add_product():
     return product_api.add_product(mongo)
@@ -70,8 +78,19 @@ def delete_productCategory():
 def get_all_type_of_payment():
     return typeOfPayment_api.get_all_type_of_payment(mongo)
 
-
-#--------------- Customer API -----------------------#
-@app.route('/api/add_bill', methods=['POST'])
-def add_bill():
-    return customer_api.add_bill(mongo)
+#-------------------Get bill-------------------------#
+@app.route('/api/bill/statistics/year=<string:year>', methods = ['GET'])
+def get_bill_by_year(year):
+    month= request.args.get('month')
+    day = request.args.get('day')
+    
+    if month is None:
+        return bill_api.get_bill_by_year(mongo,year)
+    else:
+        if day is None:
+            return bill_api.get_bill_by_year_month(mongo,year,month)
+        else:
+            return bill_api.get_bill_by_day(mongo,year,month,day)
+@app.route('/api/bill/statistics/allyear', methods = ['GET'])
+def get_bill_by_all_year():
+    return bill_api.get_bill_by_all_year(mongo)

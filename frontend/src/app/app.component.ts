@@ -4,6 +4,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ItemCartService } from './services/item-cart.service';
 import { Router } from '@angular/router';
+import { SharedService } from './services/shared.service';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent implements OnInit{
     public auth: AuthService,
     private modalService: BsModalService,
     private icService: ItemCartService,
-    public router: Router,  
+    public router: Router,
+    private share: SharedService
     ){}
 
   ngOnInit() {
@@ -49,6 +51,9 @@ export class AppComponent implements OnInit{
 
   } 
 
-  submit() {}
+  searchEnter() {
+    this.router.navigate(['search']);
+
+  }
 
 }

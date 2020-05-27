@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { SharedModule } from './shared/shared-module';
 
@@ -52,12 +53,16 @@ import { ProductCategoryServiceAPI } from './services/productCategory-api.servic
 // Component
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
+import { SearchComponent } from './modules/search/search.component';
+import { DashboardComponent } from './modules/dashboard/dashboard.component';
+import { DashboardService } from './services/dashboard.service';
+import { SharedService } from './services/shared.service';
 
 @NgModule({
   declarations: [
     AppComponent,   
     NotFoundComponent,    
-    SidebarDComponent,                  
+    SidebarDComponent,              
 
   ],
   imports: [
@@ -79,14 +84,15 @@ import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
     ChartsModule,
     PerfectScrollbarModule,
     ModalModule.forRoot(),   
-    
+    BrowserAnimationsModule,
     SharedModule
   ],
   providers: [
     AuthService,  
     ProductsApiService,
-    ProductCategoryServiceAPI
-    
+    ProductCategoryServiceAPI,
+    SharedService,
+    DashboardService,
   ],
   bootstrap: [AppComponent]
 })
