@@ -222,32 +222,8 @@ export class DashboardComponent implements OnInit {
     if(this.chartByYearMonth !== null){
       this.chartByYearMonth.destroy();
     }
-    this.chartByYear = new Chart("chart-by-time", {
-      type: 'bar',
-      data: {
-        labels: this.labelByRevenue,
-        datasets: [{
-          label: 'Doanh số (Đơn vị: Triệu VNĐ)',
-          data: this.revenueByMonth,
-          backgroundColor:'rgba(153, 102, 255, 0.2)',
-          borderColor:'rgba(153, 102, 255, 1)',
-          borderWidth: 1.5
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: this.titleByRevenue
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });
+
+    this.setBarChartInfor(this.chartByYear, "chart-by-time", this.labelByRevenue, this.revenueByMonth, this.titleByRevenue);    
   }
 
   //---Draw chart by all year
@@ -261,32 +237,8 @@ export class DashboardComponent implements OnInit {
     if(this.chartByYearMonth !== null){
       this.chartByYearMonth.destroy();
     }
-    this.chartByYear = new Chart("chart-by-time", {
-      type: 'bar',
-      data: {
-        labels: this.labelByRevenue,
-        datasets: [{
-          label: 'Doanh số (Đơn vị: Triệu VNĐ)',
-          data: this.revenueByYear,
-          backgroundColor:'rgba(153, 102, 255, 0.2)',
-          borderColor:'rgba(153, 102, 255, 1)',
-          borderWidth: 1.5
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: this.titleByRevenue
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });
+
+    this.setBarChartInfor(this.chartByYear, "chart-by-time", this.labelByRevenue, this.revenueByYear, this.titleByRevenue);    
   }
   //---Draw chart by year && month
   drawChartByYearMonth(){
@@ -299,32 +251,8 @@ export class DashboardComponent implements OnInit {
     if(this.chartByYearMonth !== null){
       this.chartByYearMonth.destroy();
     }
-    this.chartByYearMonth = new Chart("chart-by-time", {
-      type: 'bar',
-      data: {
-        labels: this.labelByRevenue,
-        datasets: [{
-          label: 'Doanh số (Đơn vị: Triệu VNĐ)',
-          data: this.revenueByYearMonth,
-          backgroundColor:'rgba(153, 102, 255, 0.2)',
-          borderColor:'rgba(153, 102, 255, 1)',
-          borderWidth: 1.5
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: this.titleByRevenue
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });
+
+    this.setBarChartInfor(this.chartByYearMonth, "chart-by-time", this.labelByRevenue, this.revenueByYearMonth, this.titleByRevenue);    
   }
   //draw chart by day
   drawChartCategoryByDay(){
@@ -337,33 +265,10 @@ export class DashboardComponent implements OnInit {
     if(this.chartByCategoryYear !== null){
       this.chartByCategoryYear.destroy();
     }
-    this.chartByDay = new Chart("chart-by-category", {
-      type: 'bar',
-      data: {
-        labels: this.labelByCategory,
-        datasets: [{
-          label: 'Doanh số (Đơn vị: Triệu VNĐ)',
-          data: this.revenueByCategoryDay,
-          backgroundColor:'rgba(153, 102, 255, 0.2)',
-          borderColor:'rgba(153, 102, 255, 1)',
-          borderWidth: 1.5
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: this.titleByCategory
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });
+
+    this.setBarChartInfor(this.chartByDay, "chart-by-category", this.labelByCategory, this.revenueByCategoryDay, this.titleByCategory);    
   }
+
   //---draw by category
   drawChartCategoryByMonth(){
     if(this.chartByDay !== null){
@@ -372,33 +277,10 @@ export class DashboardComponent implements OnInit {
     if(this.chartByCategoryMonth !== null){
       this.chartByCategoryMonth.destroy();
     }
-    this.chartByCategoryMonth = new Chart("chart-by-category", {
-      type: 'bar',
-      data: {
-        labels: this.labelByCategory,
-        datasets: [{
-          label: 'Doanh số (Đơn vị: Triệu VNĐ)',
-          data: this.revenueByCategoryMonth,
-          backgroundColor:'rgba(153, 102, 255, 0.2)',
-          borderColor:'rgba(153, 102, 255, 1)',
-          borderWidth: 1.5
-        }]
-      },
-      options: {
-        title: {
-          display: true,
-          text: this.titleByCategory
-        },
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            }
-          }]
-        }
-      }
-    });
+
+    this.setBarChartInfor(this.chartByCategoryMonth, "chart-by-category", this.labelByCategory, this.revenueByCategoryMonth, this.titleByCategory);   
   }
+
   drawChartCategoryByYear(){
     if(this.chartByDay !== null){
       this.chartByDay.destroy();
@@ -409,13 +291,19 @@ export class DashboardComponent implements OnInit {
     if(this.chartByCategoryYear !== null){
       this.chartByCategoryYear.destroy();
     }
-    this.chartByCategoryYear = new Chart("chart-by-category", {
+
+    this.setBarChartInfor(this.chartByCategoryYear, "chart-by-category", this.labelByCategory, this.revenueByCategoryYear, this.titleByCategory);
+    
+  }
+
+  private setBarChartInfor(chart, context: string, labelsList, chartData, textTitle) {
+    chart = new Chart(context, {
       type: 'bar',
       data: {
-        labels: this.labelByCategory,
+        labels: labelsList,
         datasets: [{
           label: 'Doanh số (Đơn vị: Triệu VNĐ)',
-          data: this.revenueByCategoryYear,
+          data: chartData,
           backgroundColor:'rgba(153, 102, 255, 0.2)',
           borderColor:'rgba(153, 102, 255, 1)',
           borderWidth: 1.5
@@ -424,7 +312,7 @@ export class DashboardComponent implements OnInit {
       options: {
         title: {
           display: true,
-          text: this.titleByCategory
+          text: textTitle
         },
         scales: {
           yAxes: [{
