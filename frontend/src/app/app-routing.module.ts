@@ -17,6 +17,11 @@ const routes: Routes = [
     canLoad: [AuthGuard] 
   },  
 
+  {
+    path: 'quan-ly',
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+  },
+
   { path: '**', component: NotFoundComponent }
   
            
