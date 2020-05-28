@@ -10,17 +10,18 @@ import { ProductCategoryServiceAPI } from '../../services/productCategory-api.se
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  private dateSubs: Subscription;
-  private productCategoriesListSubs: Subscription; 
+  private yearSubs: Subscription;
+  private monthSubs: Subscription;
+  private productCategoriesListSubs: Subscription;
   //date
   chosenYear: number;
   chosenMonth: number;
   chosenDay: number;
   // Chart
   titleByRevenue: string; //chart name
-  labelByRevenue: string[]; 
+  labelByRevenue: string[];
   titleByCategory: string; //chart name
-  labelByCategory: string[]; 
+  labelByCategory: string[];
   //---statistic by year
   dataBillsMonth: Array<string>[]; //save revenue by bills in 1 month
   revenueByMonth: any[]; // save total revenue by month
@@ -41,48 +42,58 @@ export class DashboardComponent implements OnInit {
   revenueByCategoryDay: any[];
 
   //---variable to draw chart
-  chartByYear = null;
+  chartByYear = null;// doanh thu theo nam
   chartByAllYear = null;
-  chartByYearMonth = null;
-  chartByDay=null;
+  chartByYearMonth = null;// doanh thu theo thang
+  chartByDay = null;
   chartByCategoryMonth = null;
   chartByCategoryYear = null;
-  
-//---Label of chart 2 (category)
+
+  //---Label of chart 2 (category)
   dataBillsByCategory: any[];
 
   constructor(
     private dashboard: DashboardService,
     private productCategoryApi: ProductCategoryServiceAPI
-    ) { }
+  ) { }
 
   ngOnInit() {
+    this.getCategory();
     this.createDay();
-    this.loadChart();
   }
   ngOnDestroy() {
-    this.dateSubs.unsubscribe();
-    if(this.productCategoriesListSubs){
+    this.yearSubs.unsubscribe();
+    this.monthSubs.unsubscribe();
+    if (this.productCategoriesListSubs) {
       this.productCategoriesListSubs.unsubscribe();
     }
   }
   //---Pick options to statistic
   //---just change state/value of dropdown
   createDay() {
-    this.dateSubs = this.dashboard.currentYear.subscribe(year => {
+    this.yearSubs = this.dashboard.currentYear.subscribe(year => {
       this.chosenYear = year;
       this.chosenMonth = 0;
       this.chosenDay = 0;
     });
-    this.dateSubs = this.dashboard.currentMonth.subscribe(month => {
+    this.monthSubs = this.dashboard.currentMonth.subscribe(month => {
       this.chosenMonth = month;
       this.chosenDay = 0;
       this.dashboard.genDaysByMonthAndYear(this.chosenYear, this.chosenMonth);
     });
   }
+  getYear(date: string) {
+    return ((new Date(date)).getFullYear()).toString();
+  }
+  getMonth(date: string) {
+    return (new Date(date)).getMonth(); //return month to 0-11
+  }
+  getDay(date: string) {
+    return (new Date(date)).getDate();
+  }
   //get category data
-  getCategory(){
-    this.productCategoriesListSubs  = this.productCategoryApi.getProductCategories().subscribe(res => {
+  getCategory() {
+    this.productCategoriesListSubs = this.productCategoryApi.getProductCategories().subscribe(res => {
       this.allCategoryName = [];
       this.allCategoryID = [];
       let resultCategory = JSON.parse(res)['data'];
@@ -93,66 +104,66 @@ export class DashboardComponent implements OnInit {
         })
       });
       this.labelByCategory = this.allCategoryName;
-      this.dataBillsByCategory = Array.from(Array(this.allCategoryID.length),() => ["0"]);
+      this.dataBillsByCategory = Array.from(Array(this.allCategoryID.length), () => ["0"]);
     })
   }
 
   //---load charts
   loadChart() {
-
     let data = []; // save data from api return
-
+    this.getCategory();
     //---Statistics by all year
-    if(!this.chosenYear){
-      this.dataBillsYear = Array.from(Array(this.dashboard.years.length), () => ["0"]);
-      this.revenueByYear = [];
+    if (!this.chosenYear) {
+
       return this.dashboard.getBillByAllYear().subscribe(res => {
+        this.dataBillsYear = Array.from(Array(this.dashboard.years.length), () => ["0"]);
+        this.revenueByYear = [];
         this.labelByRevenue = [];
         data = JSON.parse(res)['data'];
+        console.log('AllYear', data);
         this.titleByRevenue = `Thống kê doanh thu tất cả các năm `;
         this.dashboard.years.forEach(i => {
           this.labelByRevenue.push(i.value);
           data.forEach(element => {
-            if(element.year === i.value){
-              this.dataBillsYear[i.index].push(element.totalPrice);
+            if (this.getYear(element.date) === i.value) {
+              this.dataBillsYear[i.index].push(element.totalMoney);
             }
           })
         });
-        this.revenueByYear = this.dataBillsYear.map(element => element.reduce((prev, curr) => prev += Number(curr) / 1000000,0));
+        this.revenueByYear = this.dataBillsYear.map(element => element.reduce((prev, curr) => prev += Number(curr) / 1000000, 0));
         this.drawChartByAllYear();
       })
     }
 
     //---Statistics by year
     if (this.chosenYear && !this.chosenMonth) {
-      
-      this.dataBillsMonth = Array.from(Array(12), () => ["0"]);
-      this.revenueByMonth = [];
-      this.revenueByCategoryYear =[];
-      this.getCategory();
 
       return this.dashboard.getBillByYear(this.chosenYear.toString()).subscribe(res => {
+        this.dataBillsMonth = Array.from(Array(12), () => ["0"]);
+        this.revenueByMonth = [];
+        this.revenueByCategoryYear = [];
         this.labelByRevenue = [];
         data = JSON.parse(res)['data'];
+        console.log('Year', data);
         this.titleByRevenue = `Thống kê doanh thu năm ${this.chosenYear}`;
         this.titleByCategory = `Thống kê doanh thu năm ${this.chosenYear}`;
-        this.labelByRevenue = Array.from(Array(12)).map((e, index) => e = `Tháng ${index+1}`);
+        this.labelByRevenue = Array.from(Array(12)).map((e, index) => e = `Tháng ${index + 1}`);
         data.forEach(element => {
-          this.dataBillsMonth[element.month - 1].push(element.totalPrice);
+          this.dataBillsMonth[this.getMonth(element.date)].push(element.totalMoney);
 
         })
         this.revenueByMonth = this.dataBillsMonth.map(element => element.reduce((prev, curr) => prev += Number(curr) / 1000000, 0));
-        
-        this.allCategoryID.forEach((id,index) => {
+
+        this.allCategoryID.forEach((id, index) => {
           data.forEach(element => {
-            element.cart.forEach(res => {
-              if(res.category === id){
-                this.dataBillsByCategory[index].push(Number(res.price)*res.quantity);
+            element.cart.forEach(product => {
+              if (product.product['category'] === id) {
+                this.dataBillsByCategory[index].push(Number(product.product['price']) * product.quantityPurchased);
               }
             })
           })
         })
-        this.revenueByCategoryYear = this.dataBillsByCategory.map(e => e.reduce((prev,curr) => prev += Number(curr) / 1000000,0));
+        this.revenueByCategoryYear = this.dataBillsByCategory.map(e => e.reduce((prev, curr) => prev += Number(curr) / 1000000, 0));
         this.drawChartByYear();
         this.drawChartCategoryByYear();
       })
@@ -160,52 +171,52 @@ export class DashboardComponent implements OnInit {
 
 
     //---Statistics by year && month
-    if(this.chosenYear && this.chosenMonth && !this.chosenDay){
+    if (this.chosenYear && this.chosenMonth && !this.chosenDay) {
 
-      this.dataBillsYearMonth = Array.from(Array(this.dashboard.days), () => ["0"]);
-      this.revenueByYearMonth =[];
-      this.revenueByCategoryMonth =[];
-      this.getCategory();
-
-      return this.dashboard.getBillByYearMonth(this.chosenYear,this.chosenMonth.toString()).subscribe(res => {
+      return this.dashboard.getBillByYearMonth(this.chosenYear.toString(), this.chosenMonth.toString()).subscribe(res => {
+        this.dataBillsYearMonth = Array.from(Array(this.dashboard.days), () => ["0"]);
+        this.revenueByYearMonth = [];
+        this.revenueByCategoryMonth = [];
         this.labelByRevenue = [];
         data = JSON.parse(res)['data'];
+        console.log('YearMonth', data);
         this.titleByRevenue = `Thống kê doanh thu tháng ${this.chosenMonth}/${this.chosenYear}`;
         this.titleByCategory = `Thống kê doanh thu tháng ${this.chosenMonth}/${this.chosenYear}`;
-        this.labelByRevenue = Array.from(Array(this.dashboard.days)).map((e, index) => e = `Ngày ${index+1}`);
+        this.labelByRevenue = Array.from(Array(this.dashboard.days)).map((e, index) => e = `Ngày ${index + 1}`);
         data.forEach((element => {
-          this.dataBillsYearMonth[element.day-1].push(element.totalPrice);
+          this.dataBillsYearMonth[this.getDay(element.date) - 1].push(element.totalMoney);
         }))
-        this.revenueByYearMonth = this.dataBillsYearMonth.map(e => e.reduce((prev,curr) => prev += Number(curr) / 1000000,0));
-        this.allCategoryID.forEach((id,index) => {
+        this.revenueByYearMonth = this.dataBillsYearMonth.map(e => e.reduce((prev, curr) => prev += Number(curr) / 1000000, 0));
+
+        this.allCategoryID.forEach((id, index) => {
           data.forEach(element => {
-            element.cart.forEach(res => {
-              if(res.category === id){
-                this.dataBillsByCategory[index].push(Number(res.price)*res.quantity);
+            element.cart.forEach(product => {
+              if (product.product['category'] === id) {
+                this.dataBillsByCategory[index].push(Number(product.product['price']) * product.quantityPurchased);
               }
             })
           })
         })
-        this.revenueByCategoryMonth = this.dataBillsByCategory.map(e => e.reduce((prev,curr) => prev += Number(curr) / 1000000,0));
+        this.revenueByCategoryMonth = this.dataBillsByCategory.map(e => e.reduce((prev, curr) => prev += Number(curr) / 1000000, 0));
         this.drawChartByYearMonth();
         this.drawChartCategoryByMonth();
       })
     }
     else {
-      this.getCategory();
-      return this.dashboard.getBillByDay(this.chosenYear,this.chosenMonth.toString(),this.chosenDay.toString()).subscribe(res => {
+      return this.dashboard.getBillByDay(this.chosenYear, this.chosenMonth.toString(), this.chosenDay.toString()).subscribe(res => {
         data = JSON.parse(res)['data'];
+        console.log('Day', data);
         this.titleByCategory = `Thống kê doanh thu ngày ${this.chosenDay}/${this.chosenMonth}/${this.chosenYear}`;
-        this.allCategoryID.forEach((id,index) => {
+        this.allCategoryID.forEach((id, index) => {
           data.forEach(element => {
-            element.cart.forEach(res => {
-              if(res.category === id){
-                this.dataBillsByCategory[index].push(Number(res.price)*res.quantity);
+            element.cart.forEach(product => {
+              if (product.product['category'] === id) {
+                this.dataBillsByCategory[index].push(Number(product.product['price']) * product.quantityPurchased);
               }
             })
           })
         })
-        this.revenueByCategoryDay = this.dataBillsByCategory.map(e => e.reduce((prev,curr) => prev += Number(curr) / 1000000,0));
+        this.revenueByCategoryDay = this.dataBillsByCategory.map(e => e.reduce((prev, curr) => prev += Number(curr) / 1000000, 0));
         this.drawChartCategoryByDay();
       })
     }
@@ -213,90 +224,76 @@ export class DashboardComponent implements OnInit {
 
   //---Draw chart by year
   drawChartByYear() {
-    if (this.chartByAllYear !== null ) {
+    if (this.chartByAllYear !== null) {
       this.chartByAllYear.destroy();
     }
-    if(this.chartByYear !== null) {
+    if (this.chartByYear !== null) {
       this.chartByYear.destroy();
     }
-    if(this.chartByYearMonth !== null){
+    if (this.chartByYearMonth !== null) {
       this.chartByYearMonth.destroy();
     }
 
-    this.setBarChartInfor(this.chartByYear, "chart-by-time", this.labelByRevenue, this.revenueByMonth, this.titleByRevenue);    
+    this.chartByYear = this.setBarChartInfor(this.chartByYear, "chart-by-time", this.labelByRevenue, this.revenueByMonth, this.titleByRevenue);
   }
 
   //---Draw chart by all year
   drawChartByAllYear() {
-    if (this.chartByAllYear !== null ) {
+    if (this.chartByAllYear !== null) {
       this.chartByAllYear.destroy();
+
     }
-    if(this.chartByYear !== null) {
+    if (this.chartByYear !== null) {
       this.chartByYear.destroy();
     }
-    if(this.chartByYearMonth !== null){
+    if (this.chartByYearMonth !== null) {
       this.chartByYearMonth.destroy();
     }
 
-    this.setBarChartInfor(this.chartByYear, "chart-by-time", this.labelByRevenue, this.revenueByYear, this.titleByRevenue);    
+    this.chartByAllYear = this.setBarChartInfor(this.chartByAllYear, "chart-by-time", this.labelByRevenue, this.revenueByYear, this.titleByRevenue);
   }
   //---Draw chart by year && month
-  drawChartByYearMonth(){
-    if (this.chartByAllYear !== null ) {
+  drawChartByYearMonth() {
+    if (this.chartByAllYear !== null) {
       this.chartByAllYear.destroy();
     }
-    if(this.chartByYear !== null) {
+    if (this.chartByYear !== null) {
       this.chartByYear.destroy();
     }
-    if(this.chartByYearMonth !== null){
+    if (this.chartByYearMonth !== null) {
       this.chartByYearMonth.destroy();
     }
 
-    this.setBarChartInfor(this.chartByYearMonth, "chart-by-time", this.labelByRevenue, this.revenueByYearMonth, this.titleByRevenue);    
+    this.chartByYearMonth = this.setBarChartInfor(this.chartByYearMonth, "chart-by-time", this.labelByRevenue, this.revenueByYearMonth, this.titleByRevenue);
   }
   //draw chart by day
-  drawChartCategoryByDay(){
-    if(this.chartByDay !== null){
-      this.chartByDay.destroy();
-    }
-    if(this.chartByCategoryMonth !== null){
-      this.chartByCategoryMonth.destroy();
-    }
-    if(this.chartByCategoryYear !== null){
-      this.chartByCategoryYear.destroy();
-    }
+  drawChartCategoryByDay() {
 
-    this.setBarChartInfor(this.chartByDay, "chart-by-category", this.labelByCategory, this.revenueByCategoryDay, this.titleByCategory);    
+    this.chartByDay = this.setBarChartInfor(this.chartByDay, "chart-by-category", this.labelByCategory, this.revenueByCategoryDay, this.titleByCategory);
   }
 
   //---draw by category
-  drawChartCategoryByMonth(){
-    if(this.chartByDay !== null){
-      this.chartByDay.destroy();
-    }
-    if(this.chartByCategoryMonth !== null){
-      this.chartByCategoryMonth.destroy();
-    }
+  drawChartCategoryByMonth() {
 
-    this.setBarChartInfor(this.chartByCategoryMonth, "chart-by-category", this.labelByCategory, this.revenueByCategoryMonth, this.titleByCategory);   
+    this.chartByCategoryMonth = this.setBarChartInfor(this.chartByCategoryMonth, "chart-by-category", this.labelByCategory, this.revenueByCategoryMonth, this.titleByCategory);
   }
 
-  drawChartCategoryByYear(){
-    if(this.chartByDay !== null){
-      this.chartByDay.destroy();
-    }
-    if(this.chartByCategoryMonth !== null){
-      this.chartByCategoryMonth.destroy();
-    }
-    if(this.chartByCategoryYear !== null){
-      this.chartByCategoryYear.destroy();
-    }
+  drawChartCategoryByYear() {
 
-    this.setBarChartInfor(this.chartByCategoryYear, "chart-by-category", this.labelByCategory, this.revenueByCategoryYear, this.titleByCategory);
-    
+    this.chartByCategoryYear = this.setBarChartInfor(this.chartByCategoryYear, "chart-by-category", this.labelByCategory, this.revenueByCategoryYear, this.titleByCategory);
+
   }
 
   private setBarChartInfor(chart, context: string, labelsList, chartData, textTitle) {
+    if (this.chartByDay !== null) {
+      this.chartByDay.destroy();
+    }
+    if (this.chartByCategoryMonth !== null) {
+      this.chartByCategoryMonth.destroy();
+    }
+    if (this.chartByCategoryYear !== null) {
+      this.chartByCategoryYear.destroy();
+    }
     chart = new Chart(context, {
       type: 'bar',
       data: {
@@ -304,8 +301,8 @@ export class DashboardComponent implements OnInit {
         datasets: [{
           label: 'Doanh số (Đơn vị: Triệu VNĐ)',
           data: chartData,
-          backgroundColor:'rgba(153, 102, 255, 0.2)',
-          borderColor:'rgba(153, 102, 255, 1)',
+          backgroundColor: 'rgba(153, 102, 255, 0.2)',
+          borderColor: 'rgba(153, 102, 255, 1)',
           borderWidth: 1.5
         }]
       },
@@ -323,5 +320,7 @@ export class DashboardComponent implements OnInit {
         }
       }
     });
+    return chart;
   }
+
 }

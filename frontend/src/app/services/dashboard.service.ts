@@ -84,4 +84,10 @@ export class DashboardService {
       catchError(DashboardService._handleError)
     );
   }
+  getAllBill(): Observable<any>{
+    return this.http.get<any>(`${API_URL}/api/bill/statistics/all-paid-bill`)
+    .pipe(
+      catchError(DashboardService._handleError)
+    );
+  }
 }
