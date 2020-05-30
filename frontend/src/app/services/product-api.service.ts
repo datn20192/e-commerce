@@ -20,7 +20,7 @@ export class ProductsApiService {
         );
       }
 
-      getProductByID(id): Observable<any>{
+      getProductByID(id:string): Observable<any>{
         return this.http.get<any>(`${API_URL}/api/products/`+id)
         .pipe(
           catchError(ProductsApiService._handleError)

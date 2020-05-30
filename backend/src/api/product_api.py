@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from bson import json_util
+from bson.objectid import ObjectId
 import json
 from config import Response
 import math
@@ -53,22 +54,33 @@ def get_all_products(mongo):
     return output
 
 def get_product_byID(mongo, id):
-    extracted= mongo.db.product.find_one_or_404({'_id': id})
-    processed = {
-                'id': str(extracted['_id']),
-                'groupID': extracted['groupID'],
-                'groupName': extracted['groupName'],
-                'category': extracted['category'],
-                'name': extracted['name'],
-                'link': extracted['link'],
-                'brand': extracted['brand'],                
-                'imageURL': extracted['imageURL'],    
-                'price': extracted['price'],            
-                'description': extracted['description'],                          
-                'quantity': extracted['quantity'],
-                'star': extracted['star']
-                }
-    return json_util.dumps(processed, ensure_ascii=False)
+    try:
+        response = Response()
+        extracted= mongo.db.product.find_one_or_404({'_id': ObjectId(id)})
+        processed = {
+                    'id': str(extracted['_id']),
+                    'groupID': extracted['groupID'],
+                    'groupName': extracted['groupName'],
+                    'category': extracted['category'],
+                    'name': extracted['name'],
+                    'link': extracted['link'],
+                    'brand': extracted['brand'],                
+                    'imageURL': extracted['imageURL'],    
+                    'price': extracted['price'],            
+                    'description': extracted['description'],                          
+                    'quantity': extracted['quantity'],
+                    'star': extracted['star']
+                    }
+        response.create(Response.SUCCESS)
+        response.data = processed              
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except:
+        response.create(Response.ERROR)
+        response.data = "Datebase connection is false."
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+
+    return output    
+
 
 def get_product_by_category(mongo, category):
     try:
