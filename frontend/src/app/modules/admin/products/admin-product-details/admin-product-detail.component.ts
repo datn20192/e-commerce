@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router'
 import { Product } from '../../../../models/product.model';
 import { ProductsApiService } from '../../../../services/product-api.service';
+import { AdminApiService } from '../../admin.service';
 
 @Component({
   selector: 'app-admin-product-detail',
@@ -12,6 +13,7 @@ import { ProductsApiService } from '../../../../services/product-api.service';
 export class AdminProductDetailComponent implements OnInit {
  
   productSubs: Subscription;
+  adminSubs: Subscription;
 
   product:Product;
   isUpdate: boolean = false;
@@ -20,7 +22,8 @@ export class AdminProductDetailComponent implements OnInit {
   
   constructor(
     private router: Router,
-    private productApiService: ProductsApiService
+    private productApiService: ProductsApiService,
+    private adminApiService: AdminApiService
   ) { }
 
 
@@ -30,6 +33,7 @@ export class AdminProductDetailComponent implements OnInit {
 
   ngOnDestroy() {
     this.productSubs.unsubscribe();
+    this.adminSubs.unsubscribe();
   }
 
   loadProduct() {
@@ -51,8 +55,24 @@ export class AdminProductDetailComponent implements OnInit {
     }
   }
 
-  updateProduct() {
+  //----------------- Update product ------------------//
+
+  updateProduct(product?:Product) {
     this.isUpdate = !this.isUpdate;
+    if(product) {
+      console.log(product);
+      this.adminApiService.updateProduct(product).subscribe(res => {
+        let result = JSON.parse(res);
+        if(result.code === 200) {
+          alert("Cập nhật sản phẩm thành công");
+          this.loadProduct();
+        }
+        else {
+          alert("Thất baị! Hãy thử lại..");
+          this.updateProduct();
+        }
+      });
+    }
   }
   
 }

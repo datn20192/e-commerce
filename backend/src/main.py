@@ -43,7 +43,7 @@ def get_product_by_filter(searchedString):
 def add_product():
     return product_api.add_product(mongo)
 
-@app.route('/api/update_product', methods=['POST'])
+@app.route('/api/admin/update_product', methods=['POST'])
 def update_product():
     return product_api.update_product(mongo)
 

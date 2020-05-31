@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router'
 import { Product } from '../../../../models/product.model';
+import { ProductCategory, CategoryChild } from '../../../../models/productCategory.model';
+import { ProductCategoryServiceAPI } from '../../../../services/productCategory-api.service';
 
 @Component({
   selector: 'app-admin-product-information',
@@ -8,30 +11,78 @@ import { Product } from '../../../../models/product.model';
 })
 export class AdminProductInformationComponent implements OnInit {
  
-  @Input() product: Product;
+  @Input() productIn: Product;
   @Input() allowSet: boolean; 
   @Output() submitProduct = new EventEmitter();
 
-  descriptionStr: string;
+  productCategorySubs: Subscription;
+
+  productCategories: ProductCategory[];
+  categories: CategoryChild[];
+  brands: string[];
+  product: Product;   // Product for modifying information
   
   constructor(
     private route: Router,
+    private productCategoryApi: ProductCategoryServiceAPI
   ) { }
 
   ngOnInit() {
-    this.descriptionStr =  this.convertDescriptionToString(this.product.description);
+    this.loadCategory();
+    this.loadProduct();
   }
 
-  onSubmit() {
-    this.submitProduct.emit(null);
+  ngOnDestroy() {
+    this.productCategorySubs.unsubscribe();
   }
 
-  convertDescriptionToString(descriptionArr:string[]):string{
-    let result:string ='';
-    descriptionArr.forEach((item, key)=>{
-      result = (key==descriptionArr.length-1) ? (result+item) : (result+item+'\n');
-    })
-    return result;
+  //------------------------------ Load category ---------------------------------//
+  loadCategory() {
+    this.productCategorySubs = this.productCategoryApi.getProductCategories().subscribe(res => {
+      let result = JSON.parse(res);
+      this.productCategories = result.data;
+      this.chooseGroup(this.product.groupID);
+      this.chooseCategory(this.product.category);
+    });
+  }
+  //------------------------------ Load Product ---------------------------------//
+  loadProduct() {
+    if(this.productIn) this.product = JSON.parse(JSON.stringify(this.productIn));
+  }
+
+  //------------------------------ process the changes in form ------------------//
+  chooseGroup(groupID:string) {
+    if(groupID!=="") this.categories = this.productCategories.filter(ele => ele.groupId==groupID)[0].children;
+    else {
+      this.categories = null;
+    }      
+  }
+  chooseCategory(category:string) {
+    if(category!=="") this.brands = this.categories.filter(ele => ele.id==category)[0].brands;
+    else {
+      this.categories = null;
+    }
+  }
+  // For description
+  customTrackBy(index: number, obj: any): any {
+    return index;
+  }
+  addDescription(){
+    let len = this.product.description.length;
+    this.product.description[len] = "";
+  }
+  deleteDescription(index:number) {
+    if(this.product.description.length>1) this.product.description.splice(index,1);    
+  }
+  
+
+  submit(isSubmit:boolean) {
+    if (isSubmit===true)  this.submitProduct.emit(this.product);
+    else this.submitProduct.emit(false);
+    
+  }  
+  resetForm() {
+    this.loadProduct();
   }
   
 }

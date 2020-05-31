@@ -24,7 +24,7 @@ def no_accent_vietnamese(s):
             s = re.sub(r'[đ]', 'd', s)
             return s
 def get_all_products(mongo):
-    try:
+    try:        
         response = Response()
         processed = []
         extracted = list(mongo.db.product.find({}))
@@ -87,7 +87,7 @@ def get_product_by_category(mongo, category):
         response = Response()
         processed = []        
         extracted = list(mongo.db.product.find({'category': category}))
-        for product in extracted:           
+        for product in extracted:          
             processed.append({
                 'id': str(product['_id']),
                 'groupID': product['groupID'],
@@ -101,7 +101,7 @@ def get_product_by_category(mongo, category):
                 'description': product['description'],                          
                 'quantity': product['quantity'],
                 'star': product['star']
-            })    
+            })  
         response.create(Response.SUCCESS)
         response.data = processed              
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
@@ -251,11 +251,16 @@ def update_product(mongo):
     try:
         response = Response()
         params = json.loads(request.data)
-        mongo.db.product.update({'product_id': params['product_id']}, {'$set': params})
+        # Modify 'id' field to '_id' field
+        params['_id'] = ObjectId(params['id'])
+        params.pop('id')
+        
+        mongo.db.product.update({'_id': params['_id']}, {'$set': params})
         response.create(Response.SUCCESS)
         response.data = 'Product was updated.'
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
-    except:
+    except Exception as e:
+        print(e)
         response.create(Response.ERROR)
         response.data = 'Datebase connection is false.'
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))

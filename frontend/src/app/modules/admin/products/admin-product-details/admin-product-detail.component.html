@@ -1,7 +1,7 @@
 <ng-container *ngIf="isLoad">
     <div class="row">
         <div class="col-5">
-            <div class="row col-5">
+            <div class="row col-9">
                 <button type="button" class="btn btn-danger" (click)="deleteProduct(product)">Xóa</button>            
                 <button type="button" class="btn btn-primary" (click)="updateProduct()" [disabled]="isUpdate">Sửa thông tin</button>
             </div>
@@ -15,7 +15,7 @@
                                 <span class="fa fa-star" *ngFor="let star of (product.star | productStar: false)"></span>
                             </div>
                             <span class="review-no">Đã bán: 15 sản phẩm</span><br>
-                            <span class="review-no">Trong kho: 10 sản phẩm</span>
+                            <span class="review-no">Trong kho: {{product.quantity}} sản phẩm</span>
                         </div>
                         <div class="preview-pic tab-content">
                           <div class="tab-pane" [ngClass]="(i==0)?'active':''" id="pic-{{i+1}}"
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="col-7">
-            <app-admin-product-information [product]="product" [allowSet]="isUpdate" (submitProduct)="updateProduct()"></app-admin-product-information>
+            <app-admin-product-information [productIn]="product" [allowSet]="isUpdate" (submitProduct)="updateProduct($event)"></app-admin-product-information>
         </div>
     </div>
     <div class="row">
