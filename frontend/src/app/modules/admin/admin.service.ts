@@ -56,9 +56,9 @@ export class AdminApiService {
         );
     }
 
-    deleteProduct(id):Observable<any>{
-        var params = {product_id: id};
-        return this.http.post<any>(`${API_URL}/api/delete_product`, params)
+    deleteProduct(id:string):Observable<any>{
+        var params = {id: id};
+        return this.http.post<any>(`${API_URL}/api/admin/delete_product`, params)
         .pipe(
           catchError(AdminApiService._handleError)
         );

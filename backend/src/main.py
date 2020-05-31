@@ -47,7 +47,7 @@ def add_product():
 def update_product():
     return product_api.update_product(mongo)
 
-@app.route('/api/delete_product', methods=['POST'])
+@app.route('/api/admin/delete_product', methods=['POST'])
 def delete_product():
     return product_api.delete_product(mongo)
 

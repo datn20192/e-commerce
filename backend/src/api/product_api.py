@@ -254,7 +254,7 @@ def update_product(mongo):
         # Modify 'id' field to '_id' field
         params['_id'] = ObjectId(params['id'])
         params.pop('id')
-        
+
         mongo.db.product.update({'_id': params['_id']}, {'$set': params})
         response.create(Response.SUCCESS)
         response.data = 'Product was updated.'
@@ -271,11 +271,12 @@ def delete_product(mongo):
     try:
         response = Response()
         params = json.loads(request.data)
-        mongo.db.product.remove({'product_id': params['product_id']})
+        mongo.db.product.remove({'_id': ObjectId(params['id'])})
         response.create(Response.SUCCESS)
         response.data = 'Product was deleted.'
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
-    except:
+    except Exception as e:
+        print(e)
         response.create(Response.ERROR)
         response.data = 'Datebase connection is false.'
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))

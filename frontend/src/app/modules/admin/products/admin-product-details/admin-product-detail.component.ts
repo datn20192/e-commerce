@@ -52,6 +52,14 @@ export class AdminProductDetailComponent implements OnInit {
   deleteProduct(product: Product){
     if(confirm("Bạn muốn xóa sản phẩm\n" + product.name)) {
       console.log("deleted");
+      this.adminSubs = this.adminApiService.deleteProduct(product.id).subscribe(res => {
+        let result = JSON.parse(res);
+        if(result.code === 200) {
+          alert(`Xóa thành công sản phẩm \n ${product.name}`);
+          this.router.navigate(["/quan-ly"]);
+        }
+        else alert("Xóa thất bại! Thử lại..");
+      });
     }
   }
 
@@ -61,7 +69,7 @@ export class AdminProductDetailComponent implements OnInit {
     this.isUpdate = !this.isUpdate;
     if(product) {
       console.log(product);
-      this.adminApiService.updateProduct(product).subscribe(res => {
+      this.adminSubs = this.adminApiService.updateProduct(product).subscribe(res => {
         let result = JSON.parse(res);
         if(result.code === 200) {
           alert("Cập nhật sản phẩm thành công");
