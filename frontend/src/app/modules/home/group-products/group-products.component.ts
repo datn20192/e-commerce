@@ -20,6 +20,7 @@ export class GroupProductsComponent implements OnInit {
   
   private url:string = '';
   public category:CategoryChild;  
+  quantity: number;
 
   /* product list for current page */
   private page:number = 0;    // show automatically products list in page 0
@@ -52,6 +53,7 @@ export class GroupProductsComponent implements OnInit {
       this.category = this.productCategoryList.filter(element => element.url===this.url)[0];   
       this.categoryListPageSubs = this.categoryApi.getProductByCategoryPage(this.category.id, this.page, 12).subscribe(res => {      
         let result = JSON.parse(res);
+        this.quantity = result.data['totalElement'];
         this.productsList = result.data['content'];     
         this.pages = new Array(result.data['totalPages']);   
         this.showList = true;    

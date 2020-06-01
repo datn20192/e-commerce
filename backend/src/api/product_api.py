@@ -111,39 +111,36 @@ def get_product_by_category(mongo, category):
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     return output
 
-def get_product_by_category_page(mongo, category, page, numOfElement):
-    try:      
-        page = int(page)
-        numOfElement = int(numOfElement)  
-        response = Response()            
+#-------------------------- Split product list by page ----------------------------#
+def split_product_by_page(productList, page, numOfElement):
+    try: 
         productPage = []            # products showed in a page
-        extracted = list(mongo.db.product.find({'category': category}))
-        
         # information of page      
-        totalElement = len(extracted)
+        totalElement = len(productList)
         totalPages = math.ceil(totalElement/numOfElement)
-        first = (page==0)
-        last = (page==(totalPages-1)) 
-        number = page       
+        first = True if (page==0) else False
+        last = True if (page==(totalPages-1)) else False
+        number = page 
 
         start = (page)*numOfElement
-        for i in range(start, start+numOfElement, 1):
+        ending = start + ((totalElement-(totalPages-1)*numOfElement) if (last==True) else (numOfElement))
+        for i in range(start, ending, 1):
             productPage.append({
-                'id': str(extracted[i]['_id']),
-                'groupID': extracted[i]['groupID'],
-                'groupName': extracted[i]['groupName'],
-                'category': extracted[i]['category'],
-                'name': extracted[i]['name'],
-                'link': extracted[i]['link'],
-                'brand': extracted[i]['brand'],                
-                'imageURL': extracted[i]['imageURL'],    
-                'price': extracted[i]['price'],            
-                'description': extracted[i]['description'],                          
-                'quantity': extracted[i]['quantity'],
-                'star': extracted[i]['star']
+                'id': str(productList[i]['_id']),
+                'groupID': productList[i]['groupID'],
+                'groupName': productList[i]['groupName'],
+                'category': productList[i]['category'],
+                'name': productList[i]['name'],
+                'link': productList[i]['link'],
+                'brand': productList[i]['brand'],                
+                'imageURL': productList[i]['imageURL'],    
+                'price': productList[i]['price'],            
+                'description': productList[i]['description'],                          
+                'quantity': productList[i]['quantity'],
+                'star': productList[i]['star']
             })
         
-        processed = {
+        return {
             'content': productPage,
             'totalPages': totalPages,
             'totalElement': totalElement,
@@ -153,75 +150,36 @@ def get_product_by_category_page(mongo, category, page, numOfElement):
             'number': number,
             'sort': ''            
         } 
+    except Exception as e:
+        print(e)
+def get_product_by_category_page(mongo, category, page, numOfElement):
+    try:              
+        page = int(page)
+        numOfElement = int(numOfElement)  
+        response = Response()            
+        extracted = list(mongo.db.product.find({'category': category}))
+                
+        processed = split_product_by_page(extracted, page, numOfElement)
         response.create(Response.SUCCESS)
         response.data = processed              
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False)) 
-    except:
+    except Exception as e:
+        print(e)
         response.create(Response.ERROR)
         response.data = "Datebase connection is false."
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
         
     return output
+
 def get_product_by_filter(mongo, searchedString, page, numOfElement):
     try:      
         page = int(page)
         numOfElement = int(numOfElement)  
         response = Response()            
-        productPage = []            # products showed in a page
         data_all = list(mongo.db.product.find({}))
         extracted = list(filter(lambda y: (no_accent_vietnamese(y['brand']).count(no_accent_vietnamese(searchedString))) or (no_accent_vietnamese(y['name']).count(no_accent_vietnamese(searchedString))) or (no_accent_vietnamese(y['groupName']).count(no_accent_vietnamese(searchedString))),data_all))
-        
-        # information of page      
-        totalElement = len(extracted)
-        totalPages = math.ceil(totalElement/numOfElement)
-        first = (page==0)
-        last = (page==(totalPages-1)) 
-        number = page       
-        start = (page)*numOfElement
-
-        if(totalElement > start + numOfElement):
-            for i in range(start, start+numOfElement, 1):
-                productPage.append({
-                    'id': extracted[i]['_id'],
-                    'groupID': extracted[i]['groupID'],
-                    'groupName': extracted[i]['groupName'],
-                    'category': extracted[i]['category'],
-                    'name': extracted[i]['name'],
-                    'link': extracted[i]['link'],
-                    'brand': extracted[i]['brand'],                
-                    'imageURL': extracted[i]['imageURL'],    
-                    'price': extracted[i]['price'],            
-                    'description': extracted[i]['description'],                          
-                    'quantity': extracted[i]['quantity'],
-                    'star': extracted[i]['star']
-                })
-        else:
-            for i in range(start, totalElement, 1):
-                productPage.append({
-                    'id': extracted[i]['_id'],
-                    'groupID': extracted[i]['groupID'],
-                    'groupName': extracted[i]['groupName'],
-                    'category': extracted[i]['category'],
-                    'name': extracted[i]['name'],
-                    'link': extracted[i]['link'],
-                    'brand': extracted[i]['brand'],                
-                    'imageURL': extracted[i]['imageURL'],    
-                    'price': extracted[i]['price'],            
-                    'description': extracted[i]['description'],                          
-                    'quantity': extracted[i]['quantity'],
-                    'star': extracted[i]['star']
-                })
-        processed = {
-            'content': productPage,
-            'totalPages': totalPages,
-            'totalElement': totalElement,
-            'first': first,
-            'last': last,
-            'size': numOfElement,
-            'number': number,
-            'sort': ''            
-        }
-        print(len(extracted))
+               
+        processed = split_product_by_page(extracted, page, numOfElement)
         response.create(Response.SUCCESS)
         response.data = processed              
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8')) 
