@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from '../../models/product.model';
 import { Subscription } from 'rxjs';
 import { SharedService } from '../../services/shared.service';
-import { debounceTime } from 'rxjs/operators';
 import { ProductsApiService } from '../../services/product-api.service';
 
 @Component({
@@ -33,7 +32,7 @@ export class SearchComponent implements OnInit {
   }
 
   load() {
-    this.productsListSubs = this.share.currentSearchedString.pipe(debounceTime(1000)).subscribe(str => {
+    this.productsListSubs = this.share.currentSearchedString.subscribe(str => {
       this.productApiService.getProductByFilter(str, this.page, 12).subscribe(res => {
         this.keyWordString = str;
         let result = JSON.parse(res);

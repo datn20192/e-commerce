@@ -123,6 +123,7 @@ def split_product_by_page(productList, page, numOfElement):
         number = page 
 
         start = (page)*numOfElement
+
         ending = totalElement if (last==True) else (start + numOfElement)
         for i in range(start, ending, 1):
             productPage.append({
@@ -180,6 +181,7 @@ def get_product_by_filter(mongo, searchedString, page, numOfElement):
         extracted = list(filter(lambda y: (no_accent_vietnamese(y['brand']).count(no_accent_vietnamese(searchedString))) or (no_accent_vietnamese(y['name']).count(no_accent_vietnamese(searchedString))) or (no_accent_vietnamese(y['groupName']).count(no_accent_vietnamese(searchedString))),data_all))
                
         processed = split_product_by_page(extracted, page, numOfElement)
+
         response.create(Response.SUCCESS)
         response.data = processed              
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8')) 

@@ -36,7 +36,10 @@ export class AppComponent implements OnInit{
 
   public sidebarMinimized = false;
   //public navItems = navItems;
-
+  onClick(value: string){
+    this.router.navigate(['search']);
+    this.share.search(value);
+  }
   toggleMinimize(e) {
     this.sidebarMinimized = e;
   }   
@@ -50,10 +53,5 @@ export class AppComponent implements OnInit{
       });    
 
   } 
-
-  searchEnter() {
-    this.router.navigate(['search']);
-
-  }
 
 }
