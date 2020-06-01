@@ -11,5 +11,6 @@ export interface CategoryChild {
     name: string,
     quantity: number,
     url: string,
-    icon: string
+    icon: string,
+    brands: string[]
 }

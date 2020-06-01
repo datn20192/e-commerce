@@ -12,6 +12,7 @@ export class ListProductGridComponent implements OnInit {
   @Input() productsList: Product[]; 
   @Input() pages: number[];
   @Input() currentPage: number;
+  @Input() modal: boolean;
 
   @Output() selectedPage = new EventEmitter();
 

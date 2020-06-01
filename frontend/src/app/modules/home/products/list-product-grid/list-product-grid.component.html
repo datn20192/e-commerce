@@ -1,7 +1,8 @@
 <ng-container>
   <div class="row">
     <div class="col-3" *ngFor="let product of productsList">
-      <app-card-product [product]="product"></app-card-product>
+      <app-card-product [product]="product" *ngIf="modal"></app-card-product>
+      <app-admin-card-product [product]="product" *ngIf="!modal"></app-admin-card-product>
     </div>
   </div>
   

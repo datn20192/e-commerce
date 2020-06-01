@@ -1,18 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { HomeApiService } from '../home.service';
+import { HomeApiService } from '../../../home/home.service';
 
 // Model
-import { CategoryChild } from '../../../models/productCategory.model';
-import { Product } from 'src/app/models/product.model';
+import { CategoryChild } from '../../../../models/productCategory.model';
+import { Product } from '../../../../models/product.model';
 
 @Component({
-  selector: 'app-group-products',
-  templateUrl: './group-products.component.html',
-  styleUrls: ['./group-products.component.css']
+  selector: 'app-admin-group-products',
+  templateUrl: './admin-group-products.component.html'
 })
-export class GroupProductsComponent implements OnInit {
+export class AdminGroupProductsComponent implements OnInit {
 
   private productCategoryList: CategoryChild[];
   private categoryListSubs: Subscription;
@@ -20,7 +19,6 @@ export class GroupProductsComponent implements OnInit {
   
   private url:string = '';
   public category:CategoryChild;  
-  quantity: number;
 
   /* product list for current page */
   private page:number = 0;    // show automatically products list in page 0
@@ -46,14 +44,13 @@ export class GroupProductsComponent implements OnInit {
 
   load() {    
     // get category from url
-    this.url = this.router.url;
+    this.url = "/" + this.router.url.split('/')[2];
     this.categoryListSubs = this.categoryApi.getProductCategoriesNonGroup().subscribe(res => {
       let result = JSON.parse(res);
       this.productCategoryList = result.data;      
       this.category = this.productCategoryList.filter(element => element.url===this.url)[0];   
       this.categoryListPageSubs = this.categoryApi.getProductByCategoryPage(this.category.id, this.page, 12).subscribe(res => {      
         let result = JSON.parse(res);
-        this.quantity = result.data['totalElement'];
         this.productsList = result.data['content'];     
         this.pages = new Array(result.data['totalPages']);   
         this.showList = true;    

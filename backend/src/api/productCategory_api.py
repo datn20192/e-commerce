@@ -36,7 +36,8 @@ def get_all_categories_non_group(mongo):
                     'name': category['name'],
                     'quantity': category['quantity'],
                     'url': category['url'],
-                    'icon': category['icon']
+                    'icon': category['icon'],
+                    'brands': category['brands']
                 })
         response.create(Response.SUCCESS)
         response.data = processed        
