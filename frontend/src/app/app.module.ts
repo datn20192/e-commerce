@@ -53,9 +53,6 @@ import { ProductCategoryServiceAPI } from './services/productCategory-api.servic
 // Component
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
-import { SearchComponent } from './modules/search/search.component';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { DashboardService } from './services/dashboard.service';
 import { SharedService } from './services/shared.service';
 
 @NgModule({
@@ -91,8 +88,7 @@ import { SharedService } from './services/shared.service';
     AuthService,  
     ProductsApiService,
     ProductCategoryServiceAPI,
-    SharedService,
-    DashboardService,
+    SharedService
   ],
   bootstrap: [AppComponent]
 })

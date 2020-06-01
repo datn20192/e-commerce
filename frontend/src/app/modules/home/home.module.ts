@@ -10,8 +10,6 @@ import { GroupProductsComponent } from './group-products/group-products.componen
 import { CarouselListProductComponent } from './products/list-product-carousel/list-product-carousel.component';
 
 import { SearchComponent } from '../search/search.component';
-import { DashboardComponent } from '../dashboard/dashboard.component';
-import { DashboardService } from '../../services/dashboard.service';
 import { ChartsModule } from 'ng2-charts';
 @NgModule({
     imports: [
@@ -25,12 +23,9 @@ import { ChartsModule } from 'ng2-charts';
         ProductListComponent,
         GroupProductsComponent,
         CarouselListProductComponent,
-        SearchComponent,
-        DashboardComponent
+        SearchComponent
     ],
-    providers: [
-        DashboardService
-    ]
+   
 })
 
 export class HomeModule {}

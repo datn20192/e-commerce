@@ -33,7 +33,7 @@ export class AdminProductDetailComponent implements OnInit {
 
   ngOnDestroy() {
     this.productSubs.unsubscribe();
-    this.adminSubs.unsubscribe();
+    if(this.adminSubs) this.adminSubs.unsubscribe();
   }
 
   loadProduct() {
