@@ -123,7 +123,7 @@ def split_product_by_page(productList, page, numOfElement):
         number = page 
 
         start = (page)*numOfElement
-        ending = start + ((totalElement-(totalPages-1)*numOfElement) if (last==True) else (numOfElement))
+        ending = totalElement if (last==True) else (start + numOfElement)
         for i in range(start, ending, 1):
             productPage.append({
                 'id': str(productList[i]['_id']),
