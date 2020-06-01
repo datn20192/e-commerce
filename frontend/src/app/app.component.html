@@ -8,8 +8,8 @@
 >  
   <div class="search-container nav navbar-nav d-md-down-none">
     <form class="form-inline">
-      <input #seachInput type="text" class="form-control" placeholder="Nhập tên sản phẩm..."(keyup)="share.search(seachInput.value)">
-      <button type="submit" class="btn btn-square btn-secondary" (click)="searchEnter()"><i class="fa fa-search" ></i>Tìm kiếm</button>
+      <input #searchInput type="text" class="form-control" placeholder="Nhập tên sản phẩm..."(keyup.enter)="onClick(searchInput.value)">
+      <button type="submit" class="btn btn-square btn-secondary" (click)="onClick(searchInput.value)"><i class="fa fa-search" ></i>Tìm kiếm</button>
     </form>
   </div>
   <ul class="nav navbar-nav ml-auto" *ngIf="!(auth.userData) && !(auth.isLoggedIn)">             

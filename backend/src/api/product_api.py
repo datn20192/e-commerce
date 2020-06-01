@@ -115,21 +115,38 @@ def get_product_by_category_page(mongo, category, page, numOfElement):
         number = page       
 
         start = (page)*numOfElement
-        for i in range(start, start+numOfElement, 1):
-            productPage.append({
-                'id': str(extracted[i]['_id']),
-                'groupID': extracted[i]['groupID'],
-                'groupName': extracted[i]['groupName'],
-                'category': extracted[i]['category'],
-                'name': extracted[i]['name'],
-                'link': extracted[i]['link'],
-                'brand': extracted[i]['brand'],                
-                'imageURL': extracted[i]['imageURL'],    
-                'price': extracted[i]['price'],            
-                'description': extracted[i]['description'],                          
-                'quantity': extracted[i]['quantity'],
-                'star': extracted[i]['star']
-            })
+        if(totalElement > start + numOfElement):
+            for i in range(start, start+numOfElement, 1):
+                productPage.append({
+                    'id': extracted[i]['_id'],
+                    'groupID': extracted[i]['groupID'],
+                    'groupName': extracted[i]['groupName'],
+                    'category': extracted[i]['category'],
+                    'name': extracted[i]['name'],
+                    'link': extracted[i]['link'],
+                    'brand': extracted[i]['brand'],                
+                    'imageURL': extracted[i]['imageURL'],    
+                    'price': extracted[i]['price'],            
+                    'description': extracted[i]['description'],                          
+                    'quantity': extracted[i]['quantity'],
+                    'star': extracted[i]['star']
+                })
+        else:
+            for i in range(start, totalElement, 1):
+                productPage.append({
+                    'id': extracted[i]['_id'],
+                    'groupID': extracted[i]['groupID'],
+                    'groupName': extracted[i]['groupName'],
+                    'category': extracted[i]['category'],
+                    'name': extracted[i]['name'],
+                    'link': extracted[i]['link'],
+                    'brand': extracted[i]['brand'],                
+                    'imageURL': extracted[i]['imageURL'],    
+                    'price': extracted[i]['price'],            
+                    'description': extracted[i]['description'],                          
+                    'quantity': extracted[i]['quantity'],
+                    'star': extracted[i]['star']
+                })
         
         processed = {
             'content': productPage,
@@ -209,7 +226,6 @@ def get_product_by_filter(mongo, searchedString, page, numOfElement):
             'number': number,
             'sort': ''            
         }
-        print(len(extracted))
         response.create(Response.SUCCESS)
         response.data = processed              
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False).encode('utf-8')) 
