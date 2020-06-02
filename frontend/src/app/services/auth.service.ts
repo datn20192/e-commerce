@@ -50,7 +50,7 @@ export class AuthService {
     public router: Router,
     public ngZone: NgZone) {      
       this.angularFireAuth.authState.subscribe(user => {        
-        if (user && this.isLoggedIn===true) {
+        if (user && this.isLoggedIn===true ) {
           this.setUser(user);   
         } else {          
           this.userData = false;
@@ -92,10 +92,12 @@ export class AuthService {
         // this.router.navigate(['image', 'list']);
       });
       this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {
-        if(!res.length) {
-          this.SetUserData(result.user);               
+        if(this.isAdmin===false) {
+          if(!res.length) {
+            this.SetUserData(result.user);               
+          }
+          this.icService.loadItemCart();
         }
-        this.icService.loadItemCart();
       })           
     })
     .catch((error) => {
@@ -129,6 +131,8 @@ export class AuthService {
   private AuthLogin(provider) {
     return this.angularFireAuth.auth.signInWithPopup(provider)
     .then((result) => {    
+      let user = auth().currentUser;
+      console.log(user);
       // Set user information to local storage
       this.setUser(result.user);
 
@@ -136,10 +140,12 @@ export class AuthService {
         //this.router.navigate(['image', 'list']);
       });
       this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {            
-        if(!res.length) {            
-          this.SetUserData(result.user);            
+        if(this.isAdmin === false) {
+          if(!res.length) {            
+            this.SetUserData(result.user);            
+          }
+          this.icService.loadItemCart();
         }
-        this.icService.loadItemCart();
       });
     }).catch((error) => {
       window.alert(error);
@@ -158,7 +164,6 @@ export class AuthService {
       infor: {}
     };    
     this.userData = userData;
-    console.log(userData);
     return userRef.set(userData, {
       merge: true
     })

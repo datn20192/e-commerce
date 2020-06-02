@@ -36,7 +36,6 @@ export class AdminModuleGuard implements CanActivate, CanActivateChild, CanLoad 
 
     private checkLogin(url: string): boolean {
         if(this.authService.isAdmin === true) return true;
-        
         this.router.navigate(['']);
         return false;
     }
