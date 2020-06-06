@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SigninSignupGuard } from '../../guards/signin-signup.guard';
 import { AdminProductGroupGuard } from '../../guards/admin/admin-product-group.guard';
+import { AdminProductHomeGuard } from '../../guards/admin/admin-product-home.guard';
 
 import { HomeComponent } from './home.component';
 import { GroupProductsComponent } from './group-products/group-products.component';
@@ -21,6 +22,7 @@ const homeRoutes: Routes = [
             {
               path: '',
               component: ProductListComponent,
+              canActivate: [AdminProductHomeGuard],
               data: {
                 title: 'Sản phẩm mới'
               }

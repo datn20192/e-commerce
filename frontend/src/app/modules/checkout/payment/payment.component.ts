@@ -9,6 +9,7 @@ import { User } from '../../../models/user.model';
 import { CartFunction } from '../../../shared/functions/cart.function';
 
 import { AuthService } from '../../../services/auth.service';
+import { ItemCartService } from '../../../services/item-cart.service';
 
 @Component({
     selector: 'app-payment',
@@ -24,6 +25,7 @@ export class PaymentComponent {
     public typeOfPaymentArr: TypeOfPayment[];     
     private card = new Card("", "", "", "");
     private user: User;
+    private numberOfItems: Number;
 
     public showBill:boolean = false;
     private customer: Customer;         // save bill
@@ -32,7 +34,8 @@ export class PaymentComponent {
         private route: Router,
         private spinnerService: NgxSpinnerService,
         private checkoutApi: CheckoutApiService,
-        private authService: AuthService
+        private authService: AuthService,
+        private itemCartService: ItemCartService
     ) { }
 
     ngOnInit() {
@@ -46,6 +49,7 @@ export class PaymentComponent {
     load() {   
         this.authService.user$.subscribe(user => {
             this.user=user;
+            this.numberOfItems = this.itemCartService.lengthCart;
             if(user) {
                 this.showBill = true;
                 this.customer = this.createBill(this.user);

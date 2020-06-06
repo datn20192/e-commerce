@@ -11,7 +11,8 @@ import { User, UserInfor } from '../../../models/user.model';
 
 export class BillComponent {
 
-    @Input() user:User;        
+    @Input() user:User;  
+    @Input() numberOfItems: number;      
 
     constructor(
         private route: Router

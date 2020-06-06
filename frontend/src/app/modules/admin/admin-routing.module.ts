@@ -7,6 +7,7 @@ import { AdminComponent } from './admin.component';
 import { AdminProductDetailComponent } from './products/admin-product-details/admin-product-detail.component';
 import { AdminGroupProductsComponent } from './products/admin-group-products/admin-group-products.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminProductListComponent } from './products/admin-home-products/admin-product-list.component';
 
 const adminRoute: Routes = [
     {
@@ -20,8 +21,10 @@ const adminRoute: Routes = [
         children: [
             {
                 path: '',
-                redirectTo: 'thong-ke-doanh-thu',
-                pathMatch: 'full'
+                component: AdminProductListComponent,
+                data: {
+                    title: 'Sản phẩm mới'
+                }
             },
 
             {
