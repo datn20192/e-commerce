@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 import { SigninSignupComponent } from './components/signin-signup/signin-signup.component';
 import { SigninComponent } from '../components/signin/signin.component';
 import { SignupComponent } from '../components/signup/signup.component';
@@ -18,6 +20,7 @@ import { CartTotalMoney } from './pipes/cart/cart-total-money.pipe';
 @NgModule({
     imports: [ 
         CommonModule,
+        NgxSpinnerModule,
         FormsModule,
         ReactiveFormsModule 
     ],
@@ -36,6 +39,7 @@ import { CartTotalMoney } from './pipes/cart/cart-total-money.pipe';
         AdminCardProductComponent
     ],
     exports: [ 
+        NgxSpinnerModule,
         CommonModule,
         FormsModule,
         ReactiveFormsModule,

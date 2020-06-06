@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 import { CheckoutApiService } from '../checkout.service';
 import { Card, TypeOfPayment, Customer, Bill } from '../../../models/bill.model';
@@ -29,6 +30,7 @@ export class PaymentComponent {
 
     constructor(
         private route: Router,
+        private spinnerService: NgxSpinnerService,
         private checkoutApi: CheckoutApiService,
         private authService: AuthService
     ) { }
@@ -62,11 +64,16 @@ export class PaymentComponent {
 
     onSubmit() {
         if(this.typeOfPayment==="cash") {
+            this.spinnerService.show();
             this.checkoutApi.addBill(this.customer).subscribe(res => {
                 let result = JSON.parse(res);
-                if(result.code !== 200) alert('Đặt hàng thất bại.')
+                if(result.code !== 200) {
+                    this.spinnerService.hide();
+                    alert('Đặt hàng thất bại.');
+                }
                 else {
                     this.checkoutApi.deleteAllProducts(this.user.uid);
+                    this.spinnerService.hide();
                     alert('Đặt hàng thàng công. Tiếp tục mua sắm..');
                     this.route.navigate(['']);
                 }

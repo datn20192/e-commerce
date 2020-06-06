@@ -33,18 +33,14 @@ import {
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
-
-// Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { ChartsModule } from 'ng2-charts';
-
-// bootstrap
 import { ModalModule } from 'ngx-bootstrap/modal';
+
+import { ChartsModule } from 'ng2-charts';
 
 // Service
 import {ProductsApiService} from './services/product-api.service';
