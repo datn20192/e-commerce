@@ -33,18 +33,14 @@ import {
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
-
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
-
-// Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { ChartsModule } from 'ng2-charts';
-
-// bootstrap
 import { ModalModule } from 'ngx-bootstrap/modal';
+
+import { ChartsModule } from 'ng2-charts';
 
 // Service
 import {ProductsApiService} from './services/product-api.service';
@@ -53,9 +49,6 @@ import { ProductCategoryServiceAPI } from './services/productCategory-api.servic
 // Component
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { SidebarDComponent } from './sidebar-d/sidebar-d.component';
-import { SearchComponent } from './modules/search/search.component';
-import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { DashboardService } from './services/dashboard.service';
 import { SharedService } from './services/shared.service';
 
 @NgModule({
@@ -91,8 +84,7 @@ import { SharedService } from './services/shared.service';
     AuthService,  
     ProductsApiService,
     ProductCategoryServiceAPI,
-    SharedService,
-    DashboardService,
+    SharedService
   ],
   bootstrap: [AppComponent]
 })

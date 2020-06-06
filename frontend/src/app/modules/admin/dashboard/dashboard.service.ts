@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { API_URL } from '../../environments/environment';
+import { API_URL } from '../../../../environments/environment';
 import {catchError} from 'rxjs/operators';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DashboardService {
   private yearSubject = new BehaviorSubject(0);
   currentYear = this.yearSubject.asObservable();

@@ -1,9 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AdminModuleGuard } from '../../guards/admin/admin-module.guard';
+
 import { AdminComponent } from './admin.component';
 import { AdminProductDetailComponent } from './products/admin-product-details/admin-product-detail.component';
 import { AdminGroupProductsComponent } from './products/admin-group-products/admin-group-products.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminProductListComponent } from './products/admin-home-products/admin-product-list.component';
 
 const adminRoute: Routes = [
     {
@@ -12,7 +16,25 @@ const adminRoute: Routes = [
         data: {
             title: 'Quản lý'
         },
+        canActivate: [ AdminModuleGuard ],
+        canActivateChild: [ AdminModuleGuard ],
         children: [
+            {
+                path: '',
+                component: AdminProductListComponent,
+                data: {
+                    title: 'Sản phẩm mới'
+                }
+            },
+
+            {
+                path: 'thong-ke-doanh-thu',
+                component: DashboardComponent,
+                data: {
+                    title: 'Thống kê doanh thu'
+                }
+            },
+
             {
                 path: 'chi-tiet-san-pham/:id',
                 component: AdminProductDetailComponent,

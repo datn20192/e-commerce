@@ -7,18 +7,26 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 
 import { API_URL} from '../../../environments/environment';
 
-import { UserInfor, Address } from '../../models/user.model';
+import { User, UserInfor } from '../../models/user.model';
 import { TypeOfPayment } from '../../models/bill.model';
 import { Customer } from '../../models/bill.model';
+
+import { AuthService } from '../../services/auth.service';
 
 @Injectable({
     providedIn: 'root',
 })
 export class CheckoutApiService {
+
+    user: User;
+
     constructor(
         private http: HttpClient,
-        private afs: AngularFirestore,       
-    ) {}
+        private afs: AngularFirestore,      
+        private authService: AuthService 
+    ) {
+        this.authService.user$.subscribe(user => this.user=user);
+    }
     private static _handleError(err: HttpErrorResponse | any) {
         return throwError(err.message || 'Error: Unable to complete request.');
     }    
@@ -31,20 +39,10 @@ export class CheckoutApiService {
         )
     }
 
-    //----------- API for query shipping information from firebase ------------//
-    // Get information of user 
-    getUserInfor(): Observable<any> {
-        const userUID = JSON.parse(localStorage.getItem('user')).uid;
-        return this.afs.doc(`users/${userUID}`).snapshotChanges()
-        .pipe(
-            catchError(CheckoutApiService._handleError)
-        );
-    }
-
+    //----------- API for query shipping information from firebase ------------//  
     // Add information for user 
-    addUserInfor(userInfor: UserInfor) {        
-        const userUID = JSON.parse(localStorage.getItem('user')).uid;
-        const user: AngularFirestoreDocument<any> = this.afs.doc(`users/${userUID}`);
+    addUserInfor(userInfor: UserInfor, uid: string) {        
+        const user: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
         user.set({"infor": JSON.parse(JSON.stringify(userInfor))}, {merge: true})
         .catch(
             catchError(CheckoutApiService._handleError)
@@ -65,9 +63,8 @@ export class CheckoutApiService {
     }    
 
     // Delete all products from cart
-    deleteAllProducts(){
-        const userUID = JSON.parse(localStorage.getItem('user')).uid;
-        const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${userUID}`);
+    deleteAllProducts(uid: string){
+        const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
         cartRef.set({"cart": []}, { merge: true }).catch(
             catchError(CheckoutApiService._handleError)
         );

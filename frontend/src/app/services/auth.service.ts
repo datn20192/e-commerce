@@ -1,111 +1,82 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Observable } from 'rxjs';
-import { auth } from 'firebase/app';
-import { AngularFireAuth } from 'angularfire2/auth';
-// import { AngularFireStorage } from '@angular/fire/storage';
-import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Router } from '@angular/router';
-import { User, UserInfor, Address } from '../models/user.model';
+
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+import * as firebase from 'firebase/app';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
+
+import { User } from '../models/user.model';
 import { ItemCartService } from './item-cart.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  // userData: Observable<firebase.User>;
-  userData: any; // save logged in user data
   defaultURL = '/assets/img/image.png';
-  isAdmin: boolean = false;  
-  userDefault = {uid: '',
-                  email: '',
-                  displayName: '',
-                  photoURL: '',
-                  emailVerified: false,
-                  cart: [],
-                  infor: {}
-                };
-
-  // Returns true when user is looged in and email is verified
-  get isLoggedIn(): boolean {
-    let user = null;
-    if ( localStorage.getItem('user') !== '') {
-      user = JSON.parse(localStorage.getItem('user'));      
-    }
-    if (user !== null) { if ( user.email !== '') { user.emailVerified = true; }  }     
-    return (user !== null && user.emailVerified !== false) ? true : false;
-  }  
-
-  // get isAdmin(): boolean {
-  //   let user = null;
-  //   if ( localStorage.getItem('user') !== '') {
-  //     user = JSON.parse(localStorage.getItem('user'));
-  //   }
-  //   if (user !-=)
-  // }
+  user$: Observable<User>;
 
   constructor(
-    private icService: ItemCartService,
-    private angularFireAuth: AngularFireAuth,
+    private afAuth: AngularFireAuth,
     private afs: AngularFirestore,
-    public router: Router,
-    public ngZone: NgZone) {      
-      this.angularFireAuth.authState.subscribe(user => {        
-        if (user && this.isLoggedIn===true) {
-          this.setUser(user);   
-        } else {          
-          this.userData = false;
-          localStorage.setItem('user', JSON.stringify(this.userDefault));                           
-        }
-      });
-  }
-
-  /* Load user when signed in */
-  private setUser(user) {
-    this.userData = user;          
-    localStorage.setItem('user', JSON.stringify(this.userData));
-    // JSON.parse(localStorage.getItem('user'));               
-    this.afs.collection('admins', ref => ref.where("uid", "==", user.uid)).snapshotChanges().subscribe(res => {              
-      if (res.length) {
-        this.isAdmin = true;              
-      } 
+    private router: Router,
+    private itemCartService: ItemCartService
+  ) {
+    // Get auth data, then get firestore user document || null
+    this.user$ = this.afAuth.authState
+    .pipe(
+      switchMap(user => { 
+      if(user) return this.afs.doc<User>(`users/${user.uid}`).valueChanges();
+      else return of(null);
     })
+    );    
   }
 
-  /* Sign up*/
+  //--------------------- Login/Signup Google, Facebook ---------------------//
+  GoogleAuth() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+  FacebookAuth() {
+    const provider = new firebase.auth.FacebookAuthProvider();
+    return this.oAuthLogin(provider);
+  }
+
+  private oAuthLogin(provider) {
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((credential) => {
+        this.afs.collection('users', ref => ref.where("uid","==",credential.user.uid)).snapshotChanges().subscribe(res => { 
+          if(!res.length) {
+            this.setUserData(credential.user);
+          }
+          this.itemCartService.loadItemCart(credential.user.uid);
+        });
+      }).catch((error) => window.alert(error));
+  }
+
+  //-------------------- Signin/signup with Account&&Password -------------------//
   signUp(email: string, password: string) {
-      return this.angularFireAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.SetUserData(result.user);
-      }).catch((error) => {
-        window.alert(error.message);  
-      });
+    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+    .then((credential) => this.setUserData(credential.user))
+    .catch((error) => alert(error))
   }
-
-  /* Sign in */
-  SignIn(email: string, password: string) {
-    return this.angularFireAuth.auth.signInWithEmailAndPassword(email, password)
-    .then(result => {
-      // Set user information to local storage
-      this.setUser(result.user);
-
-      this.ngZone.run(() => {
-        // this.router.navigate(['image', 'list']);
-      });
-      this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {
+  signIn(email: string, password: string) {
+    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
+    .then((credential)=> {
+      this.afs.collection('users', ref => ref.where("uid","==",credential.user.uid)).snapshotChanges().subscribe(res => { 
         if(!res.length) {
-          this.SetUserData(result.user);               
+          this.setUserData(credential.user);
         }
-        this.icService.loadItemCart();
-      })           
-    })
-    .catch((error) => {
-      window.alert(error.message);
-    });
+        this.user$.subscribe(user => {
+          if(user.roles.customer) this.itemCartService.loadItemCart(credential.user.uid);
+        });        
+      });
+    }).catch((error) => alert(error))
   }
-
-  // Reset Forggot password
   ForgotPassword(passwordResetEmail) {
-    return this.angularFireAuth.auth.sendPasswordResetEmail(passwordResetEmail)
+    return this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail)
     .then(() => {
       window.alert('Password reset email sent, check your inbox.');
     }).catch((error) => {
@@ -113,40 +84,7 @@ export class AuthService {
     });
   }  
 
-  // Sign in with Google
-  GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());    
-  }
-
-  // Sign in with FB
-  FacebookAuth() {
-    return this.AuthLogin(new auth.FacebookAuthProvider());
-  }
-
-
-
-  // Auth logic to run auth providers
-  private AuthLogin(provider) {
-    return this.angularFireAuth.auth.signInWithPopup(provider)
-    .then((result) => {    
-      // Set user information to local storage
-      this.setUser(result.user);
-
-      this.ngZone.run(() => {
-        //this.router.navigate(['image', 'list']);
-      });
-      this.afs.collection('users', ref => ref.where("uid","==",result.user.uid)).snapshotChanges().subscribe(res => {            
-        if(!res.length) {            
-          this.SetUserData(result.user);            
-        }
-        this.icService.loadItemCart();
-      });
-    }).catch((error) => {
-      window.alert(error);
-    });
-  }
-
-  SetUserData(user) {
+  private setUserData(user) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     const userData: User = {
       uid: user.uid,
@@ -154,33 +92,50 @@ export class AuthService {
       displayName:  user.displayName,
       photoURL: user.photoURL,
       emailVerified: user.emailVerified,
+      roles: {
+        customer: true
+      },
       cart: [],
-      infor: {}
+      infor: {
+        name: "",
+        phoneNumber: "",
+        address: {
+          province: "",
+          district: "",
+          subDistrict: "",
+          details: "",
+        }
+      }
     };    
-    this.userData = userData;
-    console.log(userData);
-    return userRef.set(userData, {
-      merge: true
-    })
-    .catch((error) => window.alert(error));
+    return userRef.set(userData, { merge: true }).catch(
+      (error) => alert(error)
+    )
   }
 
-  // Sign out
   signOut() {
-    return this.angularFireAuth.auth.signOut().then(() => {      
-      this.userData = null;
-      this.isAdmin = false;
-      localStorage.removeItem('user');
-      localStorage.setItem('user', JSON.stringify(this.userDefault));
-      this.router.navigate(['/']);
+    this.afAuth.auth.signOut().then(() => {
+      this.router.navigate(['']);
     });
   }
 
-  // Get infor of user from firebase
-  getUserInfor(): Observable<any> {  
-    const userUID = JSON.parse(localStorage.getItem('user')).uid;
-    return this.afs.doc(`users/${userUID}`).valueChanges();  
+  //--------------------- Role-based Authorization --------------------//
+  isCustomer(user: User) {
+    return this.checkAuthorization(user, "customer");
   }
-  
+  isAdmin(user: User) {
+    return this.checkAuthorization(user, "admin");
+  }
+  isLogin(user: User) {
+    return (user) ? true : false;
+  }
+
+  // determines if user has matching role
+  private checkAuthorization(user: User, allowedRole: string): boolean {
+    if (!user) {
+      return false;
+    }
+    else if(user.roles[allowedRole]) return true;
+    else return false
+  } 
 
 }

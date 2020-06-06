@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, BehaviorSubject } from 'rxjs/';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AuthService } from './auth.service';
 
 import { Cart } from '../models/cart.model';
 import { Product } from '../models/product.model';
+import { User } from '../models/user.model';
 
 
 @Injectable({
@@ -15,16 +16,12 @@ export class ItemCartService {
   showItemCart = new Array();
   isEmpty: boolean = true;
   listAfterRemove = [];
-  lengthCart: number = 0; //length cart
-  //quantityPurchased: number = 1; // quantity want to buy 
-  
-  private userUID: string = '';     // Save uid of user in local storage
+  lengthCart: number = 0; //length cart  
 
   item: Cart = { product: null, quantityPurchased: 1 };
 
   constructor(
-    private afs: AngularFirestore,
-    private db: AngularFireDatabase,
+    private afs: AngularFirestore
   ) { }
 
   //----------------------- temporary product ------------------//
@@ -32,34 +29,33 @@ export class ItemCartService {
     localStorage.setItem('tmpProduct', JSON.stringify(product));
   }
 
-  addTmpProductToCart() {
+  addTmpProductToCart(uid: string) {
     let tmpProduct = localStorage.getItem('tmpProduct');  
     if(tmpProduct) {
-      this.addToCart(JSON.parse(tmpProduct));
+      this.addToCart(JSON.parse(tmpProduct), uid);
       localStorage.removeItem('tmpProduct');
     }
     else return;
   }
 
 
-  addToCart(product) {        
+  addToCart(product: Product, uid: string) {      
     this.listItemCart = this.showItemCart;
     if (!this.listItemCart.length) {
       this.item.quantityPurchased = 1;
       this.item.product = product;
-      this.listItemCart.push(this.item);
-
+      this.listItemCart.push(this.item);      
       // save items into cart
-      this.addCart(this.listItemCart, this.userUID);
+      this.addCart(this.listItemCart, uid);
     }
     else {
       let count = 0;
       this.listItemCart.forEach(
         element => {
-              if (element.product.id["$oid"] === product.id["$oid"]) {
+              if (element.product.id === product.id) {
                 element.quantityPurchased += 1;
                 // save items into cart
-                this.addCart(this.listItemCart, this.userUID);
+                this.addCart(this.listItemCart, uid);
                 } else {
                 count += 1;
               }
@@ -70,11 +66,11 @@ export class ItemCartService {
               this.item.quantityPurchased = 1;
               this.listItemCart.push(this.item);
               // save items into cart
-              this.addCart(this.listItemCart, this.userUID);
+              this.addCart(this.listItemCart, uid);
               }
           })
       this.isEmpty = false;
-      this.loadItemCart();
+      this.loadItemCart(uid);
     }
   }
 
@@ -86,55 +82,58 @@ export class ItemCartService {
     } 
   }
 
-  loadItemCart(): Observable<any> {
-    let cartRef: AngularFirestoreDocument<any>;
-    this.userUID = JSON.parse(localStorage.getItem('user')).uid;
-    if (this.userUID !== '') {
-      cartRef = this.afs.doc(`users/${this.userUID}`);      
+  loadItemCart(uid: string): Observable<any> {
+    let cartRef: AngularFirestoreDocument<any>;  
+    if (uid) {
+      cartRef = this.afs.doc(`users/${uid}`);      
       return of(cartRef.snapshotChanges().subscribe(res => {
-        this.showItemCart = res.payload.data().cart;
-        this.lengthCart = this.showItemCart.reduce((prev, curr) => prev += curr.quantityPurchased, 0);        
-        this.isEmpty = (this.showItemCart.length) ? false : true;        
+        if(res.payload.data().cart) {
+          this.showItemCart = res.payload.data().cart;
+          this.lengthCart = this.showItemCart.reduce((prev, curr) => prev += curr.quantityPurchased, 0);        
+          this.isEmpty = (this.showItemCart.length) ? false : true;
+        }        
+        else {
+          this.showItemCart = [];
+          this.lengthCart = 0;
+          this.isEmpty = false;
+        }
       }))
     } else {
       return;
     }
   }
 
-  remove(product) {
-    const userUID = JSON.parse(localStorage.getItem('user'));
-    const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${userUID.uid}`);
+  remove(product, uid: string) {
+    const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
     this.listAfterRemove = this.showItemCart.filter(item => item.product.id["$oid"] !== product.id["$oid"]);
     cartRef.set({ "cart": this.listAfterRemove }, { merge: true });
-    this.loadItemCart();
+    this.loadItemCart(uid);
   }
 
-  onIncrease(product) {
-    const userUID = JSON.parse(localStorage.getItem('user')).uid;
-    const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${userUID}`);
+  onIncrease(product: Product, uid: string) {
+    const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
     this.listItemCart = this.showItemCart;
     this.listItemCart.forEach(element => {
-      if (element.product.id["$oid"] === product.id["$oid"]) {
+      if (element.product.id === product.id) {
         element.quantityPurchased += 1;
         cartRef.set({ "cart": this.listItemCart }, { merge: true });
       }
     })
-    this.loadItemCart();
+    this.loadItemCart(uid);
   }
 
-  onDecrease(product) {
-    const userUID = JSON.parse(localStorage.getItem('user')).uid;
-    const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${userUID}`);
+  onDecrease(product: Product, uid: string) {
+    const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
     this.listItemCart = this.showItemCart;
     this.listItemCart.forEach(element => {
-      if (element.product.id["$oid"] === product.id["$oid"]) {
-        if (element.quantityPurchased) {
-          element.quantityPurchased -= 1;
+      if (element.product.id === product.id) {
+        if (element.quantityPurchased >1) {
+          element.quantityPurchased --;
           cartRef.set({ "cart": this.listItemCart }, { merge: true });
         }
       }
     })
-    this.loadItemCart();
+    this.loadItemCart(uid);
   }     
  
 }

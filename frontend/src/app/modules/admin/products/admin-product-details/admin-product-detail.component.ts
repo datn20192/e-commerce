@@ -33,13 +33,12 @@ export class AdminProductDetailComponent implements OnInit {
 
   ngOnDestroy() {
     this.productSubs.unsubscribe();
-    this.adminSubs.unsubscribe();
+    if(this.adminSubs) this.adminSubs.unsubscribe();
   }
 
   loadProduct() {
     // Load product ID
     this.productID = this.router.url.split('/')[this.router.url.split('/').length-1];
-    console.log(this.productID);
     this.productSubs = this.productApiService.getProductByID(this.productID).subscribe(res => {
       let result = JSON.parse(res);
       if(result.code==200) {
@@ -68,7 +67,6 @@ export class AdminProductDetailComponent implements OnInit {
   updateProduct(product?:Product) {
     this.isUpdate = !this.isUpdate;
     if(product) {
-      console.log(product);
       this.adminSubs = this.adminApiService.updateProduct(product).subscribe(res => {
         let result = JSON.parse(res);
         if(result.code === 200) {

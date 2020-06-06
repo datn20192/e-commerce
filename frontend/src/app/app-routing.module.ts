@@ -2,7 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { NotFoundComponent } from './components/not-found/not-found.component';
+
 import { AuthGuard } from './guards/auth.guard';
+import { AdminModuleGuard } from './guards/admin/admin-module.guard';
 
 const routes: Routes = [      
 
@@ -19,7 +21,8 @@ const routes: Routes = [
 
   {
     path: 'quan-ly',
-    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
+    canLoad: [AdminModuleGuard]
   },
 
   { path: '**', component: NotFoundComponent }

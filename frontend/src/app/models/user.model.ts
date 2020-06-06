@@ -1,30 +1,30 @@
-export class User {
+import { Cart } from './cart.model';
+
+export interface User {
     uid: string;
     email: string;
-    displayName: string;
-    photoURL: string;
+    displayName?: string;
+    photoURL?: string;
     emailVerified: boolean;
-    cart: [];
-    infor: {};
-
-    constructor() {
-        this.uid = new Date().getTime().toString();
-    }
+    roles: Roles;
+    cart?: Cart[];
+    infor?: UserInfor;    
 }
 
-export class UserInfor  {
-    constructor(               
-        public name: string,
-        public phoneNumber: string,
-        public address: Address
-    ) {}
+export interface UserInfor  {         
+    name: string;
+    phoneNumber: string;
+    address: Address;
 }
 
-export class Address {
-    constructor(
-        public province: string,
-        public district: string,
-        public subDistrict: string,
-        public details: string
-    ) {}
+export interface Address {
+    province: string;
+    district: string;
+    subDistrict: string;
+    details: string;
+}
+
+export interface Roles {
+    customer?: boolean;
+    admin?: boolean;
 }

@@ -5,6 +5,7 @@ import { Product } from '../../../../models/product.model';
 
 import { ItemCartService } from '../../../../services/item-cart.service';
 import { AuthService } from '../../../../services/auth.service';
+import { User } from '../../../../models/user.model';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,11 +18,15 @@ export class ProductDetailComponent implements OnInit {
 
   @Output() onClose = new EventEmitter();  
   
+  user: User;
+
   constructor(
     private route: Router,
     private authService: AuthService,
     private icService: ItemCartService,  
-  ) { }
+  ) {
+    this.authService.user$.subscribe(user => this.user=user);
+  }
 
 
   ngOnInit() {
@@ -29,10 +34,10 @@ export class ProductDetailComponent implements OnInit {
   }
 
   closeModal(){
-    if(this.authService.isLoggedIn===true) this.icService.addToCart(this.product);
-    else {
+    if(this.authService.isLogin(this.user)===true) this.icService.addToCart(this.product, this.user.uid);
+    else {      
       this.icService.setProductToLocalStorage(this.product);
-      this.route.navigate(['/dangnhap-dangky']);     
+      this.route.navigate(['/dangnhap-dangky']);  
     } 
     this.onClose.emit(null);
   }

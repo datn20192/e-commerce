@@ -21,12 +21,12 @@
                   <td class="border-0"><strong>{{product.product.price | productPrice}}</strong></td>
                   <td class="border-0">
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" class="btn border-secondary" (click)="icService.onDecrease(product.product)">-</button>
+                        <button type="button" class="btn border-secondary" (click)="icService.onDecrease(product.product, user.uid)">-</button>
                         <input type="tel" value="{{product.quantityPurchased}}" disabled>
-                        <button type="button" class="btn border-secondary" (click)="icService.onIncrease(product.product)">+</button>
+                        <button type="button" class="btn border-secondary" (click)="icService.onIncrease(product.product, user.uid)">+</button>
                     </div>
                   </td>
-                  <td class="border-0"><a (click)="false" class="text-dark" (click)="icService.remove(product.product)"><i class="fa fa-trash"></i></a></td>
+                  <td class="border-0"><a (click)="false" class="text-dark" (click)="icService.remove(product.product, user.uid)"><i class="fa fa-trash"></i></a></td>
                 </tr>            
               </tbody>
             </table>

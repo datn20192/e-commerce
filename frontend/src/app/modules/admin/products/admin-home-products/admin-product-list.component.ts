@@ -2,20 +2,19 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 // Service
-import { HomeApiService } from '../home.service';
+import { HomeApiService } from '../../../home/home.service';
 
 // Model
-import { CategoryChild } from '../../../models/productCategory.model';
-import { ItemCartService } from '../../../services/item-cart.service';
-import { AuthService } from '../../../services/auth.service';
-import { User } from '../../../models/user.model';
+import { CategoryChild } from '../../../../models/productCategory.model';
+import { ItemCartService } from '../../../../services/item-cart.service';
+import { AuthService } from '../../../../services/auth.service';
+import { User } from '../../../../models/user.model';
 
 @Component({
-  selector: 'app-customers',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+  selector: 'app-admin-home-product',
+  templateUrl: './admin-product-list.component.html'
 })
-export class ProductListComponent {
+export class AdminProductListComponent {
 
     user: User;
     productCategoryList: CategoryChild[];

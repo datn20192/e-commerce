@@ -6,7 +6,8 @@
         <slide *ngFor="let quadrupleProduct of quadrupleProductList">
           <div class="row">
             <div class="col-3" *ngFor="let product of quadrupleProduct">
-              <app-card-product [product]="product"></app-card-product>
+              <app-card-product [product]="product" *ngIf="modal"></app-card-product>
+              <app-admin-card-product [product]="product" *ngIf="!modal"></app-admin-card-product>
             </div>
           </div>
         </slide>

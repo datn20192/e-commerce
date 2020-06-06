@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { DashboardService } from '../../services/dashboard.service';
+import { DashboardService } from './dashboard.service';
 import { Subscription } from 'rxjs';
 import { Chart } from 'chart.js';
-import { ProductCategoryServiceAPI } from '../../services/productCategory-api.service';
+import { ProductCategoryServiceAPI } from '../../../services/productCategory-api.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -144,7 +144,6 @@ export class DashboardComponent implements OnInit {
         this.revenueByCategoryYear = [];
         this.labelByRevenue = [];
         data = JSON.parse(res)['data'];
-        console.log('Year', data);
         this.titleByRevenue = `Thống kê doanh thu năm ${this.chosenYear}`;
         this.titleByCategory = `Thống kê doanh thu năm ${this.chosenYear}`;
         this.labelByRevenue = Array.from(Array(12)).map((e, index) => e = `Tháng ${index + 1}`);

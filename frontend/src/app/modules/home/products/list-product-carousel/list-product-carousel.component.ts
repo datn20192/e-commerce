@@ -18,6 +18,7 @@ export class CarouselListProductComponent {
   @Input() title: String;
   @Input() category: String;
   @Input() interval: number | false;
+  @Input() modal: boolean;
   
   productsListSubs: Subscription;    
 

@@ -6,14 +6,16 @@ import {
     CanActivateChild,
     CanLoad, Route
 }                     from '@angular/router';
+
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
+
+import { AuthService } from '../../services/auth.service';
 import { take, tap, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
+export class AdminModuleGuard implements CanActivate, CanActivateChild, CanLoad {
     constructor(
         private authService: AuthService,
         private router: Router
@@ -27,16 +29,16 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
         return this.canActivate(route, state);
     }
 
-    canLoad(route: Route): Observable<boolean> {
+    canLoad(route: Route): Observable<boolean> {    
         return this.checkLogin();
     }
 
-    private checkLogin(): Observable<boolean> {        
+    private checkLogin(): Observable<boolean> {
         return this.authService.user$.pipe(
             take(1),
-            map(user => user ? true : false),
-            tap(user => {
-                if(!user) this.router.navigate(['/dangnhap-dangky']);
+            map(user => user && user.roles.admin ? true : false),
+            tap(admin => {
+                if(!admin) this.router.navigate(['']);
             })
         );
     }
