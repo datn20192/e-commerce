@@ -1,10 +1,12 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
-import { AuthService } from './services/auth.service';
+import { Router } from '@angular/router';
+
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ItemCartService } from './services/item-cart.service';
-import { Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
 import { SharedService } from './services/shared.service';
+import { User } from './models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +16,7 @@ import { SharedService } from './services/shared.service';
 export class AppComponent implements OnInit{  
 
   modalRef: BsModalRef; 
+  user: User;
 
   constructor(
     public auth: AuthService,
@@ -21,15 +24,24 @@ export class AppComponent implements OnInit{
     private icService: ItemCartService,
     public router: Router,
     private share: SharedService
-    ){}
+    ){
+      
+    }
 
   ngOnInit() {
-    this.icService.loadItemCart();
+    this.load();
   }
   
   ngOnDestroy() {
   }
  
+  load() {
+    this.auth.user$.subscribe(user => {
+      this.user = user;
+      if(this.user) this.icService.loadItemCart(this.user.uid);
+    });
+  }
+
   signOut() {    
     this.auth.signOut();
   }

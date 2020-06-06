@@ -3,8 +3,9 @@ import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { CheckoutApiService } from '../checkout.service';
+import { AuthService } from '../../../services/auth.service';
 
-import { UserInfor, Address, User } from '../../../models/user.model';
+import { UserInfor, User } from '../../../models/user.model';
 
 @Component({
   selector: 'app-shipping',
@@ -14,14 +15,17 @@ import { UserInfor, Address, User } from '../../../models/user.model';
 export class ShippingComponent implements OnInit {
 
   userInforSubs: Subscription;
-
-  private account: string = '';
-  public userInfor = new UserInfor("", "", new Address("", "", "", ""));
+  
+  public userInfor:UserInfor ;
+  user: User;
  
   constructor(
     private route: Router,
-    private checkoutApi: CheckoutApiService
-  ) { }
+    private checkoutApi: CheckoutApiService,
+    private authService: AuthService
+  ) {
+    
+  }
 
   ngOnInit() {
     this.load();
@@ -32,16 +36,16 @@ export class ShippingComponent implements OnInit {
   }
 
   onSubmit() {
-    this.route.navigate(['/thanh-toan/hoa-don']);  
-    this.checkoutApi.addUserInfor(this.userInfor);
+    this.checkoutApi.addUserInfor(this.userInfor, this.user.uid);
+    this.route.navigate(['/thanh-toan/hoa-don']);      
   }
 
   load() {
-    this.account = JSON.parse(localStorage.getItem('user')).email;    
-    this.userInforSubs = this.checkoutApi.getUserInfor().subscribe(res => {                  
-      let infor = JSON.stringify(res.payload.data().infor);     
-      if (infor != '{}') this.userInfor = res.payload.data().infor;          
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+      if (user.infor) this.userInfor = user.infor; 
     });
+    
   }
   
 }

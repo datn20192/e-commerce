@@ -31,7 +31,6 @@ const routes: Routes = [
       {
         path: 'dia-chi-giao-hang',
         component: ShippingComponent,
-        canActivate: [CheckoutGuard],
         data : {
           title: 'Địa chỉ giao hàng'
         }

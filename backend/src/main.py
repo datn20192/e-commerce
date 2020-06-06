@@ -3,7 +3,7 @@ from flask import request
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 from config import Response
-from api import bill_api, productCategory_api, product_api, typeOfPayment_api
+from api import bill_api, productCategory_api, product_api, typeOfPayment_api, customer_api
 
 app = Flask(__name__)
 
@@ -78,7 +78,7 @@ def delete_productCategory():
 def get_all_type_of_payment():
     return typeOfPayment_api.get_all_type_of_payment(mongo)
 
-#-------------------Get bill-------------------------#
+#------------------- Bill -------------------------#
 @app.route('/api/bill/statistics/year=<string:year>', methods = ['GET'])
 def get_bill_by_year(year):
     month= request.args.get('month')
@@ -94,3 +94,7 @@ def get_bill_by_year(year):
 @app.route('/api/bill/statistics/allyear', methods = ['GET'])
 def get_bill_by_all_year():
     return bill_api.get_bill_by_all_year(mongo)
+
+@app.route('/api/add_bill', methods = ['POST'])
+def add_bill():
+    return customer_api.add_bill(mongo)

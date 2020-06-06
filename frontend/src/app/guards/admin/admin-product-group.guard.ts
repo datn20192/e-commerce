@@ -2,12 +2,11 @@ import { Injectable } from '@angular/core';
 import { 
     CanActivate, Router,
     ActivatedRouteSnapshot,
-    RouterStateSnapshot,
-    Route
+    RouterStateSnapshot
 }                     from '@angular/router';
-
-import { AuthService } from '../../services/auth.service';
 import { Observable } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
+import { take, tap, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -18,17 +17,21 @@ export class AdminProductGroupGuard implements CanActivate {
         private router: Router
     ) {}    
 
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
+    canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
         let url: string = state.url;
         return this.checkLogin(url);
     }
     
-    private checkLogin(url: string): boolean {
-        if(this.authService.isAdmin === true) {
-            let adminUrl = "/quan-ly" + url;
-            this.router.navigate([adminUrl]);
-            return false;
-        }
-        else return true;
+    private checkLogin(url: string): Observable<boolean> {
+        return this.authService.user$.pipe(
+            take(1),
+            map(user => user && this.authService.isAdmin(user) ? false : true),
+            tap(preventAdmin => {
+                if(!preventAdmin) {                    
+                    let adminUrl = "/quan-ly" + url;
+                    this.router.navigate([adminUrl]);
+                }
+            })
+        );
     }
 }

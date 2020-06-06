@@ -12,7 +12,7 @@
       <button type="submit" class="btn btn-square btn-secondary" (click)="onClick(searchInput.value)"><i class="fa fa-search" ></i>Tìm kiếm</button>
     </form>
   </div>
-  <ul class="nav navbar-nav ml-auto" *ngIf="!(auth.userData) && !(auth.isLoggedIn)">             
+  <ul class="nav navbar-nav ml-auto" *ngIf="!auth.isLogin(user)">             
     <li class="nav-item d-md-down-none">
       <a data-toggle="modal" (click)="openModal(signInModal)" (click)="false" class="nav-link" href="#" ><i class="icon-user icons font-2xl"></i><span>Đăng nhập</span></a>
       <ng-template #signInModal>
@@ -43,20 +43,20 @@
     </li> 
   </ul>
 
-  <ul class="nav navbar-nav ml-auto" *ngIf="(auth.userData) && (auth.isLoggedIn)">
-      <li class="nav-item d-md-down-none" *ngIf="!(auth.isAdmin)">
+  <ul class="nav navbar-nav ml-auto" *ngIf="auth.isLogin(user)">
+      <li class="nav-item d-md-down-none" *ngIf="auth.isCustomer(user)">
       <a class="nav-link" href="#"><i class="icon-location-pin font-2xl"></i><span>Theo dõi đơn hàng</span></a>
       </li>
-      <li class="nav-item d-md-down-none" *ngIf="!(auth.isAdmin)">
+      <li class="nav-item d-md-down-none" *ngIf="auth.isCustomer(user)">
       <a class="nav-link" routerLink="/thanh-toan/gio-hang">
           <i class="icon-basket font-2xl"></i>          
           <span>Giỏ hàng</span>      
           <span class="badge-pill badge-danger">{{icService.lengthCart}}</span>
       </a>             
-      <li class="nav-item d-md-down-none" *ngIf="auth.isAdmin">
+      <li class="nav-item d-md-down-none" *ngIf="auth.isAdmin(user)">
       <a class="nav-link" [routerLink]="['/quan-ly/thong-ke-doanh-thu']"><i class="fa fa-line-chart font-2xl"></i><span>Thống kê</span></a>
       </li>
-      <li class="nav-item d-md-down-none" *ngIf="(auth.isAdmin)">
+      <li class="nav-item d-md-down-none" *ngIf="auth.isAdmin(user)">
       <a class="nav-link" href="#">
           <i class="fa fa-table font-2xl"></i>          
           <span>Danh sách KH</span>      
@@ -65,10 +65,10 @@
       </li>      
       <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" dropdownToggle (click)="false">
-          <img src="{{ !auth.userData.photoURL ? auth.defaultURL : auth.userData.photoURL }}" width="40"
+          <img src="{{ !user.photoURL ? auth.defaultURL : user.photoURL }}" width="40"
           height="40" class="rounded-circle" alt="user-image"/>
           <b style="color: blue;">
-          {{auth.userData.displayName === null ? auth.userData.email.split('@')[0] : auth.userData.displayName }}
+          {{user.displayName === null ? user.email.split('@')[0] : user.displayName }}
           </b>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">

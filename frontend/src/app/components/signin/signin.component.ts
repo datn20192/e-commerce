@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import * as firebase from 'firebase';
 import { AuthService } from 'src/app/services/auth.service';
 import { ItemCartService } from '../../services/item-cart.service'
+import { User } from '../../models/user.model';
 // import { EventEmitter } from 'protractor';
 
 @Component({
@@ -13,6 +14,8 @@ import { ItemCartService } from '../../services/item-cart.service'
 })
 
 export class SigninComponent implements OnInit {
+
+  user: User;
 
   formSignin = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -25,7 +28,9 @@ export class SigninComponent implements OnInit {
     private router: Router,
     private authentification: AuthService,
     private itemCartService: ItemCartService
-  ) { }  
+  ) { 
+    this.authentification.user$.subscribe(user => this.user=user);
+  }  
 
   ngOnInit() {
   }
@@ -35,8 +40,8 @@ export class SigninComponent implements OnInit {
     if (this.formSignin.valid) {
       const email = formValue.value['email'];
       const password = formValue.value['password'];
-      this.authentification.SignIn(email, password).then(()=> {
-        if(this.authentification.isLoggedIn === true) {
+      this.authentification.signIn(email, password).then(()=> {
+        if(this.authentification.isLogin(this.user) === true) {
           this.formSignin.reset();
           this.signinClick();
         }     
@@ -48,19 +53,24 @@ export class SigninComponent implements OnInit {
 
   googleSignin() {
     this.authentification.GoogleAuth().then(()=>{
-      if(this.authentification.isLoggedIn===true) this.signinClick();
+      this.authentification.user$.subscribe(user => {
+        if(user) this.signinClick();
+      });
+      
     });      
   }
 
   facebookLogin() {
     this.authentification.FacebookAuth().then(() => {
-      if(this.authentification.isLoggedIn===true) this.signinClick();
+      this.authentification.user$.subscribe(user => {
+        if(user) this.signinClick();
+      });
     }); 
     
   }
 
   signinClick() {
-    this.itemCartService.addTmpProductToCart();
+    this.itemCartService.addTmpProductToCart(this.user.uid);
     this.onClick.emit(null);
     if(this.router.url == '/dangnhap-dangky') this.router.navigate([''])
   }

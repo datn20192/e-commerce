@@ -7,6 +7,8 @@ import { Card, TypeOfPayment, Customer, Bill } from '../../../models/bill.model'
 import { User } from '../../../models/user.model';
 import { CartFunction } from '../../../shared/functions/cart.function';
 
+import { AuthService } from '../../../services/auth.service';
+
 @Component({
     selector: 'app-payment',
     templateUrl: './payment.component.html',
@@ -16,7 +18,6 @@ import { CartFunction } from '../../../shared/functions/cart.function';
 export class PaymentComponent {
 
     private typeOfPaymentSubs: Subscription;
-    private userInforSubs: Subscription;
 
     public typeOfPayment: string;
     public typeOfPaymentArr: TypeOfPayment[];     
@@ -28,7 +29,8 @@ export class PaymentComponent {
 
     constructor(
         private route: Router,
-        private checkoutApi: CheckoutApiService
+        private checkoutApi: CheckoutApiService,
+        private authService: AuthService
     ) { }
 
     ngOnInit() {
@@ -37,27 +39,25 @@ export class PaymentComponent {
 
     ngOnDestroy() {
         this.typeOfPaymentSubs.unsubscribe();
-        this.userInforSubs.unsubscribe();
     }
 
-    load() {
-        this.userInforSubs = this.checkoutApi.getUserInfor().subscribe(res => {
-            let userFB = res.payload.data();     
-            if(userFB.infor !== {} && userFB.cart.length!=0) {
-                this.user = userFB;
+    load() {   
+        this.authService.user$.subscribe(user => {
+            this.user=user;
+            if(user) {
                 this.showBill = true;
                 this.customer = this.createBill(this.user);
-            }            
-        },
-            console.error
-        );
-        this.typeOfPaymentSubs = this.checkoutApi.getAllTypeOfPayment().subscribe(res => {
-            let result = JSON.parse(res);
-            this.typeOfPaymentArr = result.data;
-            this.typeOfPayment = 'cash';                    
-        },
-            console.error
-        );        
+            }           
+           
+            this.typeOfPaymentSubs = this.checkoutApi.getAllTypeOfPayment().subscribe(res => {
+                let result = JSON.parse(res);
+                this.typeOfPaymentArr = result.data;
+                this.typeOfPayment = 'cash';                    
+            },
+                console.error
+            );   
+        });          
+             
     }
 
     onSubmit() {
@@ -66,7 +66,7 @@ export class PaymentComponent {
                 let result = JSON.parse(res);
                 if(result.code !== 200) alert('Đặt hàng thất bại.')
                 else {
-                    this.checkoutApi.deleteAllProducts();
+                    this.checkoutApi.deleteAllProducts(this.user.uid);
                     alert('Đặt hàng thàng công. Tiếp tục mua sắm..');
                     this.route.navigate(['']);
                 }

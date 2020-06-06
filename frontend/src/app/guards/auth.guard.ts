@@ -6,9 +6,9 @@ import {
     CanActivateChild,
     CanLoad, Route
 }                     from '@angular/router';
-
-import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
+import { AuthService } from '../services/auth.service';
+import { take, tap, map } from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -20,24 +20,24 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
     ) {}    
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-        let url: string = state.url;
-        return this.checkLogin(url);
+        return this.checkLogin();
     }
 
     canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
         return this.canActivate(route, state);
     }
 
-    canLoad(route: Route): boolean {
-        let url = `/${route.path}`;
-    
-        return this.checkLogin(url);
+    canLoad(route: Route): Observable<boolean> {
+        return this.checkLogin();
     }
 
-    private checkLogin(url: string): boolean {
-        if(this.authService.isLoggedIn === true) return true;
-        
-        this.router.navigate(['/dangnhap-dangky']);
-        return false;
+    private checkLogin(): Observable<boolean> {        
+        return this.authService.user$.pipe(
+            take(1),
+            map(user => user ? true : false),
+            tap(user => {
+                if(!user) this.router.navigate(['/dangnhap-dangky']);
+            })
+        );
     }
 }
