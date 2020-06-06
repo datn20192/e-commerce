@@ -69,7 +69,9 @@ export class AuthService {
         if(!res.length) {
           this.setUserData(credential.user);
         }
-        this.itemCartService.loadItemCart(credential.user.uid);
+        this.user$.subscribe(user => {
+          if(user.roles.customer) this.itemCartService.loadItemCart(credential.user.uid);
+        });        
       });
     }).catch((error) => alert(error))
   }

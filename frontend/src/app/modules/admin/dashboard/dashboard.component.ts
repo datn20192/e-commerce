@@ -144,7 +144,6 @@ export class DashboardComponent implements OnInit {
         this.revenueByCategoryYear = [];
         this.labelByRevenue = [];
         data = JSON.parse(res)['data'];
-        console.log('Year', data);
         this.titleByRevenue = `Thống kê doanh thu năm ${this.chosenYear}`;
         this.titleByCategory = `Thống kê doanh thu năm ${this.chosenYear}`;
         this.labelByRevenue = Array.from(Array(12)).map((e, index) => e = `Tháng ${index + 1}`);

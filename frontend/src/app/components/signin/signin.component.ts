@@ -41,10 +41,12 @@ export class SigninComponent implements OnInit {
       const email = formValue.value['email'];
       const password = formValue.value['password'];
       this.authentification.signIn(email, password).then(()=> {
-        if(this.authentification.isLogin(this.user) === true) {
-          this.formSignin.reset();
-          this.signinClick();
-        }     
+        this.authentification.user$.subscribe(user => {
+          if(this.authentification.isLogin(user)) {
+            this.formSignin.reset();
+            this.signinClick();
+          }   
+        });  
       });       
     } else {
       console.error("Invalid")
