@@ -98,3 +98,12 @@ def get_bill_by_all_year():
 @app.route('/api/add_bill', methods = ['POST'])
 def add_bill():
     return customer_api.add_bill(mongo)
+
+# Get unpaid bill
+@app.route('/api/bill/unPaid')
+def get_unpaid_bill():
+    return bill_api.getUnPaidBill(mongo)
+# Get number of unpaid bills
+@app.route('/api/bill/unPaid/length')
+def get_number_of_unpaid_bills():
+    return bill_api.get_number_of_unpaid_bills(mongo)

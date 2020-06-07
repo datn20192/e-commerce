@@ -1,11 +1,13 @@
 import { Component, TemplateRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ItemCartService } from './services/item-cart.service';
 import { AuthService } from './services/auth.service';
 import { SharedService } from './services/shared.service';
+import { BillApiService } from './services/bill.service';
 import { User } from './models/user.model';
 
 @Component({
@@ -17,13 +19,19 @@ export class AppComponent implements OnInit{
 
   modalRef: BsModalRef; 
   user: User;
+  billSubs: Subscription;
+  itemCartSubs: Subscription;
+  authSubs: Subscription;
+
+  numberOfUnPaidBills: Number;
 
   constructor(
     public auth: AuthService,
     private modalService: BsModalService,
     private icService: ItemCartService,
     public router: Router,
-    private share: SharedService
+    private share: SharedService,
+    private billApiService: BillApiService
     ){
       
     }
@@ -33,12 +41,19 @@ export class AppComponent implements OnInit{
   }
   
   ngOnDestroy() {
+    this.billSubs.unsubscribe();
+    this.authSubs.unsubscribe();
   }
  
   load() {
-    this.auth.user$.subscribe(user => {
+    this.authSubs = this.auth.user$.subscribe(user => {
       this.user = user;
-      if(this.user) this.icService.loadItemCart(this.user.uid);
+      if(this.auth.isCustomer(user)) this.icService.loadItemCart(this.user.uid);
+      else if (this.auth.isShipper(user)) this.billApiService.getNumberOfPaidBill().subscribe(res => {
+        let result = JSON.parse(res);
+        if(result.code === 200) this.numberOfUnPaidBills = result.data;
+        else alert(`error server ${result.code}`);
+      });
     });
   }
 

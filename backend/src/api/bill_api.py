@@ -94,3 +94,52 @@ def get_bill_by_day(mongo,year,month,day):
         response.data = "Datebase connection is false."
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     return output
+
+#------------------------- Get un paid bill ------------------------#
+def getUnPaidBill(mongo):
+    try:
+        response = Response()
+        processed = []
+        extracted = list(mongo.db.unPaidBill.find({}))
+        for customer in extracted:
+            if(len(customer['bill'])!=0):                
+                for bill in customer['bill']:
+                    processed.append({
+                        'id': str(bill['_id']),
+                        'uid': customer['uid'],
+                        'email': customer['email'],
+                        'cart': bill['cart'],
+                        'infor': bill['infor'],
+                        'date': bill['date'],
+                        'totalMoney': bill['totalMoney'],
+                        'status': bill['status']
+                    })
+            
+        response.create(Response.SUCCESS)
+        response.data = processed        
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except:
+        response.create(Response.ERROR)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+
+    return output
+
+# Get number of unpaid bills
+def get_number_of_unpaid_bills(mongo): 
+    try:    
+        response = Response()
+        length = 0
+        extracted = list(mongo.db.unPaidBill.find({}))
+        for customer in extracted:
+            if(len(customer['bill'])!=0):                
+                length += len(customer['bill'])
+
+        response.create(Response.SUCCESS)
+        response.data = length        
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except:
+        response.create(Response.ERROR)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+
+    return output
+

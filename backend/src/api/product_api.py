@@ -48,7 +48,6 @@ def get_all_products(mongo):
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
-        response.data = "Datebase connection is false."
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
