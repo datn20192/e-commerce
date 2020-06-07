@@ -19,18 +19,24 @@ export class ProductDetailComponent implements OnInit {
   @Output() onClose = new EventEmitter();  
   
   user: User;
+  allowAddCart: boolean = false;
 
   constructor(
     private route: Router,
     private authService: AuthService,
     private icService: ItemCartService,  
-  ) {
-    this.authService.user$.subscribe(user => this.user=user);
-  }
+  ) { }
 
 
   ngOnInit() {
     
+  }
+
+  load() {
+    this.authService.user$.subscribe(user => {
+      this.user=user;
+      if(!this.authService.isShipper(user)) this.allowAddCart=true;
+    });
   }
 
   closeModal(){

@@ -5,6 +5,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 
 import { AuthGuard } from './guards/auth.guard';
 import { AdminModuleGuard } from './guards/admin/admin-module.guard';
+import { ShipperModuleGuard } from './guards/shipper/shipper-module.guard';
 
 const routes: Routes = [      
 
@@ -23,6 +24,12 @@ const routes: Routes = [
     path: 'quan-ly',
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),
     canLoad: [AdminModuleGuard]
+  },
+
+  {
+    path: 'giao-hang',
+    loadChildren: () => import('./modules/shipper/shipper.module').then(m => m.ShipperModule),
+    canLoad: [ShipperModuleGuard]
   },
 
   { path: '**', component: NotFoundComponent }

@@ -35,7 +35,7 @@
                     <ul class="product-description">
                         <li *ngFor="let des of product.description">{{des}}</li>
                     </ul>                                                                           
-                    <div class="action">
+                    <div class="action" *ngIf="allowAddCart">
                         <button class="add-to-cart btn btn-default" type="button" (click)="closeModal()">add to cart</button>                        
                     </div>
                 </div>

@@ -1,17 +1,7 @@
 import { Product } from './product.model';
 
-// export class Bill {
-//     constructor(        
-//         public cart: Cart[],
-//         public infor: {},
-//         public date: Date,
-//         public totalMoney: number,
-//         public status: boolean,
-//         public typeOfPayment: string    
-//     ) { }
-// }
-
 export interface Bill {
+    id?: string,
     cart: Cart[];
     infor: {};
     date: string;
@@ -46,6 +36,6 @@ export class TypeOfPayment {
 export interface Customer{
     uid: string;
     email: string;
-    bill: Bill;
+    bill: Bill | Bill[];
     
 }

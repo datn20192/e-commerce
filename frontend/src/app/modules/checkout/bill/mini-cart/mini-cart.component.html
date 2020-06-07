@@ -1,0 +1,14 @@
+<ng-container>
+    <div class="row" *ngFor="let item of cart">
+        <div class="col-7">
+            <strong>{{item.quantityPurchased}} x </strong><a href="#" class="text-blue ">{{item.product.name}}</a>
+        
+        </div>       
+        <div class="col-5">
+            <span class="float-right">{{item.product.price | productPrice}}</span>
+        </div>
+    </div>  
+    <hr>      
+    <strong>Thành tiền:</strong>
+    <div class="float-right">{{cart | cartTotalMoney | productPrice}}</div>
+</ng-container>
