@@ -28,9 +28,7 @@ export class SigninComponent implements OnInit {
     private router: Router,
     private authentification: AuthService,
     private itemCartService: ItemCartService
-  ) { 
-    this.authentification.user$.subscribe(user => this.user=user);
-  }  
+  ) { }  
 
   ngOnInit() {
   }
@@ -44,7 +42,8 @@ export class SigninComponent implements OnInit {
         this.authentification.user$.subscribe(user => {
           if(this.authentification.isLogin(user)) {
             this.formSignin.reset();
-            this.signinClick();
+            if(this.authentification.isAdmin(user)) this.router.navigate(['/quan-ly']);
+            this.signinClick(user.uid);
           }   
         });  
       });       
@@ -56,7 +55,7 @@ export class SigninComponent implements OnInit {
   googleSignin() {
     this.authentification.GoogleAuth().then(()=>{
       this.authentification.user$.subscribe(user => {
-        if(user) this.signinClick();
+        if(user) this.signinClick(user.uid);
       });
       
     });      
@@ -65,14 +64,14 @@ export class SigninComponent implements OnInit {
   facebookLogin() {
     this.authentification.FacebookAuth().then(() => {
       this.authentification.user$.subscribe(user => {
-        if(user) this.signinClick();
+        if(user) this.signinClick(user.uid);
       });
     }); 
     
   }
 
-  signinClick() {
-    this.itemCartService.addTmpProductToCart(this.user.uid);
+  signinClick(uid: string) {
+    this.itemCartService.addTmpProductToCart(uid);
     this.onClick.emit(null);
     if(this.router.url == '/dangnhap-dangky') this.router.navigate([''])
   }

@@ -29,7 +29,7 @@ export class ProductDetailComponent implements OnInit {
 
 
   ngOnInit() {
-    
+    this.load();
   }
 
   load() {
