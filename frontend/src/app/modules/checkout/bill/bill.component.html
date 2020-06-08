@@ -8,11 +8,9 @@
             Sửa
             </a>                          
         </div>
-        <div class="card-body">
-          <h5>{{user.infor.name}}</h5>          
-          <div>Số điện thoại: {{user.infor.phoneNumber}}
-              <br>{{user.infor.address | cartAddressInfor}}<br></div>
-        </div>
+        <div class="card-body">  
+            <app-mini-shipping [infor]="user.infor"></app-mini-shipping>
+        </div>        
     </div>
     <div class="card">
         <div class="card-header bg-primary">            
@@ -23,19 +21,8 @@
             Sửa
             </a>                          
         </div>
-        <div class="card-body">   
-            <div class="row" *ngFor="let item of user.cart">
-                <div class="col-7">
-                    <strong>{{item.quantityPurchased}} x </strong><a href="#" class="text-blue ">{{item.product.name}}</a>
-                
-                </div>       
-                <div class="col-5">
-                    <span class="float-right">{{item.product.price | productPrice}}</span>
-                </div>
-            </div>  
-            <hr>      
-            <strong>Thành tiền:</strong>
-            <div class="float-right">{{user.cart | cartTotalMoney | productPrice}}</div>
+        <div class="card-body"> 
+            <app-mini-cart [cart]="user.cart"></app-mini-cart>
         </div>
     </div>
 </ng-container>

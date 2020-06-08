@@ -5,8 +5,7 @@ import { User, UserInfor } from '../../../models/user.model';
 
 @Component({
     selector: 'app-bill',
-    templateUrl: './bill.component.html',
-    styleUrls: ['./bill.component.css']
+    templateUrl: './bill.component.html'
 })
 
 export class BillComponent {

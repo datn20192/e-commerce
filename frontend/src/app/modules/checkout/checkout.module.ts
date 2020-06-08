@@ -14,7 +14,7 @@ import { NumbericInput } from '../../shared/directives/numberic-input.directive'
 import { MonthYearInput } from '../../shared/directives/month-year-input.directive';
 
 // Pipe
-import { CartAddressInfor } from '../../shared/pipes/cart/cart-address-infor.pipe';
+
  
 @NgModule({
   declarations: [
@@ -25,9 +25,7 @@ import { CartAddressInfor } from '../../shared/pipes/cart/cart-address-infor.pip
     PaymentComponent,
 
     NumbericInput,
-    MonthYearInput,  
-    
-    CartAddressInfor
+    MonthYearInput
   ],
   imports: [
     CheckoutRoutingModule,

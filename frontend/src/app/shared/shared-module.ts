@@ -13,11 +13,14 @@ import { CardProductComponent } from '../modules/home/products/card-product/card
 import { ProductDetailComponent } from '../modules/home/products/product-detail/product-detail.component';
 import { AdminCardProductComponent } from '../modules/admin/products/admin-card-product/admin-card-product.component';
 import { CarouselListProductComponent } from '../modules/home/products/list-product-carousel/list-product-carousel.component';
+import { MiniCartComponent } from '../modules//checkout//bill//mini-cart/mini-cart.component';
+import { MiniShippingComponent } from '../modules//checkout/bill/mini-shipping/mini-shipping.component';
 
 // Pipe
 import { ProductStar } from './pipes/product/product-star.pipe';
 import { ProductPrice } from './pipes/product/product-price.pipe';
 import { CartTotalMoney } from './pipes/cart/cart-total-money.pipe';
+import { CartAddressInfor } from './pipes/cart/cart-address-infor.pipe';
 
 @NgModule({
     imports: [ 
@@ -32,6 +35,7 @@ import { CartTotalMoney } from './pipes/cart/cart-total-money.pipe';
         ProductPrice,
         CartTotalMoney,
         ProductStar,
+        CartAddressInfor,
         // Component
         SigninSignupComponent,
         SigninComponent,
@@ -40,7 +44,9 @@ import { CartTotalMoney } from './pipes/cart/cart-total-money.pipe';
         CardProductComponent,
         ProductDetailComponent,
         AdminCardProductComponent,
-        CarouselListProductComponent
+        CarouselListProductComponent,
+        MiniCartComponent,
+        MiniShippingComponent
     ],
     exports: [ 
         CarouselModule,
@@ -57,10 +63,13 @@ import { CartTotalMoney } from './pipes/cart/cart-total-money.pipe';
         ProductDetailComponent,
         AdminCardProductComponent,
         CarouselListProductComponent,
+        MiniCartComponent,
+        MiniShippingComponent,
 
         ProductPrice,
         CartTotalMoney,
-        ProductStar 
+        ProductStar,
+        CartAddressInfor 
     ]
    })
    export class SharedModule { }

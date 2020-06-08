@@ -125,6 +125,9 @@ export class AuthService {
   isAdmin(user: User) {
     return this.checkAuthorization(user, "admin");
   }
+  isShipper(user:User) {
+    return this.checkAuthorization(user, "shipper");
+  }
   isLogin(user: User) {
     return (user) ? true : false;
   }

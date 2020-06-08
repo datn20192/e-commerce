@@ -27,4 +27,5 @@ export interface Address {
 export interface Roles {
     customer?: boolean;
     admin?: boolean;
+    shipper?: boolean;
 }
