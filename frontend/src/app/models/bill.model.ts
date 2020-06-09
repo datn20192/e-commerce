@@ -1,9 +1,9 @@
 import { Product } from './product.model';
 
 export interface Bill {
-    id?: string,
-    uid?: string,
-    email?: string,
+    id?: string;
+    uid?: string;
+    email?: string;
     cart: Cart[];
     infor: {};
     date: string;

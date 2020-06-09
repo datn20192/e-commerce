@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from bson import json_util
+from bson.objectid import ObjectId
 import json
 from config import Response
 
@@ -26,7 +27,7 @@ def add_customer(mongo, params, response):
 def add_bill(mongo):
     try:
         response = Response()
-        params = json.loads(request.data)
+        params = order = json.loads(request.data)
         customerDB = list(mongo.db.customer.find({}))
         if (len(customerDB)==0):
             output = add_customer(mongo, params, response)
@@ -44,10 +45,27 @@ def add_bill(mongo):
                 output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
             else:            
                 output = add_customer(mongo, params, response)       
-        
+        ## Update quantity for product in DB
+        output = update_product_quantity(mongo, order['bill']['cart'], response)
     except Exception as e:
         print(e)
         response.create(Response.ERROR)
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
+    return output
+
+def update_product_quantity(mongo, cart, response):
+    try:
+        for item in cart:
+            productDB = mongo.db.product.find_one_or_404({'_id': ObjectId(item['product']['id'])})
+            productDB['quantity'] -= item['quantityPurchased']
+            productDB['soldNumber'] += item['quantityPurchased']
+            mongo.db.product.update({'_id': productDB['_id']}, {'$set': productDB})
+        response.create(Response.SUCCESS)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except Exception as e:
+        print(e)
+        response.create(Response.ERROR)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    
     return output

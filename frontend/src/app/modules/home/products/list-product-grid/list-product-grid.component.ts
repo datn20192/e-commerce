@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { Product } from '../../../../models/product.model';
 
 @Component({
@@ -15,8 +14,6 @@ export class ListProductGridComponent implements OnInit {
   @Input() modal: boolean;
 
   @Output() selectedPage = new EventEmitter();
-
-  private productsListSubs: Subscription;
   
   constructor(
   ) { }
@@ -26,7 +23,6 @@ export class ListProductGridComponent implements OnInit {
   }
 
   ngOndestroy() {
-    this.productsListSubs.unsubscribe();
   }
 
   setPage(i, event:any) {    

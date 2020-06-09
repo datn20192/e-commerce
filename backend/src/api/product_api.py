@@ -41,7 +41,8 @@ def get_all_products(mongo):
                 'price': product['price'],            
                 'description': product['description'],                          
                 'quantity': product['quantity'],
-                'star': product['star']
+                'star': product['star'],
+                'soldNumber': product['soldNumber']
             })    
         response.create(Response.SUCCESS)
         response.data = processed        
@@ -68,7 +69,8 @@ def get_product_byID(mongo, id):
                     'price': extracted['price'],            
                     'description': extracted['description'],                          
                     'quantity': extracted['quantity'],
-                    'star': extracted['star']
+                    'star': extracted['star'],
+                    'soldNumber': product['soldNumber']
                     }
         response.create(Response.SUCCESS)
         response.data = processed              
@@ -99,7 +101,8 @@ def get_product_by_category(mongo, category):
                 'price': product['price'],            
                 'description': product['description'],                          
                 'quantity': product['quantity'],
-                'star': product['star']
+                'star': product['star'],
+                'soldNumber': product['soldNumber']
             })  
         response.create(Response.SUCCESS)
         response.data = processed              
@@ -137,7 +140,8 @@ def split_product_by_page(productList, page, numOfElement):
                 'price': productList[i]['price'],            
                 'description': productList[i]['description'],                          
                 'quantity': productList[i]['quantity'],
-                'star': productList[i]['star']
+                'star': productList[i]['star'],
+                'soldNumber': productList[i]['soldNumber']
             })
         
         return {
