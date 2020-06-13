@@ -21,6 +21,7 @@ export class AppComponent implements OnInit{
   user: User;
   billSubs: Subscription;
   itemCartSubs: Subscription;
+  countSubs: Subscription;
   authSubs: Subscription;
 
   numberOfUnPaidBills: Number;
@@ -43,15 +44,19 @@ export class AppComponent implements OnInit{
   ngOnDestroy() {
     this.billSubs.unsubscribe();
     this.authSubs.unsubscribe();
+    this.countSubs.unsubscribe();
   }
  
   load() {
     this.authSubs = this.auth.user$.subscribe(user => {
       this.user = user;
       if(this.auth.isCustomer(user)) this.icService.loadItemCart(this.user.uid);
-      else if (this.auth.isShipper(user)) this.billApiService.getNumberOfPaidBill().subscribe(res => {
+      else if (this.auth.isShipper(user)) this.billApiService.getNumberOfUnPaidBill().subscribe(res => {
         let result = JSON.parse(res);
-        if(result.code === 200) this.numberOfUnPaidBills = result.data;
+        if(result.code === 200) {
+          this.billApiService.changeCountUnPaidBill(result.data);
+          this.countSubs = this.billApiService.currentNumberOfUnPaidBill.subscribe(res => this.numberOfUnPaidBills = res);
+        }
         else alert(`error server ${result.code}`);
       });
     });

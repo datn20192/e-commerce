@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { Bill } from '../../../models/bill.model';
 import { BillApiService } from '../../../services/bill.service';
+import { ShipperApiService } from '../shipper.service';
 
 @Component({
     selector: 'app-shipper-delivery',
@@ -13,11 +14,14 @@ export class ShipperDeliveryComponent {
 
     modalRef: BsModalRef;   
     billSubs: Subscription;
+    shipperSubs: Subscription;
     bills: Bill[];
+    private isSubmit: boolean = false;
 
     constructor(
         private modalService: BsModalService,
-        private billApiService: BillApiService
+        private billApiService: BillApiService,
+        private shipperApiService: ShipperApiService
     ) {}
 
     ngOnInit() {
@@ -26,12 +30,16 @@ export class ShipperDeliveryComponent {
 
     ngOnDestroy() {
         this.billSubs.unsubscribe();
+        if(this.isSubmit) this.shipperSubs.unsubscribe();
     }
 
     load() {
         this.billSubs = this.billApiService.getUnPaidBill().subscribe(res => {
             let result = JSON.parse(res);
-            if(result.code === 200) this.bills = result.data;
+            if(result.code === 200) {
+                this.bills = result.data;
+                this.billApiService.changeCountUnPaidBill(this.bills.length);
+            }
             else alert(`error server ${result.code}`);
         });
     }
@@ -46,7 +54,13 @@ export class ShipperDeliveryComponent {
         });    
     }  
 
-    submitDelivery() {
-        
+    clickSubmit(uid: string, billID: string) {
+        this.isSubmit = true;
+        this.shipperSubs = this.shipperApiService.submitDelivery(uid, billID).subscribe(res => {
+            let result = JSON.parse(res);
+            if(result.code === 200) {
+                this.load();
+            }
+        });
     }
 }
