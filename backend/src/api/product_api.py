@@ -231,12 +231,30 @@ def delete_product(mongo):
     try:
         response = Response()
         params = json.loads(request.data)
+        
         mongo.db.product.remove({'_id': ObjectId(params['id'])})
         response.create(Response.SUCCESS)
         response.data = 'Product was deleted.'
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except Exception as e:
         print(e)
+        response.create(Response.ERROR)
+        response.data = 'Datebase connection is false.'
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+
+    return output
+def update_star(mongo):
+    try:
+        response = Response()
+        params = json.loads(request.data)
+        params['_id'] = ObjectId(params['id'])
+        params.pop('id')
+        # print(params, params['_id'])
+        mongo.db.product.update({'_id': params['_id']}, {'$set': {'star':params['star']}})
+        response.create(Response.SUCCESS)
+        response.data = 'category was updated.'
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except:
         response.create(Response.ERROR)
         response.data = 'Datebase connection is false.'
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))

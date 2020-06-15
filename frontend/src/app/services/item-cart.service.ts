@@ -101,11 +101,12 @@ export class ItemCartService {
     } else {
       return;
     }
+
   }
 
   remove(product, uid: string) {
     const cartRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${uid}`);
-    this.listAfterRemove = this.showItemCart.filter(item => item.product.id["$oid"] !== product.id["$oid"]);
+    this.listAfterRemove = this.showItemCart.filter(item => item.product.id !== product.id);
     cartRef.set({ "cart": this.listAfterRemove }, { merge: true });
     this.loadItemCart(uid);
   }

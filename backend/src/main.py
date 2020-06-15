@@ -71,7 +71,9 @@ def update_productCategory():
 @app.route('/api/delete_productCategory', methods=['POST'])
 def delete_productCategory():
     return productCategory_api.delete_category(mongo)
-
+@app.route('/api/update_star', methods = ['POST'])
+def update_star():
+    return product_api.update_star(mongo)
 
 #--------------- "type of payment" api --------------#
 @app.route('/api/payment/types', methods = ['GET'])
