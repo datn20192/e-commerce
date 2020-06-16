@@ -2,6 +2,7 @@ import { Product } from './product.model';
 
 export interface Bill {
     id?: string;
+    onlinePaymentID ?: string;
     uid?: string;
     email?: string;
     cart: Cart[];

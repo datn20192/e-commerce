@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 import { CheckoutApiService } from '../checkout.service';
-import { Card, TypeOfPayment, Customer, Bill } from '../../../models/bill.model';
+import { TypeOfPayment, Customer } from '../../../models/bill.model';
 import { User } from '../../../models/user.model';
 import { CartFunction } from '../../../shared/functions/cart.function';
 
@@ -22,8 +22,7 @@ export class PaymentComponent {
     private typeOfPaymentSubs: Subscription;
 
     public typeOfPayment: string;
-    public typeOfPaymentArr: TypeOfPayment[];     
-    private card = new Card("", "", "", "");
+    public typeOfPaymentArr: TypeOfPayment[]; 
     private user: User;
     private numberOfItems: Number;
 
@@ -85,12 +84,7 @@ export class PaymentComponent {
                 console.error
             );
         }
-    }
-
-    // Nomalize the valid thru input
-    slash() {
-        this.card.validThru = this.card.validThru + '/'
-    }
+    }    
 
     // create bill
     private createBill(user:User): Customer {
@@ -108,6 +102,14 @@ export class PaymentComponent {
         };               
 
         return customer;
+    }
+
+    checkoutByNL() {   
+        let order_code = this.user.uid + new Date().getUTCMilliseconds().toString();            
+        let paymentUrl = this.checkoutApi.buildURL(this.customer,"http://localhost:4200/thanh-toan/thanh-cong", 
+                                                     order_code, "vnd", 1, 0, 0, 0, 0, "");
+        
+        window.location.href = paymentUrl;
     }
     
 }

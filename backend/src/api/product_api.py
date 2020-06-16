@@ -43,7 +43,7 @@ def get_all_products(mongo):
                 'quantity': product['quantity'],
                 'star': product['star'],
                 'soldNumber': product['soldNumber']
-            })    
+            })               
         response.create(Response.SUCCESS)
         response.data = processed        
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
