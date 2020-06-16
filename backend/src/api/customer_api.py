@@ -41,6 +41,7 @@ def add_bill(mongo):
                 bill = params['bill']
                 bill['uid'] = params['uid']
                 bill['email'] = params['email']
+
                 mongo.db.bill.insert_one(bill)  # Save to bill Colection 
                 extracted['bill'].append(params['bill'])    # Add new bill to old bill list   
 
@@ -75,3 +76,23 @@ def update_product_quantity(mongo, cart, response):
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     
     return output
+
+def submit_online_payment(mongo):
+    try:
+        response = Response()
+        params = json.loads(request.data)
+        mongo.db.bill.update({'onlinePaymentID': params['onlinePaymentID']}, {'$set':{'onlinePaymentChecking': True}})
+        customer = mongo.db.customer.find_one_or_404({'uid': params['uid']})
+        for bill in customer['bill']:
+            if(bill['onlinePaymentID']==params['onlinePaymentID']):
+                bill['onlinePaymentChecking'] = True
+        mongo.db.customer.update({'uid': params['uid']}, {'$set':customer})
+        response.create(Response.SUCCESS)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except Exception as e:
+        print(e)
+        response.create(Response.ERROR)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    
+    return output
+    

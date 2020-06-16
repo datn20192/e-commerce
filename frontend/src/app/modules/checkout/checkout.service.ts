@@ -57,11 +57,23 @@ export class CheckoutApiService {
             email: customer.email,
             bill: customer.bill
         }
-        return this.http.post<any>(`${API_URL}/api/add_bill`, params)
+        return this.http.post<any>(`${API_URL}/api/bill/add_bill`, params)
         .pipe(
             catchError(CheckoutApiService._handleError)
         );
-    }    
+    }
+    
+    // Submit the online order
+    submitOnlinePayment(uid: string, onlinePaymentID: string):Observable<any>{
+        var params = {
+            uid: uid,
+            onlinePaymentID: onlinePaymentID
+        };
+        return this.http.post<any>(`${API_URL}/api/bill/submitOnlinePayment`, params)
+        .pipe(
+            catchError(CheckoutApiService._handleError)
+        );
+    }
 
     // Delete all products from cart
     deleteAllProducts(uid: string){

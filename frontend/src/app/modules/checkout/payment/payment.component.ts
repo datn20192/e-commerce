@@ -20,11 +20,13 @@ import { ItemCartService } from '../../../services/item-cart.service';
 export class PaymentComponent {
 
     private typeOfPaymentSubs: Subscription;
+    private billSubs: Subscription;
 
     public typeOfPayment: string;
     public typeOfPaymentArr: TypeOfPayment[]; 
     private user: User;
     private numberOfItems: Number;
+    private isSubmit: boolean = false;
 
     public showBill:boolean = false;
     private customer: Customer;         // save bill
@@ -43,17 +45,13 @@ export class PaymentComponent {
 
     ngOnDestroy() {
         this.typeOfPaymentSubs.unsubscribe();
+        if (this.isSubmit) this.billSubs.unsubscribe();
     }
 
     load() {   
         this.authService.user$.subscribe(user => {
             this.user=user;
             this.numberOfItems = this.itemCartService.lengthCart;
-            if(user) {
-                this.showBill = true;
-                this.customer = this.createBill(this.user);
-            }           
-           
             this.typeOfPaymentSubs = this.checkoutApi.getAllTypeOfPayment().subscribe(res => {
                 let result = JSON.parse(res);
                 this.typeOfPaymentArr = result.data;
@@ -61,14 +59,20 @@ export class PaymentComponent {
             },
                 console.error
             );   
+            if(user) {
+                this.showBill = true;
+                this.customer = this.createBill(this.user);
+            }                   
         });          
              
     }
 
     onSubmit() {
+        this.isSubmit = true;
         if(this.typeOfPayment==="cash") {
+            this.customer.bill['typeOfPayment'] = this.typeOfPayment;
             this.spinnerService.show();
-            this.checkoutApi.addBill(this.customer).subscribe(res => {
+            this.billSubs = this.checkoutApi.addBill(this.customer).subscribe(res => {
                 let result = JSON.parse(res);
                 if(result.code !== 200) {
                     this.spinnerService.hide();
@@ -83,6 +87,7 @@ export class PaymentComponent {
             },
                 console.error
             );
+            console.log(this.customer);
         }
     }    
 
@@ -100,16 +105,39 @@ export class PaymentComponent {
                 typeOfPayment: this.typeOfPayment
             }
         };               
-
         return customer;
     }
 
     checkoutByNL() {   
-        let order_code = this.user.uid + new Date().getUTCMilliseconds().toString();            
-        let paymentUrl = this.checkoutApi.buildURL(this.customer,"http://localhost:4200/thanh-toan/thanh-cong", 
+        this.isSubmit = true;
+
+        this.customer.bill['typeOfPayment'] = this.typeOfPayment;
+        this.customer.bill['onlinePaymentChecking'] = false;
+        // Create order id
+        let date = new Date();
+        let order_code = this.user.uid + date.getFullYear().toString() + date.getMonth().toString() + 
+                            date.getDay().toString() + date.getHours().toString() + date.getMinutes().toString() + 
+                            date.getUTCMilliseconds().toString();
+        this.customer.bill['onlinePaymentID'] = order_code;
+        this.spinnerService.show();
+        this.billSubs = this.checkoutApi.addBill(this.customer).subscribe(res => {
+            let result = JSON.parse(res);
+            if(result.code !== 200) {
+                this.spinnerService.hide();
+                alert('Đặt hàng thất bại.');
+            }
+            else {
+                this.checkoutApi.deleteAllProducts(this.user.uid);
+                this.spinnerService.hide();
+                // Redirect to nganluong.vn checkout                          
+                let paymentUrl = this.checkoutApi.buildURL(this.customer,"http://localhost:4200/thanh-toan/ket-qua-giao-dich", 
                                                      order_code, "vnd", 1, 0, 0, 0, 0, "");
+                window.location.href = paymentUrl;
+            }
+        },
+            console.error
+        );
         
-        window.location.href = paymentUrl;
     }
     
 }

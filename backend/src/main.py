@@ -95,9 +95,13 @@ def get_bill_by_year(year):
 def get_bill_by_all_year():
     return bill_api.get_bill_by_all_year(mongo)
 
-@app.route('/api/add_bill', methods = ['POST'])
+@app.route('/api/bill/add_bill', methods = ['POST'])
 def add_bill():
     return customer_api.add_bill(mongo)
+
+@app.route('/api/bill/submitOnlinePayment', methods = ['POST'])
+def submit_online_payment():
+    return customer_api.submit_online_payment(mongo)
 
 # Get unpaid bill
 @app.route('/api/bill/unPaid' , methods = ['GET'])

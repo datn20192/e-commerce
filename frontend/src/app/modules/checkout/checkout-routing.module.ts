@@ -47,11 +47,10 @@ const routes: Routes = [
       },
 
       {
-        path: 'thanh-cong',
+        path: 'ket-qua-giao-dich',
         component: SuccessComponent,
-        canActivate: [CheckoutGuard],
         data : {
-          title: 'Thanh toán thành công'
+          title: 'Kết quả giao dịch'
         }
       }
       

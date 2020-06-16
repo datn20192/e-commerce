@@ -11,6 +11,7 @@ export interface Bill {
     totalMoney: number;
     status: boolean;
     typeOfPayment: string;
+    onlinePaymentChecking?: boolean;       //  The payment gateway submit for online payment
 }
 
 export class Cart {
