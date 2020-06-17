@@ -104,9 +104,9 @@ def submit_online_payment():
     return customer_api.submit_online_payment(mongo)
 
 # Get unpaid bill
-@app.route('/api/bill/unPaid' , methods = ['GET'])
-def get_unpaid_bill():
-    return bill_api.getUnPaidBill(mongo)
+@app.route('/api/bill/unPaid/<string:typeOfPayment>' , methods = ['GET'])
+def get_unpaid_bill(typeOfPayment):
+    return bill_api.getUnPaidBill(mongo, typeOfPayment)
 # Get number of unpaid bills
 @app.route('/api/bill/unPaid/length')
 def get_number_of_unpaid_bills():

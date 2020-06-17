@@ -17,6 +17,7 @@ export class ShipperDeliveryComponent {
     shipperSubs: Subscription;
     bills: Bill[];
     private isSubmit: boolean = false;
+    public activeTab: string = 'cash';           // Enable signin tab automatically when navigating this page
 
     constructor(
         private modalService: BsModalService,
@@ -34,7 +35,7 @@ export class ShipperDeliveryComponent {
     }
 
     load() {
-        this.billSubs = this.billApiService.getUnPaidBill().subscribe(res => {
+        this.billSubs = this.billApiService.getUnPaidBill(this.activeTab).subscribe(res => {
             let result = JSON.parse(res);
             if(result.code === 200) {
                 this.bills = result.data;
@@ -54,13 +55,18 @@ export class ShipperDeliveryComponent {
         });    
     }  
 
-    clickSubmit(uid: string, billID: string) {
+    clickSubmit(id) {
         this.isSubmit = true;
-        this.shipperSubs = this.shipperApiService.submitDelivery(uid, billID).subscribe(res => {
+        this.shipperSubs = this.shipperApiService.submitDelivery(id.uid, id.billID).subscribe(res => {
             let result = JSON.parse(res);
             if(result.code === 200) {
                 this.load();
             }
         });
+    }
+
+    clickTab(tab:string) {
+        this.activeTab = tab;
+        this.load();
     }
 }

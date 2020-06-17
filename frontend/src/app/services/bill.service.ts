@@ -15,8 +15,8 @@ export class BillApiService {
         return throwError(err.message || 'Error: Unable to complete request.');
     }    
 
-    getUnPaidBill(): Observable<any> {
-        return this.http.get<any>(`${API_URL}/api/bill/unPaid`)
+    getUnPaidBill(typeOfPayment: string): Observable<any> {
+        return this.http.get<any>(`${API_URL}/api/bill/unPaid/${typeOfPayment}`)
         .pipe(
             catchError(BillApiService._handleError)
         )

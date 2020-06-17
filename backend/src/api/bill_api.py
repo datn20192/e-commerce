@@ -96,11 +96,14 @@ def get_bill_by_day(mongo,year,month,day):
     return output
 
 #------------------------- Get un paid bill ------------------------#
-def getUnPaidBill(mongo):
+def getUnPaidBill(mongo, typeOfPayment):
     try:
         response = Response()
         processed = []
-        extracted = list(mongo.db.bill.find({"status": False}))
+        if typeOfPayment == "cash":
+            extracted = list(mongo.db.bill.find({"status": False, "typeOfPayment": "cash"}))
+        elif typeOfPayment == "card":
+            extracted = list(mongo.db.bill.find({"status": False, "typeOfPayment": "card", "onlinePaymentChecking": True}))
         for bill in extracted:            
             processed.append({
                 'id': str(bill['_id']),
