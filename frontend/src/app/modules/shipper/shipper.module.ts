@@ -7,6 +7,7 @@ import { ShipperRoutingModule } from './shipper-routing.module';
 // Components
 import { ShipperComponent } from './shipper.component';
 import { ShipperDeliveryComponent } from './delivery/shipper-delivery.component';
+import { BillTableComponent } from './bill-table/bill-table.component';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import { ShipperDeliveryComponent } from './delivery/shipper-delivery.component'
     ],
     declarations: [ 
         ShipperComponent,
-        ShipperDeliveryComponent       
+        ShipperDeliveryComponent,
+        BillTableComponent       
     ]
 })
 export class ShipperModule {}

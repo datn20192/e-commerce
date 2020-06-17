@@ -9,6 +9,7 @@ import { CheckoutComponent } from './checkout.component';
 import { CartComponent } from './cart/cart.component';
 import { ShippingComponent } from './shipping/shipping.component';
 import { PaymentComponent } from './payment/payment.component';
+import { SuccessComponent } from './payment/success/success.component';
 
 const routes: Routes = [
   { 
@@ -42,6 +43,14 @@ const routes: Routes = [
         canActivate: [CheckoutGuard],
         data : {
           title: 'Thanh toán & Đặt mua'
+        }
+      },
+
+      {
+        path: 'ket-qua-giao-dich',
+        component: SuccessComponent,
+        data : {
+          title: 'Kết quả giao dịch'
         }
       }
       

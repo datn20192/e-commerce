@@ -29,7 +29,7 @@
                             <span class="fa fa-star checked" *ngFor="let star of (product.star | productStar : true)"></span>                            
                             <span class="fa fa-star" *ngFor="let star of (product.star | productStar: false)"></span>
                         </div>
-                        <span class="review-no">41 lượt mua</span>
+                        <span class="review-no">{{product.soldNumber}} lượt mua</span>
                     </div>
                     <h4 class="price"><span>{{product.price | productPrice}}</span></h4>
                     <ul class="product-description">

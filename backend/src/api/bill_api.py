@@ -18,7 +18,7 @@ def get_bill_by_all_year(mongo):
     try:
         response = Response()
         processed = []
-        extracted = list(mongo.db.paidBill.find({}))
+        extracted = list(mongo.db.bill.find({"status": True}))
         for paidBill in extracted:
             processed.append({
                 'cart': paidBill['cart'],
@@ -38,7 +38,7 @@ def get_bill_by_year(mongo,year):
         response = Response()
         processed = []
 
-        extracted = list(mongo.db.paidBill.find({}))
+        extracted = list(mongo.db.bill.find({"status": True}))
         for paidBill in extracted:
             if(year == get_year(paidBill['date'])):
                 processed.append({
@@ -58,7 +58,7 @@ def get_bill_by_year_month(mongo,year,month):
     try:
         response = Response()
         processed = []
-        extracted = list(mongo.db.paidBill.find({}))
+        extracted = list(mongo.db.bill.find({"status": True}))
         for paidBill in extracted:
             if(year == get_year(paidBill['date']) and month == get_month(paidBill['date'])):
                 processed.append({
@@ -78,7 +78,7 @@ def get_bill_by_day(mongo,year,month,day):
     try:
         response = Response()
         processed = []
-        extracted = list(mongo.db.paidBill.find({}))
+        extracted = list(mongo.db.bill.find({"status": True}))
         for paidBill in extracted:
             if((year == get_year(paidBill['date'])) and (month == get_month(paidBill['date'])) and (day == get_day(paidBill['date']))):
                 processed.append({
@@ -94,3 +94,49 @@ def get_bill_by_day(mongo,year,month,day):
         response.data = "Datebase connection is false."
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     return output
+
+#------------------------- Get un paid bill ------------------------#
+def getUnPaidBill(mongo, typeOfPayment):
+    try:
+        response = Response()
+        processed = []
+        if typeOfPayment == "cash":
+            extracted = list(mongo.db.bill.find({"status": False, "typeOfPayment": "cash"}))
+        elif typeOfPayment == "card":
+            extracted = list(mongo.db.bill.find({"status": False, "typeOfPayment": "card", "onlinePaymentChecking": True}))
+        for bill in extracted:            
+            processed.append({
+                'id': str(bill['_id']),
+                'uid': bill['uid'],
+                'email': bill['email'],
+                'cart': bill['cart'],
+                'infor': bill['infor'],
+                'date': bill['date'],
+                'totalMoney': bill['totalMoney'],
+                'status': bill['status']
+            })
+        response.create(Response.SUCCESS)
+        response.data = processed        
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except:
+        response.create(Response.ERROR)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+
+    return output
+
+# Get number of unpaid bills
+def get_number_of_unpaid_bills(mongo): 
+    try:    
+        response = Response()
+        extracted = list(mongo.db.bill.find({"status": False}))      
+        length = len(extracted)  
+
+        response.create(Response.SUCCESS)
+        response.data = length        
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except:
+        response.create(Response.ERROR)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+
+    return output
+

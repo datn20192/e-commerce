@@ -41,17 +41,19 @@ def get_all_products(mongo):
                 'price': product['price'],            
                 'description': product['description'],                          
                 'quantity': product['quantity'],
-                'star': product['star']
-            })    
+                'star': product['star'],
+                'soldNumber': product['soldNumber']
+            })               
         response.create(Response.SUCCESS)
         response.data = processed        
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     except:
         response.create(Response.ERROR)
-        response.data = "Datebase connection is false."
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output
+
+
 
 def get_product_byID(mongo, id):
     try:
@@ -69,8 +71,9 @@ def get_product_byID(mongo, id):
                     'price': extracted['price'],            
                     'description': extracted['description'],                          
                     'quantity': extracted['quantity'],
-                    'star': extracted['star']
-                    }
+                    'star': extracted['star'],
+                    'soldNumber': extracted['soldNumber']
+                    }        
         response.create(Response.SUCCESS)
         response.data = processed              
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
@@ -100,7 +103,8 @@ def get_product_by_category(mongo, category):
                 'price': product['price'],            
                 'description': product['description'],                          
                 'quantity': product['quantity'],
-                'star': product['star']
+                'star': product['star'],
+                'soldNumber': product['soldNumber']
             })  
         response.create(Response.SUCCESS)
         response.data = processed              
@@ -138,7 +142,8 @@ def split_product_by_page(productList, page, numOfElement):
                 'price': productList[i]['price'],            
                 'description': productList[i]['description'],                          
                 'quantity': productList[i]['quantity'],
-                'star': productList[i]['star']
+                'star': productList[i]['star'],
+                'soldNumber': productList[i]['soldNumber']
             })
         
         return {

@@ -1,16 +1,15 @@
-export class Product {
-    constructor(
-        public id: string,
-        public groupID: string,
-        public groupName: string,
-        public category: string,
-        public name: string,
-        public link: string,
-        public brand: string,
-        public imageURL: string[],
-        public price: string,            
-        public description: string[],
-        public quantity: string,  
-        public star: number
-    ){}
+export interface Product {    
+    id: string;
+    groupID: string;
+    groupName: string;
+    category: string;
+    name: string;
+    link: string;
+    brand: string;
+    imageURL: string[];
+    price: string;            
+    description: string[];
+    quantity: number; 
+    star: number;   
+    soldNumber?: number; 
 }
