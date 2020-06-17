@@ -1,0 +1,128 @@
+<ng-container>    
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <strong>Thông tin sản phẩm</strong>
+      </div>
+      <div class="card-body">
+        <form #productInforForm="ngForm" class="form-horizontal" > 
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="name">Tên sản phẩm</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" placeholder="Nhập tên.." 
+                        id="name" required [(ngModel)]="product.name"
+                        name="name" #name="ngModel"
+                >
+                <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
+                  Không được để trống
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="groupID">Nhóm</label>
+                <div class="col-md-9">
+                  <select class="form-control" id="groupID" required (change)="chooseGroup(groupID.value)"
+                          [(ngModel)]="product.groupID"
+                          name="groupID" #groupID="ngModel"
+                  >
+                    <option value="">Chọn nhóm</option>
+                    <option *ngFor="let categoryGroup of productCategories" [value]="categoryGroup.groupId">{{categoryGroup.name}}</option>                  
+                  </select>
+                  <div [hidden]="groupID.valid || groupID.pristine" class="alert alert-danger">
+                    Không được để trống
+                  </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="category">Loại</label>
+                <div class="col-md-9">
+                  <select class="form-control" id="groupID" required (change)="chooseCategory(category.value)"
+                          [(ngModel)]="product.category"
+                          name="category" #category="ngModel"              
+                  >
+                    <option value="">Chọn loại</option>
+                    <option  *ngFor="let category of categories" [value]="category.id">{{category.name}}</option>
+                  </select>
+                  <div [hidden]="category.valid || category.pristine" class="alert alert-danger">
+                    Không được để trống
+                  </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="brand">Thương hiệu</label>
+                <div class="col-md-9">
+                  <select class="form-control" id="brand" required
+                          [(ngModel)]="product.brand"
+                          name="brand" #brand="ngModel" 
+                  >
+                    <option value="">Chọn thương hiệu</option>
+                    <option  *ngFor="let brand of brands" [value]="brand">{{brand}}</option>
+                  </select>
+                  <div [hidden]="brand.valid || brand.pristine" class="alert alert-danger">
+                    Không được để trống
+                  </div>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="bigImage">Ảnh 390x390</label>
+                <div class="col-md-9">
+                  <input type="file" id="bigImage" name="bigImage">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="smallImages">4 x Ảnh 75x75</label>
+                <div class="col-md-9">
+                  <input type="file" id="smallImages" name="smallImages" multiple>
+                </div>
+            </div>
+            <div class="form-group row">
+              <label class="col-md-3 col-form-label" for="price">Giá</label>
+              <div class="col-md-9">
+                <input type="text" class="form-control" placeholder="Nhập giá.." 
+                        id="price" required [(ngModel)]="product.price"
+                        name="price" #price="ngModel"
+                >
+                <div [hidden]="price.valid || price.pristine" class="alert alert-danger">
+                  Không được để trống
+                </div>
+              </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="descriptionStr">Mô tả 
+                  <button type="button" class="btn btn-pill btn-success btn-sm" (click)="addDescription()">
+                    <strong>+</strong>
+                  </button>
+                </label>
+                <div class="col-md-9">                     
+                  <div class="input-group" *ngFor="let des of product.description; let i=index; trackBy:customTrackBy">
+                    <input type="text" class="form-control" placeholder="Nhập mô tả.."
+                            required [(ngModel)]="product.description[i]"
+                            [name]="'description'+i" 
+                    > 
+                    <span class="input-group-append">
+                      <button type="button" class="btn btn-pill btn-danger btn-sm" (click)="deleteDescription(i)">
+                        <strong>x</strong>
+                      </button>
+                    </span>
+                  </div>
+                
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label" for="quantity">Số lượng</label>
+                <div class="col-md-9">
+                  <input type="text" class="form-control" placeholder="Nhập số lượng.." 
+                          id="quantity" required [(ngModel)]="product.quantity"
+                          name="quantity" #quantity="ngModel"
+                  >
+                  <div [hidden]="quantity.valid || quantity.pristine" class="alert alert-danger">
+                    Không được để trống
+                  </div>
+                </div>
+            </div>       
+            <button type="button" class="btn btn-sm btn-success" [disabled]="!productInforForm.form.valid" (click)="submit()">
+              Xác nhận
+            </button>       
+        </form>
+      </div>
+    </div>
+  </ng-container>

@@ -62,6 +62,9 @@
           <span>Danh sách KH</span>      
           <span class="badge-pill badge-danger">5</span>
       </a>
+      </li>
+      <li class="nav-item d-md-down-none" *ngIf="auth.isAdmin(user)">
+        <a class="nav-link" [routerLink]="['/quan-ly/them-san-pham']"><i class="fa fa-upload font-2xl"></i><span>Thêm sản phẩm</span></a>        
       </li> 
       <li class="nav-item d-md-down-none" *ngIf="auth.isShipper(user)">
         <a class="nav-link" [routerLink]="['/giao-hang']">
