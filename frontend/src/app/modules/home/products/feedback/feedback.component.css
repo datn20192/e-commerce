@@ -99,3 +99,9 @@ ul li span:last-child{
 ul li div{
     margin-left: 15px;
 }
+.checked{
+    font-weight: bold;
+    color: #ff9f1a; }
+.card-text{
+    margin: 15px;
+}

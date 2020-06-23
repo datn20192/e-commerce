@@ -47,8 +47,8 @@ export class FeedbackService {
     return of
       (this.fbRefSubs = this.feedbackRef.valueChanges().subscribe(res => {
         if (res) {
-          console.log(res)
-          this.feedbackData = res.feedbacks;
+          // console.log(res)
+          this.feedbackData = res.feedbacks.reverse();
           this.totalRate = (this.feedbackData.reduce((prev, curr) => prev += Number(curr.starVoted), 0) / this.feedbackData.length).toFixed(1);
           this.updateStarSubs = this.updateStar(product_id, this.totalRate).subscribe();
           this.feedbackData.forEach((element => {
