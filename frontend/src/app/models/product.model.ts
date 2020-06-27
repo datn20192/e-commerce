@@ -1,5 +1,5 @@
 export interface Product {    
-    id: string;
+    id?: string;
     groupID: string;
     groupName: string;
     category: string;
