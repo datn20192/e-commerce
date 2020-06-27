@@ -10,6 +10,6 @@ export class ProductPrice implements PipeTransform {
       let tripleNum = (i>2) ? priceStr.substring(i-3, i) : priceStr.substring(0,i);
       nomalizedPrice = (i!=priceStr.length) ? (tripleNum + '.' + nomalizedPrice) : (tripleNum + nomalizedPrice);      
     }   
-    return nomalizedPrice + ' đ';    
+    return nomalizedPrice + 'đ';    
   }
 }

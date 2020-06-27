@@ -8,6 +8,7 @@ import { AdminProductDetailComponent } from './products/admin-product-details/ad
 import { AdminProductInformationComponent } from './products/admin-product-information/admin-product-information.component';
 import { AdminGroupProductsComponent } from './products/admin-group-products/admin-group-products.component';
 import { AdminProductListComponent } from './products/admin-home-products/admin-product-list.component';
+import { AdminAddingProductComponent } from './products/admin-adding-product/admin-adding-product.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardService } from './dashboard/dashboard.service';
@@ -24,7 +25,8 @@ import { DashboardService } from './dashboard/dashboard.service';
         AdminProductInformationComponent,
         AdminGroupProductsComponent,
         DashboardComponent,
-        AdminProductListComponent
+        AdminProductListComponent,
+        AdminAddingProductComponent
     ]
 })
 export class AdminModule {}

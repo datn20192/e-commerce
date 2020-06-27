@@ -41,7 +41,7 @@ export class AdminProductDetailComponent implements OnInit {
     this.productID = this.router.url.split('/')[this.router.url.split('/').length-1];
     this.productSubs = this.productApiService.getProductByID(this.productID).subscribe(res => {
       let result = JSON.parse(res);
-      if(result.code==200) {
+      if(result.code==200) {        
         this.product = result.data;
         this.isLoad = true;
       }      
@@ -50,7 +50,6 @@ export class AdminProductDetailComponent implements OnInit {
 
   deleteProduct(product: Product){
     if(confirm("Bạn muốn xóa sản phẩm\n" + product.name)) {
-      console.log("deleted");
       this.adminSubs = this.adminApiService.deleteProduct(product.id).subscribe(res => {
         let result = JSON.parse(res);
         if(result.code === 200) {

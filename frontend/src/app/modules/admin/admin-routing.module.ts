@@ -8,6 +8,7 @@ import { AdminProductDetailComponent } from './products/admin-product-details/ad
 import { AdminGroupProductsComponent } from './products/admin-group-products/admin-group-products.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminProductListComponent } from './products/admin-home-products/admin-product-list.component';
+import { AdminAddingProductComponent } from './products/admin-adding-product/admin-adding-product.component';
 
 const adminRoute: Routes = [
     {
@@ -32,6 +33,14 @@ const adminRoute: Routes = [
                 component: DashboardComponent,
                 data: {
                     title: 'Thống kê doanh thu'
+                }
+            },
+
+            {
+                path: 'them-san-pham',
+                component: AdminAddingProductComponent,
+                data: {
+                    title: 'Thêm sản phẩm'
                 }
             },
 

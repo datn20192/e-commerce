@@ -15,67 +15,12 @@
                         {{type.name}}
                       </label>
                     </div>                               
-                    <div class="card" *ngIf="(typeOfPayment=='card')">          
-                      <div class="card-header bg-danger">
-                        <strong>Thông tin thẻ</strong>            
-                      </div>           
-                      <div class="card-body">                          
-                            <div class="row">
-                              <div class="col-sm-12">
-                                <div class="form-group">
-                                  <label for="name">Tên in trên thẻ</label>
-                                  <input type="text" class="form-control"  placeholder="Nhập tên thẻ.."
-                                          id="name" required [(ngModel)]="card.name"
-                                          name="name" #name="ngModel"
-                                  >
-                                  <div [hidden]="name.valid || name.pristine" class="alert alert-danger">
-                                    Không được để trống
-                                  </div>
-                                </div>
-                              </div>
-                            </div><!--/.row-->
-                            <div class="row">
-                              <div class="col-sm-12">
-                                <div class="form-group">
-                                  <label for="cardNumber">Số thẻ</label>
-                                  <input [NumbericInput]=16 class="form-control" placeholder="0000 0000 0000 0000"
-                                          id="cardNumber" required [(ngModel)]="card.cardNumber"
-                                          name="cardNumber" #cardNumber="ngModel"
-                                  >
-                                  <div [hidden]="cardNumber.valid || cardNumber.pristine" class="alert alert-danger">
-                                    Không được để trống
-                                  </div>
-                                </div>
-                              </div>
-                            </div><!--/.row-->
-                            <div class="row">
-                              <div class="form-group col-sm-4">
-                                <label for="ccmonth">Ngày hết hạn</label>
-                                <input MonthYearInput (nomalized)="slash()" 
-                                        class="form-control" placeholder="MM/YYYY"
-                                        id="validThru" required [(ngModel)]="card.validThru"
-                                        name="validThru" #validThru="ngModel"
-                                >
-                                <div [hidden]="validThru.valid || validThru.pristine" class="alert alert-danger">
-                                  Không được để trống
-                                </div>
-                              </div>
-                              <div class="col-sm-4">
-                                <div class="form-group">
-                                  <label for="securityCode">Mã bảo mật</label>
-                                  <input [NumbericInput]=3 class="form-control" placeholder="123"
-                                          id="securityCode" required [(ngModel)]="card.securityCode"
-                                          name="securityCode" #securityCode="ngModel"
-                                  >
-                                  <div [hidden]="securityCode.valid || securityCode.pristine" class="alert alert-danger">
-                                    Không được để trống
-                                  </div>
-                                </div>
-                              </div>
-                            </div><!--/.row-->                          
-                      </div>
+                    <div *ngIf="(typeOfPayment=='card')">   
+                      <a (click)="checkoutByNL()" (click)="false" href>                        
+                        <img src="https://sandbox.nganluong.vn:8088/nl35/css/newhome/img/button/safe-pay-3.png"/>
+                      </a>
                     </div>                                       
-                    <button type="submit" [disabled]="!paymentForm.valid" class="btn btn-sm btn-primary">Đặt hàng</button>
+                    <button type="submit" *ngIf="(typeOfPayment=='cash')" class="btn btn-sm btn-primary">Đặt hàng</button>
                 </form>
               </div>
             </div>

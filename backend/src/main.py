@@ -3,7 +3,7 @@ from flask import request
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 from config import Response
-from api import bill_api, productCategory_api, product_api, typeOfPayment_api, customer_api
+from api import bill_api, productCategory_api, product_api, typeOfPayment_api, customer_api, shipper_api
 
 app = Flask(__name__)
 
@@ -97,6 +97,25 @@ def get_bill_by_year(year):
 def get_bill_by_all_year():
     return bill_api.get_bill_by_all_year(mongo)
 
-@app.route('/api/add_bill', methods = ['POST'])
+@app.route('/api/bill/add_bill', methods = ['POST'])
 def add_bill():
     return customer_api.add_bill(mongo)
+
+@app.route('/api/bill/submitOnlinePayment', methods = ['POST'])
+def submit_online_payment():
+    return customer_api.submit_online_payment(mongo)
+
+# Get unpaid bill
+@app.route('/api/bill/unPaid/<string:typeOfPayment>' , methods = ['GET'])
+def get_unpaid_bill(typeOfPayment):
+    return bill_api.getUnPaidBill(mongo, typeOfPayment)
+# Get number of unpaid bills
+@app.route('/api/bill/unPaid/length')
+def get_number_of_unpaid_bills():
+    return bill_api.get_number_of_unpaid_bills(mongo)
+
+# Submit the delivery of shipper
+@app.route('/api/bill/submitDelivery', methods = ['POST'])
+def submit_delivery():
+    return shipper_api.submit_delivery(mongo)
+

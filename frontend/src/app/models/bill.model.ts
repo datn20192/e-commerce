@@ -1,13 +1,17 @@
 import { Product } from './product.model';
 
 export interface Bill {
-    id?: string,
+    id?: string;
+    onlinePaymentID ?: string;
+    uid?: string;
+    email?: string;
     cart: Cart[];
     infor: {};
     date: string;
     totalMoney: number;
     status: boolean;
     typeOfPayment: string;
+    onlinePaymentChecking?: boolean;       //  The payment gateway submit for online payment
 }
 
 export class Cart {

@@ -1,57 +1,40 @@
 <ng-container>
-    <div class="card">
-        <div class="card-header">
-          <i class="fa fa-align-justify"></i> Danh sách đơn hàng
-        </div>
-        <div class="card-body">
-          <table class="table table-bordered">
-            <thead>
-              <tr class="d-flex">
-                <th class="col-3">Địa chỉ</th>
-                <th class="col-3">Đơn hàng</th>
-                <th class="col-2">Tổng tiền</th>                
-                <th class="col-2">Ngày đặt hàng</th>
-                <th class="col-2">Trạng thái</th>
-              </tr>
-            </thead>
-            <tbody>
-              <div *ngFor="let customer of customerList">
-                <div *ngFor="let bill of customer.bill">
-                    <tr class="d-flex">
-                        <td class="col-3">
-                            <app-mini-shipping [infor]="bill.infor"></app-mini-shipping>
-                        </td>
-                        <td class="col-3">
-                            <a data-toggle="modal" (click)="openModal(billDetail)" 
-                                (click)="false" class="nav-link" href="#"
-                            >
-                                {{bill.id}}
-                            </a>  
-                            <ng-template #billDetail>
-                                <div class="modal-header bg-danger">
-                                  <h4 class="modal-title pull-left">Chi tiết hóa đơn</h4>
-                                  <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                                      <span aria-hidden="true">&times;</span>
-                                  </button>
-                                </div>
-                                <div class="modal-body">
-                                  <app-mini-cart [cart]="bill.cart"></app-mini-cart>
-                                </div>
-                            </ng-template>
-                        </td>
-                        <td class="col-2">
-                            {{bill.totalMoney | productPrice}}                                  
-                        </td>
-                        <td class="col-2">{{bill.date}}</td>                
-                        <td class="col-2">
-                          <button class="btn btn-primary" (click)="submitDelivery()">Xác nhận</button>
-                        </td>
-                        
-                    </tr> 
-                </div>
-              </div>             
-            </tbody>
-          </table>          
-        </div>
+  <ul class="nav nav-pills">
+    <li class="nav-item">
+        <a class="nav-link border border-bottom-0 active" 
+            data-toggle="tab" href="#cash"
+            [ngClass]="{ 'active': activeTab==='cash' }"
+            (click)="clickTab('cash')"
+        >
+        Thanh toán khi nhận hàng
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link border border-bottom-0" 
+            data-toggle="tab" href="#card"
+            [ngClass]="{ 'active': activeTab==='card' }"
+            (click)="clickTab('card')"
+        >
+        Thanh toán trực tuyến
+        </a>
+    </li>                
+  </ul> 
+  <div class="tab-content">
+    <div class="tab-pane active container" id="cash"
+            [ngClass]="{ 'active': activeTab==='cash' }"
+    >
+      <app-bill-table [bills]="bills" (confirm)="clickSubmit($event)">
+
+      </app-bill-table>
+                
     </div>
+    <div class="tab-pane container" id="card"
+            [ngClass]="{ 'active': activeTab==='card' }"
+    >
+      <app-bill-table [bills]="bills" (confirm)="clickSubmit($event)">
+
+      </app-bill-table>
+    </div>
+  </div>
+    
 </ng-container>

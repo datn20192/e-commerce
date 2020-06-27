@@ -14,20 +14,20 @@ export class AdminApiService {
         return throwError(err.message || 'Error: Unable to complete request.');
     }
 
-    addProduct(id, groupID, groupName, category, name, link, brand, imageURL, price, description, quantity, star):Observable<any>{
+    addProduct(product: Product):Observable<any>{
         var params = {
-          id: id,
-          groupID: groupID,
-          groupName: groupName,
-          category: category,
-          name: name,
-          link: link,
-          brand: brand,
-          imageURL: imageURL,
-          price: price,
-          description: description,
-          quantity: quantity,
-          star: star                  
+          groupID: product.groupID,
+          groupName: product.groupName,
+          category: product.category,
+          name: product.name,
+          link: product.link,
+          brand: product.brand,
+          imageURL: product.imageURL,
+          price: product.price,
+          description: product.description,
+          quantity: product.quantity,
+          star: product.star,
+          soldNumber: product.soldNumber           
         };
         return this.http.post<any>(`${API_URL}/api/add_product`, params)
         .pipe(
