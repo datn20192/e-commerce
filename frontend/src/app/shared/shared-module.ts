@@ -21,14 +21,18 @@ import { ProductStar } from './pipes/product/product-star.pipe';
 import { ProductPrice } from './pipes/product/product-price.pipe';
 import { CartTotalMoney } from './pipes/cart/cart-total-money.pipe';
 import { CartAddressInfor } from './pipes/cart/cart-address-infor.pipe';
-
+import { FeedbackComponent } from '../modules/home/products/feedback/feedback.component';
+import { TabsModule } from 'ngx-bootstrap';
+import { ProgressbarModule } from 'ngx-bootstrap';
 @NgModule({
     imports: [ 
         CarouselModule,
         CommonModule,
         NgxSpinnerModule,
         FormsModule,
-        ReactiveFormsModule 
+        ReactiveFormsModule,
+        TabsModule.forRoot(),
+        ProgressbarModule.forRoot(), 
     ],
     declarations: [ 
         // Pipe
@@ -46,7 +50,8 @@ import { CartAddressInfor } from './pipes/cart/cart-address-infor.pipe';
         AdminCardProductComponent,
         CarouselListProductComponent,
         MiniCartComponent,
-        MiniShippingComponent
+        MiniShippingComponent,
+        FeedbackComponent
     ],
     exports: [ 
         CarouselModule,

@@ -1,0 +1,107 @@
+.rating-info .rating{
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 58%;
+}
+.rating-info{
+    display: flex;
+    flex-direction: row;
+}
+.rating-info .score{
+    color: #e75318;
+    font-size: 47px;
+    font-weight: 500;
+    margin: 0;
+}
+.star, span, i{
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+.rating-info .star-progress-bar{
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    box-sizing: border-box;
+    width: 45%;
+}
+
+ul, ul li{
+    margin: 0;
+    padding: 0;
+
+}
+ul li {    
+    font-size: 20px;
+    list-style: none;
+    line-height: 20px;
+    height: 35px;
+    width: 70%;
+    display: flex;
+    justify-content: center;
+}
+.progressbar{
+    margin: 0;
+    padding: 0;
+    height: 20px;
+}
+.percent{
+    margin-left: 25px;
+}
+.open-feedback{
+    font-size: 16px;
+    display: block;
+    width: 60rem;
+    margin: 0 auto;
+}
+.title{
+    margin-top: 10px;
+    text-align: center;
+}
+#fa-star {
+    color: 'yellow';
+    font-size: 50px;
+}
+
+th {
+    width: 20%;
+    text-align: center;
+}
+img{
+    width: 80px;
+    height: 80px;
+}
+.show-comment{
+    overflow: scroll; 
+    height: 50em;
+    margin-top: 50px;
+}
+.fa{
+    margin: 0 15px 0 2px;
+}
+ul li span:last-child{
+    margin: 0 15px 0 0;
+}
+.open-feedback div{
+    margin: 10px 0 10px 0;
+}
+.form-control{
+    width: 65%;
+    height: 8em;
+
+}
+ul li div{
+    margin-left: 15px;
+}
+.checked{
+    font-weight: bold;
+    color: #ff9f1a; }
+.card-text{
+    margin: 15px;
+}

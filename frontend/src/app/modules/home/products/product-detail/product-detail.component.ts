@@ -6,6 +6,7 @@ import { Product } from '../../../../models/product.model';
 import { ItemCartService } from '../../../../services/item-cart.service';
 import { AuthService } from '../../../../services/auth.service';
 import { User } from '../../../../models/user.model';
+import { FeedbackService } from '../feedback/feedback.service';
 
 @Component({
   selector: 'app-product-detail',
@@ -24,7 +25,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: Router,
     private authService: AuthService,
-    private icService: ItemCartService,  
+    private icService: ItemCartService,
+    private fbService: FeedbackService
   ) { }
 
 

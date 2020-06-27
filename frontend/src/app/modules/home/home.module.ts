@@ -9,17 +9,21 @@ import { GroupProductsComponent } from './group-products/group-products.componen
 
 import { SearchComponent } from '../search/search.component';
 import { ChartsModule } from 'ng2-charts';
+import { StarVote } from './products/feedback/star.directive';
+
+
 @NgModule({
     imports: [
         SharedModule,       
         HomeRoutingModule,
-        ChartsModule
+        ChartsModule,
     ],
     declarations: [
         HomeComponent,
         ProductListComponent,
         GroupProductsComponent,
-        SearchComponent
+        SearchComponent,
+        StarVote
     ],
    
 })

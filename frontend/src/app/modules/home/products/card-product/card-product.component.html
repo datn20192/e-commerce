@@ -21,18 +21,30 @@
         
         <!-- modal for the detail of product -->
         <ng-template #detailProductModal >
-          <div class="modal-header bg-danger">
-            <h4 class="modal-title pull-left">Chi tiết sản phẩm</h4>
-            <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
-                <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <app-product-detail                   
+          <div>
+            <a type='button' class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+              <span aria-hidden="true" style='font-size: 3rem; margin-right: 6px;'>&times;</span>
+            </a>
+        </div>
+          <div>
+            <tabset #staticTabs [justified]="true">
+              <tab heading="Chi tiết sản phẩm">          
+                <div class="modal-body">
+                <app-product-detail                   
+                  [product]="product"
+                  (onClose)="modalRef.hide()"
+                >
+                </app-product-detail>
+              </div>
+            </tab>
+            <tab heading="Khách hàng nhận xét">
+              <app-feedback 
               [product]="product"
-              (onClose)="modalRef.hide()"
-            >
-            </app-product-detail>
+              (close)="modalRef.hide()"
+              >
+              </app-feedback>
+            </tab>
+            </tabset>
           </div>
         </ng-template>
       </div>

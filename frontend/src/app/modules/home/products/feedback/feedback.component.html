@@ -1,0 +1,84 @@
+<div class="rating-info">
+    <div class="rating">
+        <h4 class="title">Đánh giá trung bình</h4>
+        <p class="score">{{fbService.totalRate}}/5</p>
+        <p class="number"><i>({{fbService.feedbackData.length}} nhận xét)</i></p>
+    </div>
+    <div class="star-progress-bar">
+        <ul>
+            <li>
+                <span>5</span><i style="color:yellow" class="fa fa-star"></i>
+                <progressbar class="progressbar" [animate]="true" [max]="100" [value]="fbService.value5s"
+                    type="success">{{fbService.value5s}}%</progressbar>
+            </li>
+            <li>
+                <span>4</span><i style="color:yellow" class="fa fa-star"></i>
+                <progressbar class="progressbar" [animate]="true" [max]="100" [value]="fbService.value4s"
+                    type="success">{{fbService.value4s}}%</progressbar>
+            </li>
+            <li>
+                <span>3</span><i style="color:yellow" class="fa fa-star"></i>
+                <progressbar class="progressbar" [animate]="true" [max]="100" [value]="fbService.value3s"
+                    type="success">{{fbService.value3s}}%</progressbar>
+            </li>
+            <li>
+                <span>2</span><i style="color:yellow" class="fa fa-star"></i>
+                <progressbar class="progressbar" [animate]="true" [max]="100" [value]="fbService.value2s"
+                    type="success">{{fbService.value2s}}%</progressbar>
+            </li>
+            <li>
+                <span>1</span><i style="color:yellow" class="fa fa-star"></i>
+                <progressbar class="progressbar" [animate]="true" [max]="100" [value]="fbService.value1s"
+                    type="success">{{fbService.value1s}}%</progressbar>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="open-feedback">
+    <div class="title">
+        <p><i>(Chia sẻ nhận xét của bạn về sản phẩm)</i></p>
+        <button class="btn btn-warning" (click)="isOpenFeedback()">Viết nhận xét</button>
+    </div>
+
+    <form [formGroup]="formFb" *ngIf="isOpenFb" (ngSubmit)="onSubmit(formFb)">
+        <div starVote class="star-vote">
+            1.Đánh giá của bạn về sản phẩm này:
+            <i starVote id="vote-1" class="fa fa-star"></i>
+            <i starVote id="vote-2" class="fa fa-star "></i>
+            <i starVote id="vote-3" class="fa fa-star "></i>
+            <i starVote id="vote-4" class="fa fa-star "></i>
+            <i starVote id="vote-5" class="fa fa-star "></i>
+        </div>
+        <div class="form-group">
+            <label>2.Viết nhận xét của bạn vào ô bên dưới:</label>
+            <input type="text" class="form-control" placeholder="Nhận xét của bạn về sản phẩm này (tối thiểu 20 kí tự)"
+                formControlName="feedback">
+        </div>
+        <button type="submit" [disabled]="!formFb.valid">Gửi phản hồi</button>
+    </form>
+</div>
+<div class="show-comment">
+    <table class="table">
+        <tbody>
+            <tr *ngFor="let fb of fbService.feedbackData">
+                <th scope="row">
+                    <img src="{{fb.avatar}}" class="rounded-circle" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{fb.owner_name}}</h5>
+                        <p class="card-text">{{fb.createAt.seconds*1000 | date}}</p>
+                    </div>
+                </th>
+                <td>
+                    <div class="card-text">
+                        <span class="fa fa-star checked"
+                            *ngFor="let star of (fb.starVoted | productStar : true)"></span>
+                        <span class="fa fa-star" *ngFor="let star of (fb.starVoted | productStar: false)"></span>
+                    </div>
+                    <div class="card-text">
+                        {{fb.content['feedback']}}
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

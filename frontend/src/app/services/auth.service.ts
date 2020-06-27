@@ -15,7 +15,7 @@ import { ItemCartService } from './item-cart.service';
   providedIn: 'root'
 })
 export class AuthService {
-  defaultURL = '/assets/img/image.png';
+  defaultURL = '../../assets/img/not-available.jpg';
   user$: Observable<User>;
 
   constructor(
@@ -90,7 +90,7 @@ export class AuthService {
       uid: user.uid,
       email: user.email,
       displayName:  user.displayName,
-      photoURL: user.photoURL,
+      photoURL: user.photoURL || this.defaultURL,
       emailVerified: user.emailVerified,
       roles: {
         customer: true
