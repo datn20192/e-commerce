@@ -3,7 +3,7 @@ from flask import request
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 from config import Response
-from api import bill_api, productCategory_api, product_api, typeOfPayment_api, customer_api, shipper_api
+from api import bill_api, productCategory_api, product_api, typeOfPayment_api, customer_api, shipper_api, map_api
 
 app = Flask(__name__)
 
@@ -118,4 +118,9 @@ def get_number_of_unpaid_bills():
 @app.route('/api/bill/submitDelivery', methods = ['POST'])
 def submit_delivery():
     return shipper_api.submit_delivery(mongo)
+
+# Get information of province, district, ward by province
+@app.route('/api/maps', methods = ['GET'])
+def get_map():
+    return map_api.get_map(mongo)
 

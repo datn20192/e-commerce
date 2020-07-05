@@ -14,6 +14,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
   @Input() product;
   @Output() close = new EventEmitter();
   user: User;
+  canVote: boolean = false;
   isOpenFb: boolean = false;
   formFb: FormGroup;
   idPrevious: any;//#id css previous
@@ -33,6 +34,7 @@ export class FeedbackComponent implements OnInit, OnDestroy {
     })
     this.authService.user$.subscribe(user => {
       this.user = user;
+      if(this.authService.isCustomer(user)) this.canVote=true;
     });
   }
   ngOnDestroy() {
