@@ -34,7 +34,7 @@
         </ul>
     </div>
 </div>
-<div class="open-feedback">
+<div class="open-feedback" *ngIf="canVote">
     <div class="title">
         <p><i>(Chia sẻ nhận xét của bạn về sản phẩm)</i></p>
         <button class="btn btn-warning" (click)="isOpenFeedback()">Viết nhận xét</button>

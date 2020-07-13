@@ -15,9 +15,13 @@ import { UserInfor, User } from '../../../models/user.model';
 export class ShippingComponent implements OnInit {
 
   userInforSubs: Subscription;
+  checkoutSubs: Subscription;
   
+  private isCheckoutSubs: boolean = false;
   public userInfor:UserInfor ;
   user: User;
+  public districtList = [];
+  public wardList = [];
  
   constructor(
     private route: Router,
@@ -33,6 +37,7 @@ export class ShippingComponent implements OnInit {
 
   onDestroy() {
     this.userInforSubs.unsubscribe();
+    if(this.isCheckoutSubs) this.checkoutSubs.unsubscribe();
   }
 
   onSubmit() {
@@ -41,11 +46,30 @@ export class ShippingComponent implements OnInit {
   }
 
   load() {
-    this.authService.user$.subscribe(user => {
+    this.userInforSubs = this.authService.user$.subscribe(user => {
       this.user = user;
-      if (user.infor) this.userInfor = user.infor; 
+      if (user.infor) 
+      {
+        this.userInfor = user.infor; 
+        if (user.infor.name == "") this.userInfor.address.province = "Hà Nội"
+        this.checkoutSubs = this.checkoutApi.GetDistrictsOfHanoi().subscribe(res => {          
+          let result = JSON.parse(res);
+          if(result.code === 200) {
+            this.districtList = result.data;
+            this.changeDistrict();
+          }
+          else alert('error');
+          this.isCheckoutSubs = true;
+        });
+      }      
+    });    
+  }
+
+  changeDistrict() {
+    var district = this.districtList.filter((district) => {
+      return district.name == this.userInfor.address.district;
     });
-    
+    this.wardList = district[0].ward;
   }
   
 }

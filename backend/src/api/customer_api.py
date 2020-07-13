@@ -35,7 +35,7 @@ def add_bill(mongo):
         if (len(customerDB)==0):
             output = add_customer(mongo, params, response)
         else:
-            extracted = mongo.db.customer.find_one_or_404({'uid': params['uid']})
+            extracted = mongo.db.customer.find_one({'uid': params['uid']})            
             if (extracted): 
                 bill = {}
                 bill = params['bill']
@@ -44,7 +44,6 @@ def add_bill(mongo):
 
                 mongo.db.bill.insert_one(bill)  # Save to bill Colection 
                 extracted['bill'].append(params['bill'])    # Add new bill to old bill list   
-
                 # Save to database         
                 mongo.db.customer.update({'uid': params['uid']}, {'$set': extracted})   # customer Colection 
 
