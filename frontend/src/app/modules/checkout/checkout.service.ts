@@ -83,6 +83,14 @@ export class CheckoutApiService {
         );
     }
 
+    // Get all of the districts of Hanoi
+    GetDistrictsOfHanoi(): Observable<any> {
+        return this.http.get<any>(`${API_URL}/api/maps`)
+        .pipe(
+            catchError(CheckoutApiService._handleError)
+        );
+    }
+
     //----------------------- Checkout with nganluong.vn -------------------------//
     
     // Build url to connect to nganluong.vn

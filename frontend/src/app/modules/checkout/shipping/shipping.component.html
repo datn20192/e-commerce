@@ -2,7 +2,7 @@
     <div class="col-12">
         <h3>1. Địa chỉ giao hàng</h3>
     </div>
-    <div class="row">
+    <div class="row" *ngIf="isCheckoutSubs">
         <div class="col-7">            
             <div class="card">
                 <div class="card-header bg-danger">
@@ -38,14 +38,10 @@
                       <div class="form-group row">
                         <label class="col-md-4 col-form-label" for="province">Tỉnh/Thành phố</label>
                         <div class="col-md-8">
-                          <select class="form-control" id="province" required
-                                  [(ngModel)]="userInfor.address.province"
-                                  name="province" #province="ngModel"
-                          >                          
-                            <option value="Hà Nội">Hà Nội</option>
-                            <option value="2">Option #2</option>
-                            <option value="3">Option #3</option>
-                          </select>
+                          <input type="text" class="form-control"
+                                  id="province" required [(ngModel)]="userInfor.address.province"
+                                  name="province" #name="ngModel" disabled
+                          >
                         </div>
                       </div>
                       <div class="form-group row">
@@ -54,10 +50,9 @@
                             <select class="form-control" id="district" required
                                     [(ngModel)]="userInfor.address.district"
                                     name="district" #district="ngModel"
+                                    (change)="changeDistrict()"
                             >                            
-                              <option value="Đống Đa">Đống Đa</option>
-                              <option value="2">Option #2</option>
-                              <option value="3">Option #3</option>
+                              <option *ngFor="let district of districtList" [value]="district.name">{{district.name}}</option>
                             </select>
                           </div>
                       </div>
@@ -68,9 +63,7 @@
                                     [(ngModel)]="userInfor.address.subDistrict"
                                     name="subDistrict" #subDistrict="ngModel"
                             >                            
-                              <option value="Kim Liên">Kim Liên</option>
-                              <option value="2">Option #2</option>
-                              <option value="3">Option #3</option>
+                              <option *ngFor="let ward of wardList" [value]="ward.name">{{ward.name}}</option>
                             </select>                          
                           </div>
                       </div>            
