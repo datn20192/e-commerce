@@ -51,7 +51,10 @@ export class ShippingComponent implements OnInit {
       if (user.infor) 
       {
         this.userInfor = user.infor; 
-        if (user.infor.name == "") this.userInfor.address.province = "Hà Nội"
+        if (user.infor.name == "") {
+          this.userInfor.address.province = "Hà Nội";
+          this.userInfor.address.district = "Đống Đa";
+        }
         this.checkoutSubs = this.checkoutApi.GetDistrictsOfHanoi().subscribe(res => {          
           let result = JSON.parse(res);
           if(result.code === 200) {

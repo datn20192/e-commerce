@@ -9,9 +9,9 @@ import { AdminProductInformationComponent } from './products/admin-product-infor
 import { AdminGroupProductsComponent } from './products/admin-group-products/admin-group-products.component';
 import { AdminProductListComponent } from './products/admin-home-products/admin-product-list.component';
 import { AdminAddingProductComponent } from './products/admin-adding-product/admin-adding-product.component';
+import { AdminGettingCustomerComponent } from './users/customers/admin-getting-customer.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { DashboardService } from './dashboard/dashboard.service';
 
 
 @NgModule({
@@ -26,7 +26,8 @@ import { DashboardService } from './dashboard/dashboard.service';
         AdminGroupProductsComponent,
         DashboardComponent,
         AdminProductListComponent,
-        AdminAddingProductComponent
+        AdminAddingProductComponent,
+        AdminGettingCustomerComponent
     ]
 })
 export class AdminModule {}

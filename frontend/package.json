@@ -29,6 +29,7 @@
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "angularfire2": "^5.4.2",
     "bootstrap": "^4.4.1",
+    "caniuse-lite": "^1.0.30001099",
     "chart.js": "^2.9.3",
     "core-js": "^2.6.11",
     "firebase": "^6.6.2",
