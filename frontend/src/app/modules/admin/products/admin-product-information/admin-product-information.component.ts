@@ -14,7 +14,7 @@ export class AdminProductInformationComponent implements OnInit {
   @Input() productIn: Product;
   @Input() allowSet: boolean; 
   @Output() submitProduct = new EventEmitter();
-
+  bigImage: string;
   productCategorySubs: Subscription;
 
   productCategories: ProductCategory[];
@@ -74,10 +74,27 @@ export class AdminProductInformationComponent implements OnInit {
   deleteDescription(index:number) {
     if(this.product.description.length>1) this.product.description.splice(index,1);    
   }
+  deleteImageURL(index:number) {
+    if(this.product.imageURL.length>1) this.product.imageURL.splice(index,1);    
+  }
   
-
+  onFileName(event){
+    var input = event.target.files[0].name;
+    let result = ""
+    for (let i=0; i<input.length; i++) {
+      if (input[i] == '-') {
+        result += '/';
+      }
+      else result += input[i];
+    }
+    console.log(result);
+    this.bigImage = result;
+    this.product.imageURL.push(this.bigImage);
+  }
   submit(isSubmit:boolean) {
-    if (isSubmit===true)  this.submitProduct.emit(this.product);
+    if (isSubmit===true){
+      this.submitProduct.emit(this.product);
+    }
     else this.submitProduct.emit(false);
     
   }  
