@@ -1,3 +1,44 @@
-<ng-container>    
-  <h3>Đang được cập nhật</h3>    
+<ng-container> 
+  <table class="table table-bordered">
+    <thead>
+      <tr class="d-flex">
+        <th class="col-3">Mã khách hàng</th>
+        <th class="col-3">Tài khoản</th>
+        <th class="col-3">Tên khách hàng</th>                
+        <th class="col-3">Hóa đơn</th>
+      </tr>
+    </thead>
+    <tbody>
+      <div *ngFor="let bill of bills">
+          <tr class="d-flex">
+              <td class="col-3">
+                  <app-mini-shipping [infor]="bill.infor"></app-mini-shipping>
+              </td>
+              <td class="col-3">
+                  <a data-toggle="modal" (click)="openModal(billDetail)" 
+                      (click)="false" class="nav-link" href="#"
+                  >
+                      {{bill.id}}
+                  </a>  
+                  <ng-template #billDetail>
+                      <div class="modal-header bg-danger">
+                        <h4 class="modal-title pull-left">Chi tiết hóa đơn</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <app-mini-cart [cart]="bill.cart"></app-mini-cart>
+                      </div>
+                  </ng-template>
+              </td>
+              <td class="col-3">
+                  {{bill.totalMoney | productPrice}}                                  
+              </td>
+              <td class="col-3">{{bill.date}}</td>                          
+              
+          </tr> 
+      </div>                          
+    </tbody>
+  </table>             
 </ng-container>

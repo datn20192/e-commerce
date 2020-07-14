@@ -94,4 +94,26 @@ def submit_online_payment(mongo):
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
     
     return output
+
+def get_customer(mongo):
+    try:
+        response = Response()
+        processed = []
+        extracted = list(mongo.db.customer.find({}))
+        for customer in extracted:            
+            processed.append({
+                'uid': customer['uid'],
+                'email': customer['email'],
+                'name': customer['infor']['name'],
+                'bill': customer['bill'],                
+            })
+        response.create(Response.SUCCESS)
+        response.data = processed        
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except Exception as e:
+        print(e)
+        response.create(Response.ERROR)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+
+    return output    
     

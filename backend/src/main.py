@@ -124,3 +124,7 @@ def submit_delivery():
 def get_map():
     return map_api.get_map(mongo)
 
+# Get customer list
+@app.route('/api/customers', methods = ['GET'])
+def get_customer():
+    return customer_api.get_customer(mongo)
