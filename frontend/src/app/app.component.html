@@ -57,7 +57,7 @@
       <a class="nav-link" [routerLink]="['/quan-ly/thong-ke-doanh-thu']"><i class="fa fa-line-chart font-2xl"></i><span>Thống kê</span></a>
       </li>
       <li class="nav-item d-md-down-none" *ngIf="auth.isAdmin(user)">
-      <a class="nav-link" href="#">
+      <a class="nav-link" [routerLink]="['quan-ly/danh-sach-khach-hang']">
           <i class="fa fa-table font-2xl"></i>          
           <span>Danh sách KH</span>      
           <span class="badge-pill badge-danger">5</span>
