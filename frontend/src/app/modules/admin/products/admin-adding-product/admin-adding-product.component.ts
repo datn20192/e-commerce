@@ -8,13 +8,14 @@ import { ProductCategoryServiceAPI } from '../../../../services/productCategory-
 // Model
 import { User } from '../../../../models/user.model';
 import { Product } from '../../../../models/product.model';
+import { AdminApiService } from '../../admin.service';
 
 @Component({
   selector: 'app-admin-adding-product',
   templateUrl: './admin-adding-product.component.html'
 })
 export class AdminAddingProductComponent {
-
+    bigImage: string;
     productCategorySubs: Subscription;
       
     productCategories: ProductCategory[];
@@ -36,7 +37,8 @@ export class AdminAddingProductComponent {
     };
     
     constructor(
-      private productCategoryApi: ProductCategoryServiceAPI
+      private productCategoryApi: ProductCategoryServiceAPI,
+      private admin: AdminApiService
     ) { }
   
     ngOnInit() {            
@@ -46,7 +48,19 @@ export class AdminAddingProductComponent {
     ngOnDestroy() {
       this.productCategorySubs.unsubscribe();
     }     
-  
+
+    onFileName(event){
+      var input = event.target.files[0].name;
+      let result = ""
+      for (let i=0; i<input.length; i++) {
+        if (input[i] == '-') {
+          result += '/';
+        }
+        else result += input[i];
+      }
+      console.log(result);
+      this.bigImage = result;
+    }
     load() {            
       this.productCategorySubs = this.productCategoryApi.getProductCategories().subscribe(res => {
         let result = JSON.parse(res);
@@ -57,7 +71,18 @@ export class AdminAddingProductComponent {
     }
 
     submit() {
-      console.log(this.product);
+      //chuan hoa duong dan anh?
+      this.product.imageURL.push(this.bigImage);
+      //goi services
+      this.admin.addProduct(this.product).subscribe(res => {
+        let result = JSON.parse(res);
+
+        if(result.code === 200) {
+          alert('Thêm sản phẩm thành công');
+        }
+        else alert('Thêm sản phẩm thất bại');
+
+      });
     }
 
     //------------------------------ process the changes in form ------------------//
