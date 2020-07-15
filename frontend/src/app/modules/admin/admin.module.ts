@@ -27,7 +27,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
         DashboardComponent,
         AdminProductListComponent,
         AdminAddingProductComponent,
-        AdminGettingCustomerComponent
+        AdminGettingCustomerComponent,
     ]
 })
 export class AdminModule {}

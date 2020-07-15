@@ -1,12 +1,18 @@
 <ng-container> 
   <table class="table table-bordered">
     <thead>
-      <tr class="d-flex">
+      <tr class="d-flex" *ngIf="isShipper">
         <th class="col-3">Địa chỉ</th>
         <th class="col-3">Đơn hàng</th>
         <th class="col-2">Tổng tiền</th>                
         <th class="col-2">Ngày đặt hàng</th>
         <th class="col-2">Trạng thái</th>
+      </tr>
+      <tr class="d-flex" *ngIf="!isShipper">
+        <th class="col-3">Địa chỉ</th>
+        <th class="col-3">Đơn hàng</th>
+        <th class="col-3">Tổng tiền</th>                
+        <th class="col-3">Ngày đặt hàng</th>
       </tr>
     </thead>
     <tbody>
@@ -22,8 +28,8 @@
                       {{bill.id}}
                   </a>  
                   <ng-template #billDetail>
-                      <div class="modal-header bg-danger">
-                        <h4 class="modal-title pull-left">Chi tiết hóa đơn</h4>
+                      <div class="modal-header bg-primary">
+                        <h4 class="modal-title pull-left">Chi tiết hóa đơn - {{bill.id}}</h4>
                         <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -33,14 +39,17 @@
                       </div>
                   </ng-template>
               </td>
-              <td class="col-2">
+              <td class="col-2" *ngIf="isShipper">
                   {{bill.totalMoney | productPrice}}                                  
               </td>
-              <td class="col-2">{{bill.date}}</td>                
-              <td class="col-2">
+              <td class="col-2" *ngIf="isShipper">{{bill.date}}</td>                
+              <td class="col-2" *ngIf="isShipper">
                 <button class="btn btn-primary" (click)="clickSubmit(bill.uid, bill.id)">Xác nhận</button>
               </td>
-              
+              <td class="col-3" *ngIf="!isShipper">
+                {{bill.totalMoney | productPrice}}                                  
+              </td>
+              <td class="col-3" *ngIf="!isShipper">{{bill.date}}</td>                                       
           </tr> 
       </div>                          
     </tbody>

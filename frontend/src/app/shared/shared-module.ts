@@ -5,6 +5,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel'
 
 import { NgxSpinnerModule } from 'ngx-spinner';
 
+// Component
 import { SigninSignupComponent } from './components/signin-signup/signin-signup.component';
 import { SigninComponent } from '../components/signin/signin.component';
 import { SignupComponent } from '../components/signup/signup.component';
@@ -13,8 +14,9 @@ import { CardProductComponent } from '../modules/home/products/card-product/card
 import { ProductDetailComponent } from '../modules/home/products/product-detail/product-detail.component';
 import { AdminCardProductComponent } from '../modules/admin/products/admin-card-product/admin-card-product.component';
 import { CarouselListProductComponent } from '../modules/home/products/list-product-carousel/list-product-carousel.component';
-import { MiniCartComponent } from '../modules//checkout//bill//mini-cart/mini-cart.component';
-import { MiniShippingComponent } from '../modules//checkout/bill/mini-shipping/mini-shipping.component';
+import { MiniCartComponent } from '../modules/checkout//bill//mini-cart/mini-cart.component';
+import { MiniShippingComponent } from '../modules/checkout/bill/mini-shipping/mini-shipping.component';
+import { BillTableComponent } from '../modules/shipper/bill-table/bill-table.component';
 
 // Pipe
 import { ProductStar } from './pipes/product/product-star.pipe';
@@ -51,7 +53,8 @@ import { ProgressbarModule } from 'ngx-bootstrap';
         CarouselListProductComponent,
         MiniCartComponent,
         MiniShippingComponent,
-        FeedbackComponent
+        FeedbackComponent,
+        BillTableComponent
     ],
     exports: [ 
         CarouselModule,
@@ -70,6 +73,7 @@ import { ProgressbarModule } from 'ngx-bootstrap';
         CarouselListProductComponent,
         MiniCartComponent,
         MiniShippingComponent,
+        BillTableComponent,
 
         ProductPrice,
         CartTotalMoney,

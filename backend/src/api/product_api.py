@@ -27,24 +27,23 @@ def get_all_products(mongo):
     try:        
         response = Response()
         processed = []
-        extracted = list(mongo.db.test.find({}))
-        for product in extracted:    
-            mongo.db.product.update({'_id': product['_id']}, {'$set': {'quantity':100}})      
-            # processed.append({
-            #     'id': str(product['_id']),
-            #     'groupID': product['groupID'],
-            #     'groupName': product['groupName'],
-            #     'category': product['category'],
-            #     'name': product['name'],
-            #     'link': product['link'],
-            #     'brand': product['brand'],                
-            #     'imageURL': product['imageURL'],    
-            #     'price': product['price'],            
-            #     'description': product['description'],                          
-            #     'quantity': product['quantity'],
-            #     'star': product['star'],
-            #     'soldNumber': product['soldNumber']
-            # })               
+        extracted = list(mongo.db.product.find({}))
+        for product in extracted:        
+            processed.append({
+                'id': str(product['_id']),
+                'groupID': product['groupID'],
+                'groupName': product['groupName'],
+                'category': product['category'],
+                'name': product['name'],
+                'link': product['link'],
+                'brand': product['brand'],                
+                'imageURL': product['imageURL'],    
+                'price': product['price'],            
+                'description': product['description'],                          
+                'quantity': product['quantity'],
+                'star': product['star'],
+                'soldNumber': product['soldNumber']
+            })               
         response.create(Response.SUCCESS)
         response.data = processed        
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
