@@ -128,3 +128,7 @@ def get_map():
 @app.route('/api/customers', methods = ['GET'])
 def get_customer():
     return customer_api.get_customer(mongo)
+
+@app.route('/api/customers/counts', methods = ['GET'])
+def get_number_of_customers():
+    return customer_api.get_number_of_customers(mongo)

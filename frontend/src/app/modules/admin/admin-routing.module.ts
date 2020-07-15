@@ -42,7 +42,7 @@ const adminRoute: Routes = [
                 component: AdminGettingCustomerComponent,
                 data: {
                     title: 'Danh sách khách hàng'
-                }
+                },                
             },
 
             {

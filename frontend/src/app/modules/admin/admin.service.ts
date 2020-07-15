@@ -64,4 +64,20 @@ export class AdminApiService {
         );
     }
 
+    // get all customer
+    getCustomer(): Observable<any> {
+      return this.http.get<any>(`${API_URL}/api/customers`)
+      .pipe(
+        catchError(AdminApiService._handleError)
+      )
+    }
+
+    // count customers
+    countCustomers(): Observable<any> {
+      return this.http.get(`${API_URL}/api/customers/counts`)
+      .pipe(
+        catchError(AdminApiService._handleError)
+      )
+    }
+
 }

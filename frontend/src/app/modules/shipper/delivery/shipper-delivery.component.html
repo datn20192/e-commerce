@@ -23,7 +23,7 @@
     <div class="tab-pane active container" id="cash"
             [ngClass]="{ 'active': activeTab==='cash' }"
     >
-      <app-bill-table [bills]="bills" (confirm)="clickSubmit($event)">
+      <app-bill-table [bills]="bills" [isShipper]="true" (confirm)="clickSubmit($event)">
 
       </app-bill-table>
                 
@@ -31,7 +31,7 @@
     <div class="tab-pane container" id="card"
             [ngClass]="{ 'active': activeTab==='card' }"
     >
-      <app-bill-table [bills]="bills" (confirm)="clickSubmit($event)">
+      <app-bill-table [bills]="bills" [isShipper]="true" (confirm)="clickSubmit($event)">
 
       </app-bill-table>
     </div>

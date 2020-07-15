@@ -10,6 +10,7 @@ import { Bill } from '../../../models/bill.model';
 export class BillTableComponent {
 
     @Input() bills: Bill[];
+    @Input() isShipper: boolean;
     @Output() confirm = new EventEmitter();
 
     modalRef: BsModalRef;   
@@ -37,7 +38,7 @@ export class BillTableComponent {
         this.modalRef = this.modalService.show(template, 
         {
             backdrop:'static', 
-            class:'modal-xl',
+            class:'modal-l',
             keyboard: true
         });    
     }  

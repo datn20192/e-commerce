@@ -99,14 +99,26 @@ def get_customer(mongo):
     try:
         response = Response()
         processed = []
-        extracted = list(mongo.db.customer.find({}))
-        for customer in extracted:            
+        extracted = list(mongo.db.customer.find({}))        
+        for customer in extracted:    
+            paidNumber = 0
+            unPaidNumber = 0
+            for bill in customer['bill']:
+                bill['id'] = str(bill['_id'])   
+                bill.pop('_id') 
+                if bill['status'] == True:
+                    paidNumber = paidNumber + 1
+                else: 
+                    unPaidNumber = unPaidNumber + 1                  
             processed.append({
                 'uid': customer['uid'],
                 'email': customer['email'],
-                'name': customer['infor']['name'],
-                'bill': customer['bill'],                
+                'name': customer['bill'][0]['infor']['name'],
+                'bill': customer['bill'],  
+                'paidNumber': paidNumber,
+                'unPaidNumber': unPaidNumber              
             })
+            
         response.create(Response.SUCCESS)
         response.data = processed        
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
@@ -116,4 +128,20 @@ def get_customer(mongo):
         output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
 
     return output    
-    
+
+def get_number_of_customers(mongo):
+    try:
+        response = Response()
+        extracted = list(mongo.db.customer.find({}))  
+
+        response.create(Response.SUCCESS)
+        response.data = len(extracted)        
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+    except Exception as e:
+        print(e)
+        response.create(Response.ERROR)
+        output = jsonify(json_util.dumps(response.__dict__, ensure_ascii=False))
+
+    return output  
+
+

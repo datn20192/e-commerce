@@ -60,7 +60,7 @@
       <a class="nav-link" [routerLink]="['quan-ly/danh-sach-khach-hang']">
           <i class="fa fa-table font-2xl"></i>          
           <span>Danh sách KH</span>      
-          <span class="badge-pill badge-danger">5</span>
+          <span class="badge-pill badge-danger">{{customersCouting}}</span>
       </a>
       </li>
       <li class="nav-item d-md-down-none" *ngIf="auth.isAdmin(user)">
